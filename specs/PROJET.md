@@ -168,6 +168,14 @@ Chaque feature reçoit son fichier dans `specs/instructions/` AVANT implémentat
   - **AR-H (a)** — la voie publique du CLI est le **tarball de release GitHub**, pas un registre
     npm. Ferme sans objet l'inconnue « désigner un 3ᵉ registre » d'AR-7.
 
+- **2026-09-03** — **`productName` = `iakaInstall`, identique au nom du dépôt.** Décision du
+  décideur. Elle **fige** ce qui commande toute la chaîne de distribution : la vitrine y substitue
+  son `{APP}`, le manifeste updater et les artefacts en tirent leur nom. Conforme à la convention
+  **mesurée** chez les deux frères, où `productName` égale déjà le nom du dépôt (`iakaFrameGUI`,
+  `IakaCockpit`). Conséquence pour l'exécution : les artefacts s'appelleront `iakaInstall_<version>_*`
+  et le nom **ne doit plus bouger** — en changer après C.2 casserait vitrine, manifeste et
+  convergence d'un seul coup.
+
 - **2026-09-03** — **L'ordre des lots n'est pas librement permutable.** `B′` ne peut pas précéder
   `C.2` : toute la convention de distribution **dérive du `productName` de `tauri.conf.json`**, qui
   n'existe qu'une fois l'application créée. Et `B′-b` exige une **release réelle** — avant elle, la
@@ -191,7 +199,4 @@ Chaque feature reçoit son fichier dans `specs/instructions/` AVANT implémentat
 - **Visibilité du dépôt.** Créé **privé** (défaut du portefeuille). Or au lot C.3 un inconnu doit
   pouvoir télécharger le `.dmg` et le `.msi` ⇒ **il devra passer public**. Décision à prendre quand
   la première release approche, pas avant.
-- **Nom affiché du produit** (`productName`) : il commande toute la chaîne de distribution (vitrine,
-  manifeste, artefacts). `iakaInstall` est le nom du **dépôt** ; le nom de l'**application** peut
-  différer. À figer **avant** C.2, car il est très coûteux à changer ensuite.
 - **Charte visuelle** de la façade (réservoir `iakagraph/theme/`) — non abordée par le cadrage.
