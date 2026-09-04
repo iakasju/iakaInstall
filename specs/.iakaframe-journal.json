@@ -18,5 +18,15 @@
     "dirty": false,
     "files": 93,
     "note": "Correction post-gate FAIL (CA-I8a) : garde de vocabulaire etendue au rendu, ecran corrige (Etape n sur N au lieu de [n/N]), tracabilite etape 1 (M-C1..M-C4) documentee. Ecart E-3 du gate (etat des lieux non regenere depuis onboarding) leve."
+  },
+  {
+    "date": "2026-09-05 00:52",
+    "reason": "pause",
+    "version": "v0.1.0",
+    "branch": "main",
+    "commit": "72bdc7d merge: LOT C.2-a + B'-a — coquille Tauri studio-clair + ossature de release (gate Legolas PASS au second passage)",
+    "dirty": false,
+    "files": 94,
+    "note": "LOT C.2-a + B'-a livre et fusionne (72bdc7d) : coquille Tauri 2 en charte studio-clair, ecran d annonce qui dit que l app n installe rien encore, ossature release.yml 4 plateformes epinglee au SHA. Gate Legolas FAIL (CA-I8a, garde de vocabulaire aveugle a l interpolation) puis PASS au second passage apres garde de rendu. 41 tests front + 5 cargo verts, build macOS arm64 OK. Actes du decideur en attente : passage en PUBLIC (AR-I4), premier run CI, builds Windows/Linux/Intel. C.2-b (pilotage reel) attend le contrat machine du CLI (branche feat/contrat-machine-install d iakaframe, en gate). Push Forgejo EN ATTENTE (NAS injoignable) ; GitHub a jour."
   }
 ]

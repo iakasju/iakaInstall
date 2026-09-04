@@ -1,6 +1,6 @@
 # Etat des lieux - iakaInstall
 
-> Genere par iakaframe (CLI) le 2026-09-05 00:24 (motif: manual).
+> Genere par iakaframe (CLI) le 2026-09-05 00:52 (motif: pause).
 > A regenerer a chaque changement de version et a chaque pause/reprise.
 
 ## Etat courant
@@ -8,26 +8,26 @@
 | Champ | Valeur |
 |---|---|
 | Version | v0.1.0 |
-| Branche | feat/facade-tauri-ossature-release |
-| Dernier commit | a0a21bf docs(qualite): traçabilité étape 1 lot C.2-a (M-C1..M-C4 rejouées) |
+| Branche | main |
+| Dernier commit | 72bdc7d merge: LOT C.2-a + B'-a — coquille Tauri studio-clair + ossature de release (gate Legolas PASS au second passage) |
 | Arbre | propre |
-| Fichiers (suivis + non ignores) | 93 |
-| Note | Correction post-gate FAIL (CA-I8a) : garde de vocabulaire etendue au rendu, ecran corrige (Etape n sur N au lieu de [n/N]), tracabilite etape 1 (M-C1..M-C4) documentee. Ecart E-3 du gate (etat des lieux non regenere depuis onboarding) leve. |
+| Fichiers (suivis + non ignores) | 94 |
+| Note | LOT C.2-a + B'-a livre et fusionne (72bdc7d) : coquille Tauri 2 en charte studio-clair, ecran d annonce qui dit que l app n installe rien encore, ossature release.yml 4 plateformes epinglee au SHA. Gate Legolas FAIL (CA-I8a, garde de vocabulaire aveugle a l interpolation) puis PASS au second passage apres garde de rendu. 41 tests front + 5 cargo verts, build macOS arm64 OK. Actes du decideur en attente : passage en PUBLIC (AR-I4), premier run CI, builds Windows/Linux/Intel. C.2-b (pilotage reel) attend le contrat machine du CLI (branche feat/contrat-machine-install d iakaframe, en gate). Push Forgejo EN ATTENTE (NAS injoignable) ; GitHub a jour. |
 
 ## Commits recents
 
 | Hash | Date | Sujet |
 |---|---|---|
+| `72bdc7d` | 2026-09-05 | merge: LOT C.2-a + B'-a — coquille Tauri studio-clair + ossature de release (gate Legolas PASS au second passage) |
+| `e468b6b` | 2026-09-05 | docs(qualite): re-gate lot C.2-a + B'-a — PASS |
+| `30d77bb` | 2026-09-05 | fix(gardes): lire le registre par import JSON, pas node:fs (typecheck) |
+| `31fcb41` | 2026-09-05 | docs(etat-des-lieux): régénère + récit de reprise (écart E-3 du gate) |
 | `a0a21bf` | 2026-09-05 | docs(qualite): traçabilité étape 1 lot C.2-a (M-C1..M-C4 rejouées) |
 | `261c2c5` | 2026-09-05 | fix(front): ne plus reproduire le format [n/N] du moteur (CA-I8a, R3) |
 | `b567771` | 2026-09-05 | fix(gardes): balayer le RENDU en plus de la source (CA-I8a, R-I5) |
 | `18478ca` | 2026-09-05 | docs(qualite): gate lot C.2-a + B'-a — FAIL |
 | `bb98387` | 2026-09-04 | docs(claude): remplir CLAUDE.md — stack reelle, commandes exposees |
 | `b10dda5` | 2026-09-04 | feat(ci): ossature de release B'-a — matrice 4 plateformes, SHA epingle |
-| `bab0278` | 2026-09-04 | test(gardes): vocabulaire du moteur (R3, CA-I8a) + nom-produit + doc |
-| `873201d` | 2026-09-04 | feat(tauri): backend Rust minimal, coquille C.2-a (AR-I2b) |
-| `713e71c` | 2026-09-04 | feat(charte): synchroniser studio-clair depuis iakagraph (AR-I3) |
-| `1f8ef24` | 2026-09-04 | feat(front): squelette React/TS/Vite de la facade (ecran d'annonce) |
 
 ## Reprise du travail (a completer par Cowork)
 
@@ -62,5 +62,6 @@
 
 | Date | Motif | Version | Branche | Note |
 |---|---|---|---|---|
+| 2026-09-05 00:52 | pause | v0.1.0 | main | LOT C.2-a + B'-a livre et fusionne (72bdc7d) : coquille Tauri 2 en charte studio-clair, ecran d annonce qui dit que l app n installe rien encore, ossature release.yml 4 plateformes epinglee au SHA. Gate Legolas FAIL (CA-I8a, garde de vocabulaire aveugle a l interpolation) puis PASS au second passage apres garde de rendu. 41 tests front + 5 cargo verts, build macOS arm64 OK. Actes du decideur en attente : passage en PUBLIC (AR-I4), premier run CI, builds Windows/Linux/Intel. C.2-b (pilotage reel) attend le contrat machine du CLI (branche feat/contrat-machine-install d iakaframe, en gate). Push Forgejo EN ATTENTE (NAS injoignable) ; GitHub a jour. |
 | 2026-09-05 00:24 | manual | v0.1.0 | feat/facade-tauri-ossature-release | Correction post-gate FAIL (CA-I8a) : garde de vocabulaire etendue au rendu, ecran corrige (Etape n sur N au lieu de [n/N]), tracabilite etape 1 (M-C1..M-C4) documentee. Ecart E-3 du gate (etat des lieux non regenere depuis onboarding) leve. |
 | 2026-09-03 23:22 | version | v0.1.0 | main | onboarding initial |
