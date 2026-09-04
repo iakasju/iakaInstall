@@ -196,7 +196,40 @@ Chaque feature reçoit son fichier dans `specs/instructions/` AVANT implémentat
 
 ## ⬜ Ce qui reste à décider — attente Stéphane
 
-- **Visibilité du dépôt.** Créé **privé** (défaut du portefeuille). Or au lot C.3 un inconnu doit
-  pouvoir télécharger le `.dmg` et le `.msi` ⇒ **il devra passer public**. Décision à prendre quand
-  la première release approche, pas avant.
-- **Charte visuelle** de la façade (réservoir `iakagraph/theme/`) — non abordée par le cadrage.
+> **Mis à jour le 2026-09-04** par 🔵 Gandalf, au cadrage du lot **C.2 + B′-a**. Les quatre points
+> ci-dessous sont **soumis au décideur avec une recommandation motivée** dans
+> `specs/instructions/facade-installeur-tauri-ossature-release.md` § 3 — les motifs y sont, ils ne
+> sont pas recopiés ici.
+
+- **AR-I1 — Quand la façade pilote-t-elle réellement la chaîne ?** ⚠️ **Fait mesuré qui rouvre la
+  question** : le verbe `install` **n'émet aucune sortie machine** (`--json` est déclaré au registre
+  et ne produit que de la prose), et **aucun canal ne permet un feu vert par étape hors TTY** — le
+  seul moyen de faire avancer la chaîne depuis un programme est `--yes`, qui **saute toutes** les
+  validations (AR-4 nié). La façade décrite par le cadrage n'est donc **pas implémentable** sans
+  parser de la prose, c'est-à-dire sans réaliser **R3**.
+  *Reco : **(b)** scinder — **C.2-a + B′-a maintenant** (ils ne dépendent de rien), et un prérequis
+  nommé côté `iakaframe`, `CONTRAT-MACHINE-DU-VERBE-INSTALL`, cadré et joué en parallèle, avant
+  **C.2-b** (le pilotage réel).*
+
+- **AR-I2 — Comment la façade atteint-elle le moteur ?** Sous-processus du CLI installé / ressource
+  Node embarquée / sidecar Tauri. *Reco : **ressource embarquée** exécutée par le `node` du poste —
+  le prérequis Node/npm **existe déjà**, l'étape 1 du moteur `spawn` littéralement `npm`. Le sidecar
+  est nommé successeur (`SIDECAR-CLI-AUTONOME`), sa condition d'entrée étant de servir des postes
+  **sans Node**.*
+
+- **AR-I3 — Charte visuelle.** **Dix** chartes disponibles au réservoir `iakagraph/theme/`
+  (`naonedge-dark`, `naonedge-light`, `grimoire-dark-fantasy`, `os-windows`, `os-ubuntu`,
+  `os-android`, `os-macos`, `cartoon-std`, `photoreal-modern`, `studio-clair`).
+  *Reco : **`naonedge-dark`**, **une seule** charte, **aucun sélecteur** — c'est le premier écran du
+  produit, il dit la marque. Geste déjà écrit : `IakaCockpit/scripts/sync-chartes.sh` (pont de
+  23 variables), tokens servis en `'self'`. Une marque propre à `iakaInstall` serait 🎨 Loki
+  (successeur `MARQUE-IAKAINSTALL`).*
+
+- **AR-I4 — Visibilité du dépôt.** Mesure qui déplace la question : Actions est **gratuit et
+  illimité** sur un dépôt **public**, alors qu'un dépôt **privé** consomme 2 000 min/mois avec
+  **macOS décompté ×10** — et la matrice porte **deux** jobs macOS. Techniquement B′-a fonctionne en
+  privé ; **économiquement non**, et **C.3 l'exige public**.
+  *Reco : **passer public avant le premier run de B′-a**, après le balayage de secrets (CA-I13) —
+  les deux sœurs sont publiques depuis le 2026-08-28, et ce dépôt est neuf. **Acte du décideur**,
+  refusé aux agents. (Visibilité actuelle de `iakasju/iakaInstall` : **non mesurée** — le remote
+  existe, `.git/config:15`, mais son état demande un appel authentifié non joué.)*
