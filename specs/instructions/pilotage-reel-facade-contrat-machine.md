@@ -317,6 +317,16 @@ hors d'une demande reçue**, et `--yes` reste introuvable dans tout l'arbre.
 
 *Chacun porte ma recommandation. Aucun n'est tranché ici.*
 
+> **Verdicts rendus le 2026-09-05 par Stéphane** (relayés par 🔵 Aragorn, mot pour mot : *« comme reco »*) :
+> **AR-P1 → (a)** Rust pilote (`std::process::Command`), zéro plugin, zéro permission ouverte à la webview.
+> **AR-P2 → (b)** ressource = arbre extrait au build depuis l'asset de release GitHub épinglé, version +
+> `sha256` en fixture vérifiés AVANT extraction ; repli (a) documenté. **AR-P3 → (a)** bump du CLI en
+> `0.40.0` et publication AVANT ce lot — prérequis ordonné par Aragorn dans `iakaframe`, le tag qui
+> déclenche la publication est un acte du décideur. **AR-P4 → (a)** jamais d'écriture dans `~/.claude`
+> pendant les tests : bac à sable `--target-claude`/`--apps-dir`/`--backup-dir` temporaires, garde qui
+> rougit si l'un manque. **AR-P5 → (a)** ressource épinglée, remontée à chaque release de la façade ;
+> successeur `RESSOURCE-CLI-RAFRAICHIE-EN-LIGNE`.
+
 ### AR-P1 — Qui pilote le processus : le natif (Rust) ou la webview (JS) ?
 
 Cet arbitrage commande les **dépendances**, les **capabilities** et la surface d'attaque. Il se
