@@ -1,0 +1,63 @@
+/* App.css — mise en forme minimale de l'ecran d'annonce, consommant les
+   variables de la charte (chartes.css / tokens studio-clair). Aucune couleur
+   en dur : le reservoir iakagraph reste l'unique source (AR-I3). */
+.ecran-annonce {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: var(--text);
+  background: var(--bg);
+  font-family: var(--font-sans);
+}
+
+.comptage {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.liste-etapes {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.liste-etapes li {
+  background: var(--surf);
+  border-radius: var(--r);
+  padding: 1rem;
+}
+
+.etape-compteur {
+  display: inline-block;
+  margin-right: 0.5rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+}
+
+.prereq-liste {
+  list-style: none;
+  padding: 0;
+}
+
+.prereq-present {
+  color: var(--green);
+}
+
+.prereq-absent {
+  color: var(--red);
+}
+
+.couverture-ok {
+  color: var(--green);
+}
+
+.couverture-refus {
+  color: var(--red);
+  font-weight: 600;
+}
+
+.cause-desarmement {
+  color: var(--text-2);
+  font-size: 0.9rem;
+}
