@@ -1,0 +1,24 @@
+{
+  "_lire": "Registre du garde-fou R3/CA-I8a (specs/instructions/facade-installeur-tauri-ossature-release.md § 7-8). Chaque motif vise un detail du MOTEUR (cli/iakaframe) : la facade qui le nommerait deviendrait une seconde lecture de sa logique. Le compte de 'motifs' est un CLIQUET DE COMPLETUDE (R-I5) : il ne descend que dans le commit qui le decide explicitement — voir le test associe.",
+  "motifs": [
+    { "motif": "install.mjs", "raison": "nom du fichier moteur (bundle CLI) — cli/_bundled/install.mjs" },
+    { "motif": "_bundled", "raison": "chemin interne du moteur (cli/_bundled)" },
+    { "motif": "minisign", "raison": "detail cryptographique du moteur (M-E4, app-bundle.js)" },
+    { "motif": "rollback", "raison": "nom du mecanisme moteur (cli/lib/rollback.js), pas un concept de facade" },
+    { "motif": "npm install -g", "raison": "commande d'installation reelle jouee par l'etape 1 du moteur" },
+    { "motif": ".app.tar.gz", "raison": "format d'archive interne du bundle updater du moteur" },
+    { "motif": "apps-dir", "raison": "option CLI --apps-dir (cible des etapes 3/4)" },
+    { "motif": "latest.json", "raison": "nom du manifeste moteur/updater (reservoir.js)" },
+    { "motif": "192.168.1.139", "raison": "IP du NAS Forgejo, detail d'infrastructure du moteur" },
+    { "motif": "raw.githubusercontent", "raison": "endpoint de telechargement du moteur (AR-H)" },
+    { "motif": "dW50cnVzdGVk", "raison": "prefixe base64 d'une cle publique minisign" },
+    { "motif": "[1/4]", "raison": "format de progression imprime par le moteur (prose CLI, install.js)" },
+    { "motif": "réservoir :", "raison": "libelle de provenance imprime par le moteur (formatProvenance, reservoir.js)" }
+  ],
+  "horsCouverture": [
+    {
+      "chemin": "src/api/backend.ts",
+      "motif": "seule couture d'invoke autorisee a NOMMER le moteur, en COMMENTAIRE, pour documenter ce que C.2-b branchera — jamais dans du code executable"
+    }
+  ]
+}
