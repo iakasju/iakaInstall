@@ -1,0 +1,11 @@
+# EMPREINTE DU BLOC `latest:` DE `.github/workflows/release.yml` — garde LOCALE.
+#
+# Copie du geste d'IakaCockpit (lot L44 la-bas). `iakaInstall` n'est PAS inscrit au
+# registre de convergence des soeurs (AR-E) : cette fixture ne compare RIEN a
+# IakaCockpit/iakaFrameGUI, elle protege seulement CE depot d'une derive silencieuse
+# du bloc par rapport a lui-meme.
+#
+# POUR REGENERER, apres une modification VOULUE du bloc :
+#   node -e "import('./scripts/lib/bloc-latest.mjs').then(m=>console.log(m.empreinte(m.lireBloc('.'))))"
+# puis reporter la valeur ici.
+f5de9ecb81dc4ed25924484a6cf20afa81829f8e188d50b206960795ede32af3  .github/workflows/release.yml#latest

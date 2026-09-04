@@ -1,0 +1,180 @@
+# release.yml — ossature de release (lot B'-a).
+#
+# COPIE de la convention d'IakaCockpit (M-R6, decidee au cadrage : les deux
+# soeurs divergent deja entre elles — voir CONVERGENCE-RELEASE-YML-ALIGNEMENT
+# — c'est celle du Cockpit qui est choisie, motif dans l'instruction § 2).
+# SOURCE : IakaCockpit/.github/workflows/release.yml
+# COMMIT : 8ed1e1a132195ec962e942307db0d7e4be76648c (2026-09-01)
+#
+# Ce depot n'a PAS de manifeste updater (B'-b, hors perimetre de ce lot) : le
+# job `build` ne porte donc AUCUN secret de signature minisign, et
+# `includeUpdaterJson` reste a `false` pour la meme raison qu'au Cockpit — un
+# manifeste concurrent, non autoritaire, ne doit jamais atterrir sur la
+# release (voir le cliquet `fixtures/tauri-action-pin.json`).
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag de version a construire (ex. v0.1.0)'
+        required: true
+      platforms:
+        description: 'Plateformes a construire'
+        type: choice
+        required: true
+        default: toutes
+        options:
+          - toutes
+          - windows,linux
+          - windows
+          - linux
+          - macos
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set.outputs.matrix }}
+    steps:
+      - id: set
+        run: |
+          SEL="${{ github.event.inputs.platforms || 'toutes' }}"
+          ALL='[
+            {"key":"macos-arm64","platform":"macos-latest","args":"--target aarch64-apple-darwin","rust":"aarch64-apple-darwin"},
+            {"key":"macos-x64","platform":"macos-latest","args":"--target x86_64-apple-darwin","rust":"x86_64-apple-darwin"},
+            {"key":"linux","platform":"ubuntu-22.04","args":"","rust":""},
+            {"key":"windows","platform":"windows-latest","args":"","rust":""}
+          ]'
+          if [ "$SEL" = "toutes" ]; then
+            M=$(echo "$ALL" | jq -c .)
+          else
+            M=$(echo "$ALL" | jq -c --arg sel "$SEL" \
+              '($sel|split(",")) as $s | [ .[] | select( .key as $k | $s | any(. as $x | $k|startswith($x)) ) ]')
+          fi
+          echo "plateformes retenues : $(echo "$M" | jq -r '[.[].key]|join(", ")')"
+          echo "matrix=$M" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Dependances systeme Linux
+        if: matrix.key == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev \
+            librsvg2-dev patchelf libgtk-3-dev libasound2-dev cmake pkg-config
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust }}
+
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> target'
+
+      - name: Installer les dependances
+        run: npm ci
+
+      # Referent IMMUABLE — cliquet dans fixtures/tauri-action-pin.json (copie
+      # de la discipline L41 du Cockpit : le SHA epingle est celui contre
+      # lequel les entrees ci-dessous ont ete LUES, jamais un tag deplacable).
+      - uses: tauri-apps/tauri-action@84b9d35b5fc46c1e45415bdb6144030364f7ebc5 # action-v0.6.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.event.inputs.tag || github.ref_name }}
+          releaseName: ${{ github.event.inputs.tag || github.ref_name }}
+          releaseDraft: false
+          prerelease: false
+          # A ce SHA (action-v0.6.2), `includeUpdaterJson` (defaut 'true') est
+          # la SEULE entree qui gouverne la pose d'un manifeste updater
+          # concurrent sur la release. Ce depot n'a pas encore de manifeste
+          # autoritaire (B'-b) : on la coupe, pour ne rien poser du tout.
+          includeUpdaterJson: false
+          args: ${{ matrix.args }}
+
+  # Le referent est la population des RELEASES (pas des tags) : `GET
+  # /releases/latest` ne peut jamais rendre qu'un tag PORTEUR d'une release.
+  # `if: always()` : les artefacts sont deja televerses quand ce job demarre,
+  # y compris apres un build partiellement rouge — ne pas designer le
+  # `latest` dans ce cas laisserait le drapeau au defaut `true` de l'API,
+  # c'est-a-dire au hasard de l'ordre de publication. Copie verbatim de la
+  # logique d'IakaCockpit (lot L44 la-bas) : elle REPARE (ecrit `--latest` sur
+  # le plus haut semver porteur d'une release) mais n'EMPECHE pas le vol (la
+  # release est creee avant que ce job ne demarre). Sans release existante,
+  # il n'y a rien a designer : il sort en SUCCES en le disant (jamais un
+  # silence). Historique complet de la decouverte de ce comportement :
+  # IakaCockpit/.github/workflows/release.yml (lots L42 a L44).
+  latest:
+    needs: build
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Designer explicitement le latest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.event.inputs.tag || github.ref_name }}
+          DEPOT: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          RELEASES=$(gh api "repos/$DEPOT/releases" --paginate \
+            --jq '.[] | select(.draft|not) | select(.prerelease|not) | .tag_name')
+          PLUS_HAUT=$(printf '%s\n' "$RELEASES" \
+            | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1 || true)
+          echo "tag publie      : $TAG"
+          echo "plus haut semver: $PLUS_HAUT"
+
+          if [ -z "$PLUS_HAUT" ]; then
+            echo "AUCUNE release non-brouillon non-preversion portant un tag de version sur $DEPOT."
+            echo "Il n'y a donc AUCUN latest a designer, et rien a verifier. Sortie en SUCCES."
+            exit 0
+          fi
+
+          if [ "$TAG" = "$PLUS_HAUT" ]; then
+            CIBLE="$TAG"
+            echo "DECISION : $TAG EST le plus haut semver porteur d'une release -> il est latest."
+          else
+            CIBLE="$PLUS_HAUT"
+            echo "DECISION : $TAG n'est PAS le plus haut ($PLUS_HAUT) -> on RE-AFFIRME --latest sur"
+            echo "           $PLUS_HAUT. Sans cette ligne, le defaut make_latest=true de l'API"
+            echo "           aurait laisse le latest a $TAG."
+          fi
+
+          if ! gh release edit "$CIBLE" --latest --repo "$DEPOT"; then
+            echo "::error::impossible de designer le latest sur $CIBLE."
+            echo "::error::RATTRAPAGE MANUEL : gh release edit $PLUS_HAUT --latest --repo $DEPOT"
+            exit 1
+          fi
+
+          EFFECTIF=$(gh api "repos/$DEPOT/releases/latest" --jq '.tag_name')
+          echo "VERIFICATION : latest effectif = $EFFECTIF (attendu : $PLUS_HAUT)"
+          if [ "$EFFECTIF" != "$PLUS_HAUT" ]; then
+            echo "::error::le latest effectif ($EFFECTIF) n'est pas le plus haut semver ($PLUS_HAUT)."
+            echo "::error::RATTRAPAGE MANUEL : gh release edit $PLUS_HAUT --latest --repo $DEPOT"
+            exit 1
+          fi
+          echo "latest maitrise : $PLUS_HAUT"
