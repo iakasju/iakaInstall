@@ -8,5 +8,15 @@
     "dirty": false,
     "files": 29,
     "note": "onboarding initial"
+  },
+  {
+    "date": "2026-09-05 00:24",
+    "reason": "manual",
+    "version": "v0.1.0",
+    "branch": "feat/facade-tauri-ossature-release",
+    "commit": "a0a21bf docs(qualite): traçabilité étape 1 lot C.2-a (M-C1..M-C4 rejouées)",
+    "dirty": false,
+    "files": 93,
+    "note": "Correction post-gate FAIL (CA-I8a) : garde de vocabulaire etendue au rendu, ecran corrige (Etape n sur N au lieu de [n/N]), tracabilite etape 1 (M-C1..M-C4) documentee. Ecart E-3 du gate (etat des lieux non regenere depuis onboarding) leve."
   }
 ]
