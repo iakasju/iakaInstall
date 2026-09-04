@@ -28,6 +28,13 @@
   padding: 1rem;
 }
 
+.etape-compteur {
+  display: inline-block;
+  margin-right: 0.5rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+}
+
 .prereq-liste {
   list-style: none;
   padding: 0;

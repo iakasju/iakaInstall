@@ -70,8 +70,12 @@ export default function App() {
       <ol className="liste-etapes">
         {ETAPES_ANNONCEES.map((etape) => (
           <li key={etape.n}>
+            <span className="etape-compteur" aria-hidden="true">
+              {"●".repeat(etape.n)}
+              {"○".repeat(NB_ETAPES - etape.n)}
+            </span>
             <strong>
-              [{etape.n}/{NB_ETAPES}] {etape.nom}
+              Étape {etape.n} sur {NB_ETAPES} — {etape.nom}
             </strong>
             <p>{etape.quoi}</p>
             <p>
