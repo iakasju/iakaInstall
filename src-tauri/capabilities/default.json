@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capabilites minimales de la fenetre principale (coquille C.2-a). Aucun plugin : ni dialog, ni process, ni updater (B'-b, hors perimetre).",
+  "windows": ["main"],
+  "permissions": ["core:default"]
+}

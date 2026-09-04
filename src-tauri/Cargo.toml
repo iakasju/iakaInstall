@@ -1,0 +1,24 @@
+[package]
+name = "iakainstall"
+version = "0.1.0"
+description = "iakaInstall - facade d'installation de la suite iaka (coquille, C.2-a)"
+authors = ["Stephane / iakateam"]
+edition = "2021"
+rust-version = "1.77.2"
+
+[lib]
+# Le suffixe `_lib` evite un conflit de nom lib/bin sur Windows
+# (cf. https://github.com/rust-lang/cargo/issues/8519).
+name = "app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.6.2", features = [] }
+
+[dependencies]
+# Coquille C.2-a : AUCUN plugin (ni dialog, ni process, ni updater — B'-b).
+# `serde`/`serde_json` portent les structures de sonde (prerequis, plateforme),
+# pas de logique d'installation (AR-3).
+tauri = { version = "2.11.2", features = [] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
