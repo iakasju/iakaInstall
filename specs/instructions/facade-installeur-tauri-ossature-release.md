@@ -268,6 +268,16 @@ discipline anti-collision : **3040** (M-R8 : 3020 et 3030 sont pris).
 
 *Chacun porte ma recommandation. Aucun n'est tranché ici.*
 
+> **Verdicts rendus le 2026-09-04 par Stéphane** (relayés par 🔵 Aragorn, mot pour mot : *« 3 : studio
+> clair. sinon go »*) : **AR-I1 → (b)** C.2 scindé, la coquille + la charte + l'ossature maintenant, le
+> pilotage réel après le prérequis CLI `CONTRAT-MACHINE-DU-VERBE-INSTALL` (cadré en parallèle dans
+> `iakaframe`) ; l'écran DIT que l'app n'installe rien encore. **AR-I2 → (b)** ressource Node embarquée.
+> **AR-I3 → (b) `studio-clair`**, UNE seule charte, aucun sélecteur — le décideur écarte la
+> recommandation (a) ; le geste reste le même (`sync-chartes.sh`, tokens depuis `iakagraph/theme/`
+> uniquement), l'icône reste dérivée du logo NaonEdge tant que `MARQUE-IAKAINSTALL` n'est pas joué.
+> **AR-I4 → passer public avant le premier run de B′-a**, après le balayage de secrets (CA-I13) ; le
+> basculement lui-même est un acte du décideur, Gimli s'arrête et le demande.
+
 ### AR-I1 — Quand la façade pilote-t-elle réellement la chaîne ?
 
 Le contrat machine du moteur n'existe pas (M-C1..M-C5). Trois voies :
