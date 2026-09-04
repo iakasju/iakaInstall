@@ -1,8 +1,7 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { render, waitFor } from "@testing-library/react";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import App from "../App";
+import registre from "../../fixtures/vocabulaire-interdit.json";
 
 // CA-I8a / R3 / R-I5 — deuxieme jambe de la garde de vocabulaire, sur le
 // RENDU (pas seulement la source). La garde statique (grep) de
@@ -21,9 +20,6 @@ vi.mock("../api/backend", () => ({
   detectPrerequisites: (...args: unknown[]) => detectPrerequisites(...args),
   getPlatformInfo: (...args: unknown[]) => getPlatformInfo(...args),
 }));
-
-const ROOT = process.cwd();
-const registre = JSON.parse(readFileSync(join(ROOT, "fixtures/vocabulaire-interdit.json"), "utf8"));
 
 beforeEach(() => {
   detectPrerequisites.mockReset();
