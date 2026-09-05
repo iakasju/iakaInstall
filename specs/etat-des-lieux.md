@@ -1,6 +1,6 @@
 # Etat des lieux - iakaInstall
 
-> Genere par iakaframe (CLI) le 2026-09-05 14:19 (motif: version).
+> Genere par iakaframe (CLI) le 2026-09-05 15:05 (motif: pause).
 > A regenerer a chaque changement de version et a chaque pause/reprise.
 
 ## Etat courant
@@ -9,25 +9,25 @@
 |---|---|
 | Version | v0.1.1 |
 | Branche | main |
-| Dernier commit | 5709ab1 chore(iakaframe): update etat des lieux + commit global (pause) |
+| Dernier commit | 7d1343a docs(instruction): cadrage C.3 + B'-b — vitrine trois freres, 16 criteres, 6 arbitrages tranches comme recommande |
 | Arbre | propre |
-| Fichiers (suivis + non ignores) | 120 |
-| Note | v0.1.1 PUBLIEE : PREMIERE RELEASE COMPLETE, run 33965353603, 4/4 plateformes vertes, 9 assets (dmg x2, app.tar.gz x2, msi, setup.exe, deb, rpm, AppImage), latest = v0.1.1. Le script d embarquement a journalise sur Windows (sha256 verifie avant extraction, 552 entrees) : gate humain bsdtar Windows leve par mesure. v0.1.0 reste en pre-release. Reste : recette humaine (dmg Gatekeeper, msi, deb), cadrage RELEASE-PARTIELLE-PUBLIEE puis C.3. Push Forgejo EN ATTENTE. |
+| Fichiers (suivis + non ignores) | 125 |
+| Note | RELEASE-PARTIELLE-PUBLIEE livre et fusionne (aa1634b, gate PASS 91 tests) : brouillon cree une fois dans prepare, releaseId passe a la matrice, job publier en needs [build] strict, latest derriere publier, entree casser inerte hors dispatch. Cadrage C.3 + B'-b commite (7d1343a, verdicts comme reco). Reste au decideur : run de preuve casser sur un tag de test (CA-R8), run nominal (CA-R9), successeurs soeurs. Prochain lot : C.3 vitrine (Gimli). Push Forgejo EN ATTENTE. |
 
 ## Commits recents
 
 | Hash | Date | Sujet |
 |---|---|---|
+| `7d1343a` | 2026-09-05 | docs(instruction): cadrage C.3 + B'-b — vitrine trois freres, 16 criteres, 6 arbitrages tranches comme recommande |
+| `aa1634b` | 2026-09-05 | merge: RELEASE-PARTIELLE-PUBLIEE — brouillon jusqu a matrice verte, publication par id (gate Legolas PASS) |
+| `4271302` | 2026-09-05 | docs(qualite): gate RELEASE-PARTIELLE-PUBLIEE — PASS |
+| `b05229c` | 2026-09-05 | docs(release): backlog + verdict RELEASE-PARTIELLE-PUBLIEE decide/livre |
+| `a7a49dd` | 2026-09-05 | test(release): garde statique release-publication (CA-R1..R4, R6, R7) |
+| `3739313` | 2026-09-05 | feat(release): brouillon jusqu'a matrice verte, publication par id (AR-1a+AR-2b) |
+| `cb138be` | 2026-09-05 | docs(instruction): cadrage RELEASE-PARTIELLE-PUBLIEE — 12 criteres, 6 arbitrages tranches comme recommande |
+| `e67f483` | 2026-09-05 | chore(iakaframe): update etat des lieux + commit global (version) |
 | `5709ab1` | 2026-09-05 | chore(iakaframe): update etat des lieux + commit global (pause) |
 | `a330ad5` | 2026-09-05 | docs(projet): mitigation appliquee — v0.1.0 en pre-release, latest 404, decision de fond ouverte |
-| `834e548` | 2026-09-05 | merge: fix embarquer-cli muet sous Windows + bump 0.1.1 (gate Legolas PASS) |
-| `71e6779` | 2026-09-05 | docs(qualite): gate fix embarquer-cli windows — PASS |
-| `95c8d5e` | 2026-09-05 | docs: consigner le correctif Windows et le successeur RELEASE-PARTIELLE-PUBLIEE |
-| `41b11bc` | 2026-09-05 | chore(version): bump 0.1.0 -> 0.1.1 |
-| `9a766bf` | 2026-09-05 | fix(embarquer-cli): supprimer la garde d'entree muette (echec Windows, run v0.1.0) |
-| `69d76a1` | 2026-09-05 | chore(iakaframe): update etat des lieux + commit global (pause) |
-| `6bad4fd` | 2026-09-05 | merge: LOT C.2-b — pilotage reel de la facade par le contrat machine du CLI 0.40.0 (gate Legolas PASS au second passage) |
-| `a689d51` | 2026-09-05 | docs(qualite): re-gate lot C.2-b — PASS |
 
 ## Reprise du travail (a completer par Cowork)
 
@@ -62,6 +62,7 @@
 
 | Date | Motif | Version | Branche | Note |
 |---|---|---|---|---|
+| 2026-09-05 15:05 | pause | v0.1.1 | main | RELEASE-PARTIELLE-PUBLIEE livre et fusionne (aa1634b, gate PASS 91 tests) : brouillon cree une fois dans prepare, releaseId passe a la matrice, job publier en needs [build] strict, latest derriere publier, entree casser inerte hors dispatch. Cadrage C.3 + B'-b commite (7d1343a, verdicts comme reco). Reste au decideur : run de preuve casser sur un tag de test (CA-R8), run nominal (CA-R9), successeurs soeurs. Prochain lot : C.3 vitrine (Gimli). Push Forgejo EN ATTENTE. |
 | 2026-09-05 14:19 | version | v0.1.1 | main | v0.1.1 PUBLIEE : PREMIERE RELEASE COMPLETE, run 33965353603, 4/4 plateformes vertes, 9 assets (dmg x2, app.tar.gz x2, msi, setup.exe, deb, rpm, AppImage), latest = v0.1.1. Le script d embarquement a journalise sur Windows (sha256 verifie avant extraction, 552 entrees) : gate humain bsdtar Windows leve par mesure. v0.1.0 reste en pre-release. Reste : recette humaine (dmg Gatekeeper, msi, deb), cadrage RELEASE-PARTIELLE-PUBLIEE puis C.3. Push Forgejo EN ATTENTE. |
 | 2026-09-05 14:07 | pause | v0.1.0 | main | Correctif Windows fusionne (834e548) : garde d entree ESM muette supprimee, script loquace et rouge si ressource absente, bump 0.1.1, gate PASS. v0.1.0 passee en PRE-RELEASE (latest = 404). Reste au decideur : tag v0.1.1 (run 4 plateformes, seul juge de bsdtar Windows), recette 3 OS, cadrage RELEASE-PARTIELLE-PUBLIEE. Push Forgejo EN ATTENTE ; GitHub a jour. |
 | 2026-09-05 13:24 | pause | v0.1.0 | main | LOT C.2-b livre et fusionne (6bad4fd) : la facade pilote REELLEMENT le CLI 0.40.0 embarque (pont Rust std::process, flux --events NDJSON, feu vert par stdin, reducteur pur, garde de vocabulaire a 3 jambes, CA-I8b enfin couvert). Gate FAIL (release.yml ne produisait pas la ressource) puis PASS au 2e passage (beforeBuildCommand = npm run embarquer && npm run build, garde dediee). 70 tests front, 22 cargo, build macOS OK avec ressource. Depot PUBLIC depuis ce jour. Reste au decideur : tag v0.1.0 = premier run CI 4 plateformes (Windows tar non prouve), recette 3 OS, notarisation (C.3). Push Forgejo EN ATTENTE (NAS injoignable) ; GitHub a jour. |
