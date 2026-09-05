@@ -346,3 +346,75 @@ build volontairement cassé (`casser`) prouve que la release reste brouillon et 
 `releases/latest` ne bouge pas ; seul un run réel 4/4 vert prouve que `publier` publie et que
 `latest` désigne. Procédure complète et gardes-fous : `CLAUDE.md` § Backlog,
 `specs/instructions/release-partielle-publiee.md` § 5.7 et § 8.
+
+### Verdicts du lot C.3 + B′-b — « la vitrine à trois frères » (2026-09-05) — DÉCIDÉS ET LIVRÉS
+
+> Rendus par Stéphane le 2026-09-05 (relayés par Aragorn, *« comme reco »*), tranchant les six
+> arbitrages de `specs/instructions/amorcage-c3-vitrine-trois-freres.md` § 3. Implémenté par
+> ⚒️ Gimli, branche `feat/vitrine-trois-freres`, **REMIS AU GATE 🏹 Legolas, non auto-validé** — la
+> recommandation motivée complète reste dans l'instruction, elle n'est pas recopiée ici.
+
+**AR-V1 → (a)** un seul lot dans `iakaInstall` : ce qui restait de C.3 (notarisation déclarée,
+écart AR-C(a) écrit) et B′-b sont livrés ensemble — la release réelle était déjà faite (`v0.1.1`,
+9 assets, 4/4), ce qui en restait est de la matière de vitrine. **AR-V2 → (a)** clé neuve
+`absences_de_signature` dans `fixtures/vitrine-locale.json` (deux entrées : notarisation macOS,
+signature Windows), `rendreSecurite()` + zone `securite` ajoutées à la copie locale de
+`scripts/lib/vitrine.mjs` avec cartouche de divergence en tête, **cliquet offline**
+(`ecartsCliquetSecurite`) éprouvé par contrefactuel (câblage `env:` APPLE_*/WINDOWS_* fictif
+injecté en mémoire → rougit nommément → révoqué, empreinte `sha256` du fichier réel inchangée).
+**AR-V3 → (a)** updater de la façade **dehors** — successeur nommé `UPDATER-DE-LA-FACADE`
+(`CLAUDE.md` § Backlog), condition d'entrée non remplie (pas de paire minisign posée, pas de
+seconde version publiée) ; `fixtures/canaux-publication.json` exclu en conséquence. **AR-V4 → (a)**
+`iakaInstall` **copie** les cinq fichiers de la convention (byte-identiques entre `IakaCockpit` et
+`iakaFrameGUI`, vérifié par empreinte à l'étape 0.4) mais **n'entre PAS** au registre de
+convergence des sœurs — successeur nommé `CONVERGENCE-TROIS-FRERES` (`CLAUDE.md` § Backlog),
+mandat en trois points écrit là-bas. **AR-V5 → (b)**, tranché par la mesure de l'étape 0.3 : lu au
+tag `@tauri-apps/cli-v2.11.4` (celui que résout `package-lock.json` de ce dépôt), `keychain()`
+(`crates/tauri-bundler/src/bundle/macos/sign.rs:19-44`) entre en branche de signature dès que
+`APPLE_CERTIFICATE`/`APPLE_CERTIFICATE_PASSWORD` sont **présentes, même vides**, dans
+l'environnement du process — et GitHub Actions pose une variable `env:` référençant un secret
+absent comme une chaîne vide mais **présente**. Câbler ces deux clés sur l'étape `tauri-action`
+sans que les secrets existent aurait donc décodé un p12 vide et cassé la matrice 4/4 verte
+(`tauri-apps/tauri-action#291`). L'étape de notarisation posée dans `release.yml` **n'écrit donc
+aucun `env:` APPLE_\*** sur `tauri-action` ; elle imprime son verdict en lisant la présence des
+secrets par expression GitHub Actions (`${{ secrets.X }}`, substitution textuelle, aucune
+variable d'environnement créée — donc sans le risque mesuré). **AR-V6 → (a)** Gatekeeper **et**
+SmartScreen déclarés dans le même bloc `absences_de_signature`, chacun avec sa procédure exacte
+et sa condition de levée propre (macOS : achat seul ; Windows : achat **et** réputation qui se
+construit avec le temps).
+
+**Étape 0 mesurée par ⚒️ Gimli le 2026-09-05** : 9 assets de `v0.1.1` re-mesurés via
+`gh release view`, tailles identiques à celles transmises par Aragorn, aucun `.sig` ni
+`latest.json`, `releases/latest = v0.1.1`, `v0.1.0` en pré-release (confirmé) ; symptôme F-d
+mesuré sur l'asset **réel téléchargé** (`iakaInstall_0.1.1_aarch64.dmg`, monté, `codesign -dv
+--verbose=4` → `Signature=adhoc`, `TeamIdentifier=not set` ; `spctl -a -vv` → rejeté, exit non
+nul) ; lecture de `action.yml` au SHA épinglé (aucune entrée Apple) **et** de la source Rust de
+`tauri-bundler`/`tauri-macos-sign` au tag résolu par ce dépôt (verdict AR-V5 ci-dessus) ; **les
+cinq fichiers de vitrine comparés par empreinte entre `IakaCockpit` et `iakaFrameGUI` : AUCUNE
+divergence** (`fixtures/vitrine-assets.json`, `scripts/lib/vitrine.mjs`, `scripts/vitrine.mjs`,
+`scripts/vitrine-en-ligne.mjs`, `scripts/__tests__/vitrine.test.mjs`, cinq empreintes `sha256`
+identiques de part et d'autre) — le lot ne s'est donc **pas** arrêté sur l'inconnue 0.4 ; chaîne
+qualité verte avant toute modification (`typecheck` `0`, `lint` `0`, `test` `91 passed (91)`,
+`cargo test` `22 passed`).
+
+**Preuve mesurée après implémentation** — `npm run typecheck` `0` ; `npm run lint` `0` ;
+`npm run test` `0`, **`127 passed (127)`** (avant : `91` — **+36 tests, aucun supprimé**) ;
+`cargo test` `0`, `22 passed` (**aucun `.rs` ni `tauri.conf.json` modifié : pas de build Tauri à
+rejouer**) ; `npm run vitrine:check` → `0` ; `npm run vitrine:en-ligne` sur la release réelle
+`v0.1.1` → **`0`**, concordance citée, jamais un `3` présenté comme un succès ; `IakaCockpit` et
+`iakaFrameGUI` intacts (`fixtures/convergence.sha256` toujours à 90 lignes de part et d'autre,
+`git diff --stat` vide sur ce fichier dans les deux dépôts). **Écart déclaré, sans rapport avec ce
+lot** : `IakaCockpit` porte un diff local pré-existant sur `.claude/settings.local.json` (fichier
+de configuration d'outil, hors du périmètre de ce lot, non touché par ⚒️ Gimli) — `git status`
+n'y est donc pas strictement vierge, mais aucun fichier de la convention de vitrine n'y est
+modifié.
+
+**Non couvert par construction, gate humain déclaré (§ 8 de l'instruction)** : téléchargement du
+`.dmg` par navigateur sur un Mac vierge (Gatekeeper, procédure Sequoia telle qu'écrite) ; `.msi`
+sur Windows réel (SmartScreen) ; `.deb`/AppImage sur Linux réel ; `.dmg` Intel sur Mac Intel ;
+l'étape de notarisation s'exécutant dans un run CI réel (exige un push de tag, acte du décideur) ;
+poser les secrets Apple/Windows dans les réglages du dépôt (acte du décideur).
+
+**Successeurs nommés (backlog `CLAUDE.md`, non traités par ce lot)** : `CONVERGENCE-TROIS-FRERES`
+(à jouer dans les deux sœurs) et `UPDATER-DE-LA-FACADE` (condition d'entrée : paire minisign posée
+par le décideur + seconde version publiée).

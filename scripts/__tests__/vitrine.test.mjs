@@ -1,0 +1,566 @@
+// vitrine.test.mjs — FACE LOCALE du cliquet de vitrine (L42). DANS le gate, HORS RESEAU,
+// deterministe.
+//
+// ┌─ FICHIER CONVERGENT (chez les soeurs) — COPIE DIVERGENTE ICI ──────────────────────────────────┐
+// │ Byte-identique entre IakaCockpit et iakaFrameGUI, inscrit dans LEUR `fixtures/convergence.     │
+// │ sha256`. `iakaInstall` N'ENTRE PAS a ce registre (AR-V4=(a), successeur                        │
+// │ CONVERGENCE-TROIS-FRERES, instruction amorcage-c3-vitrine-trois-freres.md). TOUS LES describe   │
+// │ ci-dessous jusqu'a « le generateur est PUR... » et « CA-2 — la limite de fichiersPromis... »    │
+// │ sont repris VERBATIM des soeurs (mesure : byte-identique au 2026-09-05, etape 0.4). CE QUI EST  │
+// │ AJOUTE PAR CETTE COPIE, a la fin du fichier : « AR-V2 — la vitrine declare ce qu'elle ne signe  │
+// │ pas encore » (rendreSecurite, garde de l'aveu, CLIQUET OFFLINE + contrefactuel CA-A7) et        │
+// │ « CA-A4/CA-A9 — l'ecran et le README disent la meme chose » (comptage AR-A, ecart AR-C(a)).     │
+// └──────────────────────────────────────────────────────────────────────────────────────────────┘
+//
+// LE DEFAUT FERME (H-1, H-4). La section « Installation » du README etait recopiee a la main. Le
+// 2026-08-29, les trois depots du portefeuille annoncaient une version perimee et TOUTES LES SUITES
+// ETAIENT VERTES : IakaCockpit 866 tests verts en annoncant v0.31.2 alors qu'il portait 0.32.1,
+// iakaFrameGUI 1242 tests verts en annoncant v0.1.4 alors qu'il portait 0.1.7. C'est ce vert-la que
+// ce fichier supprime — la preuve que la garde n'existait pas est le vert lui-meme.
+//
+// ┌─ CE QUE CETTE FACE NE VOIT PAS, ET POURQUOI C'EST ECRIT ICI ─────────────────────────────────┐
+// │ Elle rejoue le generateur EN MEMOIRE et compare au README VERSIONNE. Elle compare donc DEUX   │
+// │ DERIVES DE LA MEME TABLE (`fixtures/vitrine-assets.json`). Si le bundler change sa convention │
+// │ de nommage, les deux derives bougent ensemble et cette face reste VERTE sur un README qui     │
+// │ ment. Ce n'est pas un oubli : aucune mesure hors ligne ne peut savoir ce qu'une release       │
+// │ PORTE. CE QUI FERME LE TROU : `scripts/vitrine-en-ligne.mjs` (E-3/E-4), seule face a          │
+// │ confronter la table au monde reel — anonyme, hors gate, `SKIP` explicite sans reseau.         │
+// │ CONDITION DE LEVEE : aucune. Les deux faces sont complementaires par construction, comme      │
+// │ celles de la garde de convergence (L41).                                                      │
+// └──────────────────────────────────────────────────────────────────────────────────────────────┘
+import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import {
+  debutZone,
+  detecterCablageSignatureActif,
+  ecartsCliquetSecurite,
+  ecartsDeVitrine,
+  ecrireZones,
+  estHorsVitrine,
+  finZone,
+  fichiersCites,
+  fichiersPromis,
+  lireZones,
+  nomsAttendus,
+  rendreSecurite,
+  rendreVitrine,
+  SENTINELLE_ABSENTS,
+  SENTINELLE_SECURITE,
+  substituer,
+  versionAnnoncee,
+} from "../lib/vitrine.mjs";
+import { createHash } from "node:crypto";
+
+const RACINE = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
+const lire = (rel) => readFileSync(resolve(RACINE, rel), "utf8");
+const lireJson = (rel) => JSON.parse(lire(rel));
+
+const TABLE = lireJson("fixtures/vitrine-assets.json");
+const LOCALE = lireJson("fixtures/vitrine-locale.json");
+const APP = lireJson("src-tauri/tauri.conf.json").productName;
+const VERSION = lireJson("package.json").version;
+const README = lire("README.md");
+
+const CONTEXTE = {
+  app: APP,
+  depot: LOCALE.depot,
+  version: VERSION,
+  plateformes: TABLE.plateformes,
+  absents: LOCALE.absents ?? [],
+  gabarits: LOCALE.gabarits ?? {},
+  // AR-V2 = (a), AJOUTE PAR CETTE COPIE — absent du CONTEXTE des soeurs.
+  absencesDeSignature: LOCALE.absences_de_signature ?? [],
+};
+
+const RELEASE_YML = lire(".github/workflows/release.yml");
+
+// LE NOM FICTIF PARTAGE PAR LES TEMOINS CI-DESSOUS, ET POURQUOI IL EST HISSE ICI (F-2, gardes de la
+// vitrine). Il vivait auparavant DANS un seul `describe`, invisible aux autres. Deux temoins
+// distants dans ce fichier (l'angle mort de la prose ci-dessous, ET le pin bidirectionnel de CA-2)
+// ont besoin du MEME nom : il n'est derive d'AUCUNE plateforme de la table et ne figure dans AUCUN
+// README des deux depots, donc il ne peut etre promis QUE par ce que le test ajoute lui-meme. Une
+// seule constante, jamais deux temoins fictifs qui divergeraient en silence.
+const FANTOME = substituer("{APP}_{V}_fantome-de-vitrine.dmg", { app: APP, version: VERSION });
+
+describe("CA-1 — la vitrine est DERIVEE, jamais recopiee", () => {
+  it("le README versionne est EXACTEMENT ce que le generateur produit", () => {
+    const attendues = rendreVitrine(CONTEXTE);
+    const ecarts = ecartsDeVitrine(lireZones(README, Object.keys(attendues)), attendues);
+    const detail = ecarts
+      .map((e) => `  zone « ${e.zone} », ligne ${e.ligne}\n    lu      : ${e.lu}\n    attendu : ${e.attendu}`)
+      .join("\n");
+    expect(
+      detail,
+      "README.md a DERIVE de la version d'autorite (package.json). La section Installation ne " +
+        "s'edite plus a la main depuis L42.\nsortie : node scripts/vitrine.mjs --write",
+    ).toBe("");
+  });
+
+  it("la version ANNONCEE par le README egale la version d'AUTORITE du depot", () => {
+    // Redondant avec le test ci-dessus par construction, et garde volontairement : c'est CE
+    // critere-la (CA-1) qu'un lecteur vient chercher, et un test NOMME vaut mieux qu'un compte.
+    expect(versionAnnoncee(README), `README.md annonce autre chose que package.json (${VERSION})`).toBe(
+      VERSION,
+    );
+  });
+});
+
+describe("CA-2 — CONTREFACTUEL : la garde MORD sur un README desaligne", () => {
+  // Sur une FIXTURE en memoire, JAMAIS sur le vrai README.
+  it("un README fige a une version anterieure fait rougir, en nommant la zone et la ligne", () => {
+    const perime = ecrireZones(README, rendreVitrine({ ...CONTEXTE, version: "0.0.1" }));
+    expect(perime).not.toBe(README);
+
+    const attendues = rendreVitrine(CONTEXTE);
+    const ecarts = ecartsDeVitrine(lireZones(perime, Object.keys(attendues)), attendues);
+    expect(ecarts.length, "un README desaligne DOIT produire au moins un ecart").toBeGreaterThan(0);
+    expect(ecarts.every((e) => typeof e.zone === "string" && e.ligne > 0)).toBe(true);
+    expect(versionAnnoncee(perime)).toBe("0.0.1");
+    expect(versionAnnoncee(perime)).not.toBe(VERSION);
+  });
+
+  it("RETIRER LES MARQUEURS ne rend pas la garde verte : c'est un refus", () => {
+    // Le faux vert le plus facile a produire : supprimer les marqueurs et laisser la zone libre.
+    const sansMarqueurs = README.replaceAll(debutZone("binaires"), "");
+    expect(() => lireZones(sansMarqueurs, ["binaires"])).toThrow(/introuvable/);
+  });
+});
+
+describe("CA-11 / CA-12 — la table et les absents disent ce qu'ils font", () => {
+  it("chaque plateforme porte un libelle, un motif versionne et SA RAISON d'etre en vitrine", () => {
+    expect(TABLE.plateformes.length).toBeGreaterThan(0);
+    for (const p of TABLE.plateformes) {
+      expect(p.cle, "cle").toMatch(/^[a-z0-9-]+$/);
+      expect(p.libelle, `${p.cle}.libelle`).toMatch(/\S/);
+      // `{V}` obligatoire : un artefact SANS version dans le nom n'est pas un installeur de cette
+      // version — c'est le piege des `.app.tar.gz`, comptes deux fois pour du « macOS couvert ».
+      expect(p.motif, `${p.cle}.motif`).toContain("{V}");
+      expect(p.motif, `${p.cle}.motif`).toContain("{APP}");
+      expect(String(p.raison ?? "").trim().length, `${p.cle}.raison`).toBeGreaterThan(20);
+    }
+    expect(new Set(TABLE.plateformes.map((p) => p.cle)).size).toBe(TABLE.plateformes.length);
+  });
+
+  it("ce qui est HORS vitrine est enumere NOMMEMENT, avec sa raison", () => {
+    const cles = Object.keys(TABLE.hors_vitrine).filter((k) => k !== "//");
+    expect(cles.length, "l'exclusion doit etre nommee, pas implicite").toBeGreaterThan(0);
+    for (const c of cles) {
+      expect(String(TABLE.hors_vitrine[c]).trim().length, `hors_vitrine[${c}]`).toBeGreaterThan(20);
+    }
+    // Le piege de comptage, ferme mecaniquement : une charge d'updater n'est pas un installeur.
+    for (const suffixe of ["_aarch64.app.tar.gz", "_x64.app.tar.gz"]) {
+      const nom = `${APP}${suffixe}`;
+      expect(estHorsVitrine(nom, TABLE.hors_vitrine, { app: APP, version: VERSION })).toBeTruthy();
+    }
+    expect(estHorsVitrine("latest.json", TABLE.hors_vitrine, { app: APP, version: VERSION })).toBeTruthy();
+    expect(
+      estHorsVitrine(`${APP}_${VERSION}_amd64.deb.sig`, TABLE.hors_vitrine, {
+        app: APP,
+        version: VERSION,
+      }),
+    ).toBeTruthy();
+  });
+
+  it("aucune charge d'updater n'est annoncee comme telechargeable dans le README", () => {
+    for (const nom of fichiersCites(README)) {
+      expect(nom, "un `.app.tar.gz` ne se double-clique pas : il n'a rien a faire en vitrine").not.toMatch(
+        /\.app\.tar\.gz$/,
+      );
+    }
+  });
+
+  it("chaque ABSENT declare porte sa cle connue, sa date, son motif ET sa condition de levee", () => {
+    const clesTable = new Set(TABLE.plateformes.map((p) => p.cle));
+    for (const a of CONTEXTE.absents) {
+      expect(clesTable.has(a.cle), `absent « ${a.cle} » : cle inconnue de la table`).toBe(true);
+      expect(a.constate_sur, `${a.cle}.constate_sur`).toMatch(/\S/);
+      expect(a.depuis, `${a.cle}.depuis`).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      // Un motif telegraphique laisse l'absence muette : c'est le defaut qu'on repare, pas un style.
+      expect(String(a.motif_absence ?? "").trim().length, `${a.cle}.motif_absence`).toBeGreaterThan(40);
+      expect(
+        String(a.condition_de_levee ?? "").trim().length,
+        `${a.cle}.condition_de_levee — une absence sans condition de levee est definitive`,
+      ).toBeGreaterThan(20);
+    }
+  });
+
+  it("CONTREFACTUEL — declarer un absent sur une cle INCONNUE de la table est un refus", () => {
+    expect(() =>
+      rendreVitrine({
+        ...CONTEXTE,
+        absents: [
+          {
+            cle: "haiku-ppc",
+            constate_sur: "fixture",
+            depuis: "2026-08-29",
+            motif_absence: "plateforme imaginaire, pour exercer le refus sur une fixture",
+            condition_de_levee: "aucune : elle n'existe pas",
+          },
+        ],
+      }),
+    ).toThrow(/cle inconnue de la table|clé inconnue de la table/);
+  });
+
+  it("un absent N'EST PAS annonce comme telechargeable, et EST nomme comme non fourni", () => {
+    const zones = rendreVitrine(CONTEXTE);
+    const noms = nomsAttendus(TABLE.plateformes, { app: APP, version: VERSION });
+    for (const a of CONTEXTE.absents) {
+      const nom = noms[a.cle];
+      expect(zones.binaires, `${nom} ne doit plus figurer au tableau des telechargements`).not.toContain(
+        `| \`${nom}\` |`,
+      );
+      expect(zones.binaires, `${nom} doit etre DECLARE absent, pas passe sous silence`).toContain(nom);
+      expect(zones.binaires).toContain("Non fourni");
+    }
+  });
+
+  it("« Tous les systemes sont couverts » n'est ecrit QUE si la liste des absents est vide", () => {
+    const avecAbsent = rendreVitrine({
+      ...CONTEXTE,
+      absents: [
+        {
+          cle: TABLE.plateformes[0].cle,
+          constate_sur: "fixture",
+          depuis: "2026-08-29",
+          motif_absence: "fixture destinee a verifier que le slogan disparait avec la couverture",
+          condition_de_levee: "sans objet, fixture",
+        },
+      ],
+    });
+    expect(avecAbsent.binaires).not.toContain("Tous les systèmes sont couverts");
+    expect(rendreVitrine({ ...CONTEXTE, absents: [] }).binaires).toContain(
+      "Tous les systèmes sont couverts",
+    );
+  });
+});
+
+describe("le generateur est PUR — meme entree, meme sortie", () => {
+  it("deux rendus successifs sont identiques, et `--write` est idempotent", () => {
+    expect(rendreVitrine(CONTEXTE)).toEqual(rendreVitrine(CONTEXTE));
+    const une = ecrireZones(README, rendreVitrine(CONTEXTE));
+    expect(ecrireZones(une, rendreVitrine(CONTEXTE))).toBe(une);
+  });
+
+  it("substituer ne touche QUE {APP} et {V}", () => {
+    expect(substituer("{APP}_{V}_x64.dmg", { app: "A", version: "1.2.3" })).toBe("A_1.2.3_x64.dmg");
+    expect(substituer("rien a substituer {AUTRE}", { app: "A", version: "1" })).toBe(
+      "rien a substituer {AUTRE}",
+    );
+  });
+
+  it("E-3 ne porte QUE sur ce qui est PROMIS, pas sur ce qui est mentionne", () => {
+    // Le defaut trouve par la face en ligne : un artefact nomme dans le bloc des absents n'est pas
+    // annonce comme telechargeable. Confondre les deux faisait rougir la garde sur l'honnetete.
+    const promis = fichiersPromis(README);
+    const cites = fichiersCites(README);
+    const noms = nomsAttendus(TABLE.plateformes, { app: APP, version: VERSION });
+    for (const a of CONTEXTE.absents) {
+      expect(cites, `${noms[a.cle]} doit etre NOMME (absence declaree)`).toContain(noms[a.cle]);
+      expect(
+        promis,
+        `${noms[a.cle]} est declare absent : il ne doit PAS etre presente comme telechargeable`,
+      ).not.toContain(noms[a.cle]);
+    }
+    // Toute plateforme NON declaree absente est, elle, bien promise.
+    const clesAbsentes = new Set(CONTEXTE.absents.map((a) => a.cle));
+    for (const p of TABLE.plateformes) {
+      if (clesAbsentes.has(p.cle)) continue;
+      expect(promis).toContain(noms[p.cle]);
+    }
+  });
+
+  it("le README ne PROMET rien que la table ne derive et que les absents n'aient retire", () => {
+    // LA FERMETURE EN GATE de l'angle mort, et la seule qui morde HORS LIGNE. La face en ligne
+    // (E-3) constate qu'un fichier promis n'existe pas ; elle est hors gate et depend du reseau.
+    // Ici, sans reseau, on interdit la SOURCE du defaut : le README n'a le droit de promettre —
+    // ENTRE BACKTICKS, la seule forme mesuree par `ARTEFACT` (cf. le hors-couverture declare et
+    // le pin « CA-2 » plus bas dans ce fichier) — que les noms que le generateur produit pour les
+    // plateformes REELLEMENT fournies. Une promesse ecrite ailleurs, SOUS CETTE FORME — prose
+    // libre, note — n'est derivee de rien : elle est donc fausse par construction, et ce test la
+    // refuse au moment ou elle est ecrite.
+    const noms = nomsAttendus(TABLE.plateformes, { app: APP, version: VERSION });
+    const clesAbsentes = new Set(CONTEXTE.absents.map((a) => a.cle));
+    const promettables = new Set(
+      TABLE.plateformes.filter((p) => !clesAbsentes.has(p.cle)).map((p) => noms[p.cle]),
+    );
+    for (const nom of fichiersPromis(README)) {
+      expect(
+        promettables,
+        `« ${nom} » est PROMIS par le README sans etre derive de la table des plateformes ` +
+          "fournies : soit il n'existe pas, soit il doit etre declare absent",
+      ).toContain(nom);
+    }
+  });
+
+  // LE NOM FICTIF DES DEUX TEMOINS CI-DESSOUS, ET POURQUOI IL DOIT L'ETRE.
+  //
+  // Une premiere ecriture prenait `noms[TABLE.plateformes[0].cle]` — c'est-a-dire une plateforme
+  // FOURNIE, donc DEJA promise par sa ligne du tableau du README. L'assertion « la prose est vue »
+  // etait alors satisfaite par cette seule ligne de tableau : le test serait reste VERT meme si
+  // `fichiersPromis` ignorait totalement la prose. Il ne mesurait pas ce qu'il nommait, et un
+  // TEMOIN VIDE est pire qu'un temoin absent — il invite a supprimer la vraie garde, puisqu'on lit
+  // un test vert intitule « une promesse en PROSE est VUE ». Le defaut d'origine, lui, portait sur
+  // un nom que la release ne porte PAS ; c'est cette propriete-la qu'il fallait garder.
+  //
+  // `FANTOME` est defini au niveau du module (juste apres `CONTEXTE`) : le pin bidirectionnel de
+  // CA-2, plus bas dans ce fichier, en a besoin lui aussi et ne doit pas fabriquer un second nom.
+
+  it("une promesse en PROSE, hors tableau et hors marqueurs, est VUE par E-3", () => {
+    // ANGLE MORT MESURE PUIS FERME. « Promis = ligne de tableau » laissait passer une phrase libre
+    // du README annoncant un artefact que la release ne porte pas : les DEUX faces vertes et la
+    // suite entiere verte sur un fichier inexistant promis en toutes lettres au visiteur. CA-10 dit
+    // « CHAQUE fichier annonce par chaque README ». Ce test est la reproduction exacte du cas.
+    //
+    // LA PREMIERE ASSERTION EST LE VERROU DU TEMOIN : elle exige que le nom ne soit PAS deja promis
+    // AVANT la prose. Sans elle, il suffit qu'un jour ce nom rejoigne le tableau — ou qu'on le
+    // remplace par un nom de plateforme fournie — pour que le test redevienne vide en silence.
+    expect(
+      fichiersPromis(README),
+      `temoin vide : « ${FANTOME} » est deja promis par le README SANS la prose ; ce test ` +
+        "verdirait meme si `fichiersPromis` ignorait entierement la prose",
+    ).not.toContain(FANTOME);
+
+    const prose = `Les utilisateurs prendront directement \`${FANTOME}\` sur la page de la release.`;
+    expect(
+      fichiersPromis(`${README}\n\n${prose}\n`),
+      "une phrase en prose annoncant un artefact est une PROMESSE, au meme titre qu'une ligne " +
+        "de tableau : pour un visiteur, les deux disent « ce fichier est telechargeable »",
+    ).toContain(FANTOME);
+  });
+
+  it("le MEME nom, ecrit dans un bloc d'absence declaree, n'est PAS une promesse", () => {
+    // L'autre moitie de la regle : l'exemption existe, mais SEULEMENT la ou le generateur ecrit
+    // l'absence. Sans elle, la garde rougirait sur l'honnetete (defaut n°1, deja ferme).
+    const declare = [
+      "# fixture",
+      "",
+      `${SENTINELLE_ABSENTS}v${VERSION}** — cette plateforme n'est pas livrée.`,
+      ">",
+      `> - **Plateforme** (\`${FANTOME}\`)`,
+      ">   — *constaté le 2026-08-29.* motif de fixture.",
+      "",
+    ].join("\n");
+    expect(fichiersCites(declare), "le nom doit rester NOMME").toContain(FANTOME);
+    expect(fichiersPromis(declare), "declare absent : ce n'est pas une promesse").not.toContain(
+      FANTOME,
+    );
+
+    // Et le bloc se REFERME : la premiere ligne non citee cesse d'etre exemptee.
+    const puisPromis = `${declare}\nEt \`${FANTOME}\` de nouveau, hors citation.\n`;
+    expect(fichiersPromis(puisPromis)).toContain(FANTOME);
+  });
+
+  it("les marqueurs de zone sont stables et distincts", () => {
+    for (const nom of Object.keys(rendreVitrine(CONTEXTE))) {
+      expect(README).toContain(debutZone(nom));
+      expect(README).toContain(finZone(nom));
+      expect(debutZone(nom)).not.toBe(finZone(nom));
+    }
+  });
+});
+
+// ┌─ HORS-COUVERTURE DECLARE — la FORME que `fichiersPromis` ne voit PAS (F-2, successeur de L42, ─┐
+// │ cadre le 2026-09-05, « gardes de la vitrine »).                                                │
+// │                                                                                                  │
+// │ `fichiersPromis` (et `ARTEFACT` qui la sous-tend, `scripts/lib/vitrine.mjs:209`) ne mesure       │
+// │ qu'UNE forme de promesse : un nom d'artefact ECRIT ENTRE BACKTICKS, hors bloc d'absence          │
+// │ declaree. « quel que soit l'endroit du README » RESTE VRAI — la boucle balaie TOUTES les lignes │
+// │ sans filtre de forme, c'est la conquete de L42-F1 — mais l'ancien commentaire laissait entendre │
+// │ « quelle que soit la FORME », qui est FAUX : un lien markdown dont l'URL porte le nom            │
+// │ (`[texte](.../nom.dmg)`), une ligne de bloc de code (`curl -LO .../nom.deb`), ou une prose SANS  │
+// │ backticks ne sont PAS vus par ce qui suit.                                                       │
+// │                                                                                                  │
+// │ MESURE (2026-09-05, § 1.3 du cadrage) : ZERO mensonge present — les deux README du portefeuille  │
+// │ ne citent aujourd'hui un artefact QU'entre backticks, en ligne de tableau genere. Et le seul     │
+// │ mode de defaillance jamais OBSERVE (le `.dmg` fantome de L42-F1) etait deja ecrit AVEC des       │
+// │ backticks : il est deja couvert. Les trois formes ci-dessus sont un piege FUTUR, pas un mensonge │
+// │ present — les elargir acheterait un faux positif CERTAIN sur un geste legitime (un guide         │
+// │ d'installation qui `curl` un `.deb` ferait rougir le gate), contre un risque hypothetique.       │
+// │                                                                                                  │
+// │ CONDITION DE LEVEE : le jour ou l'une des trois formes non couvertes est CONSTATEE dans un des   │
+// │ deux README — la mesure s'elargit alors, et ce bloc se retire.                                   │
+// └──────────────────────────────────────────────────────────────────────────────────────────────────┘
+describe("CA-2 — la limite de `fichiersPromis` est EPINGLEE, et le pin mord dans les DEUX sens", () => {
+  it("verrou du temoin : le fantome n'est PROMIS par AUCUN README AVANT qu'on l'ajoute", () => {
+    // Sans cette assertion, le jour ou ce nom rejoindrait la table des plateformes (ou un README),
+    // les temoins ci-dessous redeviendraient vides en silence — le defaut EXACT de L42-F1.
+    expect(fichiersPromis(README), `temoin vide : « ${FANTOME} » est deja promis`).not.toContain(
+      FANTOME,
+    );
+  });
+
+  it("ENTRE BACKTICKS, hors bloc d'absence, le nom EST vu — c'est la forme mesuree", () => {
+    const promis = fichiersPromis(`${README}\n\nVoir \`${FANTOME}\` sur la page de la release.\n`);
+    expect(promis).toContain(FANTOME);
+  });
+
+  it("le MEME nom, en PROSE NUE (sans backticks), N'EST PAS vu — LIMITE DECLAREE ci-dessus", () => {
+    const promis = fichiersPromis(`${README}\n\nVoir ${FANTOME} sur la page de la release.\n`);
+    expect(promis).not.toContain(FANTOME);
+  });
+
+  it("le MEME nom, dans l'URL d'un LIEN MARKDOWN, N'EST PAS vu — LIMITE DECLAREE ci-dessus", () => {
+    const promis = fichiersPromis(`${README}\n\n[Télécharger](https://exemple.test/${FANTOME}).\n`);
+    expect(promis).not.toContain(FANTOME);
+  });
+
+  it("le MEME nom, en ligne de BLOC DE CODE, N'EST PAS vu — LIMITE DECLAREE ci-dessus", () => {
+    const bloc = ["```bash", `curl -LO https://exemple.test/${FANTOME}`, "```"].join("\n");
+    const promis = fichiersPromis(`${README}\n\n${bloc}\n`);
+    expect(promis).not.toContain(FANTOME);
+  });
+});
+
+// ══════════════════════════════════════════════════════════════════════════════════════════════
+// AJOUTE PAR CETTE COPIE (AR-V2 = (a), instruction amorcage-c3-vitrine-trois-freres.md § 3 et § 8).
+// Absent des deux soeurs : elles ne declarent PAS leur propre absence de notarisation/signature
+// (M-15 de l'instruction — meme defaut chez elles, non traite ici, mandat de remontee au
+// successeur CONVERGENCE-TROIS-FRERES).
+// ══════════════════════════════════════════════════════════════════════════════════════════════
+describe("AR-V2 — la vitrine déclare ce qu'elle ne signe pas (encore)", () => {
+  it("CA-A5/CA-A6 — le README porte les DEUX déclarations, avec motif, date et condition de levée", () => {
+    for (const a of CONTEXTE.absencesDeSignature) {
+      expect(README, `${a.cle} : libellé absent du README`).toContain(a.libelle);
+      expect(README, `${a.cle} : la déclaration n'est pas datée`).toContain(a.depuis);
+    }
+    expect(CONTEXTE.absencesDeSignature.map((a) => a.cle).sort()).toEqual(
+      ["macos-notarisation", "windows-signature"].sort(),
+    );
+  });
+
+  it("CA-A5 — la procédure Sequoia exacte est écrite, et « Control-clic » n'apparaît NULLE PART", () => {
+    expect(README).toContain("Réglages Système");
+    expect(README).toContain("Confidentialité et sécurité");
+    expect(README).toContain("Ouvrir quand même");
+    expect(README).toMatch(/mot de passe administrateur/i);
+    expect(README).toMatch(/heure/i);
+    expect(README).not.toMatch(/control[- ]clic/i);
+  });
+
+  it("CA-A6 — la procédure SmartScreen exacte est écrite, et la condition de levée est honnête", () => {
+    expect(README).toContain("Informations complémentaires");
+    expect(README).toContain("Exécuter quand même");
+    expect(README).toMatch(/ne fait pas disparaître SmartScreen immédiatement/i);
+  });
+
+  it("CA-A8 — une entrée privée d'un champ obligatoire est un REFUS, jamais une ligne muette", () => {
+    for (const champManquant of ["libelle", "motif", "depuis", "condition_de_levee", "procedure"]) {
+      const entree = { cle: "fixture", libelle: "Fixture", motif: "m", depuis: "2026-09-05",
+        condition_de_levee: "c", procedure: "p" };
+      delete entree[champManquant];
+      expect(
+        () => rendreSecurite({ absencesDeSignature: [entree] }),
+        `champ manquant « ${champManquant} » aurait dû être refusé`,
+      ).toThrow(new RegExp(champManquant));
+    }
+  });
+
+  it("« Toutes les signatures sont posées » n'est écrit QUE si la liste est vide (symétrie avec « absents »)", () => {
+    expect(rendreSecurite({ absencesDeSignature: [] })).toContain("Toutes les signatures");
+    expect(rendreSecurite({ absencesDeSignature: CONTEXTE.absencesDeSignature })).not.toContain(
+      "Toutes les signatures",
+    );
+  });
+
+  it("les marqueurs de zone `securite` sont stables et distincts, comme `binaires`", () => {
+    expect(README).toContain(debutZone("securite"));
+    expect(README).toContain(finZone("securite"));
+    expect(SENTINELLE_SECURITE).not.toBe(SENTINELLE_ABSENTS);
+  });
+});
+
+describe("CA-A7 — le CLIQUET OFFLINE : une absence de signature qui redevient fausse DOIT rougir", () => {
+  const empreinte = (texte) => createHash("sha256").update(texte, "utf8").digest("hex");
+
+  it("TÉMOIN POSITIF — sur le release.yml RÉEL (non muté), aucun câblage actif détecté", () => {
+    const { macos, windows } = detecterCablageSignatureActif(RELEASE_YML);
+    expect(macos, "release.yml ne doit câbler AUCUN secret Apple actif à ce jour").toBe(false);
+    expect(windows, "release.yml ne doit câbler AUCUN secret Windows actif à ce jour").toBe(false);
+    expect(
+      ecartsCliquetSecurite({
+        releaseYmlTexte: RELEASE_YML,
+        absencesDeSignature: CONTEXTE.absencesDeSignature,
+      }),
+    ).toEqual([]);
+  });
+
+  it("CONTREFACTUEL macOS — un câblage `env:` APPLE_* fictif, EN MÉMOIRE, fait rougir nommément", () => {
+    const avant = empreinte(RELEASE_YML);
+    const muté = RELEASE_YML.replace(
+      "        env:\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n",
+      "        env:\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n" +
+        "          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}\n" +
+        "          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}\n",
+    );
+    expect(muté, "témoin vide : le patch de mutation ne trouve pas son point d'ancrage").not.toBe(
+      RELEASE_YML,
+    );
+
+    const { macos } = detecterCablageSignatureActif(muté);
+    expect(macos, "un câblage APPLE_CERTIFICATE/_PASSWORD non vide doit être VU").toBe(true);
+
+    const ecarts = ecartsCliquetSecurite({
+      releaseYmlTexte: muté,
+      absencesDeSignature: CONTEXTE.absencesDeSignature,
+    });
+    expect(ecarts.length, "la déclaration macOS doit ROUGIR : elle a survécu à sa raison d'être").toBe(1);
+    expect(ecarts[0]).toMatch(/macos-notarisation/);
+
+    // Révocation : le fichier RÉEL est intact, à l'octet — jamais muté sur disque.
+    expect(empreinte(RELEASE_YML)).toBe(avant);
+  });
+
+  it("CONTREFACTUEL Windows — symétrique, un câblage WINDOWS_CERTIFICATE fictif fait rougir nommément", () => {
+    const avant = empreinte(RELEASE_YML);
+    const muté = RELEASE_YML.replace(
+      "        env:\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n",
+      "        env:\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n" +
+        "          WINDOWS_CERTIFICATE: ${{ secrets.WINDOWS_CERTIFICATE }}\n" +
+        "          WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}\n",
+    );
+    expect(muté).not.toBe(RELEASE_YML);
+
+    const ecarts = ecartsCliquetSecurite({
+      releaseYmlTexte: muté,
+      absencesDeSignature: CONTEXTE.absencesDeSignature,
+    });
+    expect(ecarts.length).toBe(1);
+    expect(ecarts[0]).toMatch(/windows-signature/);
+    expect(empreinte(RELEASE_YML)).toBe(avant);
+  });
+
+  it("un câblage `env:` HORS d'un bloc `env:` (simple mention en commentaire) N'EST PAS vu — limite déclarée", () => {
+    const texteAvecCommentaire = `${RELEASE_YML}\n# APPLE_CERTIFICATE: pas un cablage, une note\n`;
+    const { macos } = detecterCablageSignatureActif(texteAvecCommentaire);
+    expect(macos, "une ligne de commentaire ne doit PAS être comptée comme un câblage actif").toBe(
+      false,
+    );
+  });
+
+  it("une valeur VIDE dans le YAML lui-même (`APPLE_ID:` sans valeur) N'EST PAS un câblage actif", () => {
+    const { macos } = detecterCablageSignatureActif(
+      "jobs:\n  build:\n    steps:\n      - env:\n          APPLE_ID:\n",
+    );
+    expect(macos).toBe(false);
+  });
+});
+
+describe("CA-A4 / CA-A9 — l'écran et le README disent EXACTEMENT la même chose", () => {
+  const APP_TSX = lire("src/App.tsx");
+
+  it("CA-A4 — le comptage AR-A est repris au mot près (aucun écart, aucune « trois installations »)", () => {
+    const m = /<p className="comptage">([^<]+)<\/p>/.exec(APP_TSX);
+    expect(m, "src/App.tsx:84 doit porter le comptage littéral").not.toBeNull();
+    expect(README).toContain(m[1]);
+    expect(README).not.toMatch(/trois installations/i);
+    expect(APP_TSX).not.toMatch(/trois installations/i);
+  });
+
+  it("CA-A9 — l'écart AR-C(a) (amorce, n'enchaîne pas) est écrit en toutes lettres", () => {
+    expect(README).toMatch(/amorcent ce qui enchaîne/i);
+    expect(README).toMatch(/n'exécute qu'un seul MSI à la fois/i);
+    expect(README).toMatch(/un DMG n'exécute rien/i);
+  });
+});

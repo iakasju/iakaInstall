@@ -14,7 +14,10 @@
     "chartes": "bash scripts/sync-chartes.sh",
     "embarquer": "node scripts/embarquer-cli.mjs",
     "vocabulaire": "node scripts/sync-vocabulaire-evenements.mjs",
-    "rejeu:vivant": "node scripts/rejeu-vivant.mjs"
+    "rejeu:vivant": "node scripts/rejeu-vivant.mjs",
+    "vitrine": "node scripts/vitrine.mjs --write",
+    "vitrine:check": "node scripts/vitrine.mjs --check",
+    "vitrine:en-ligne": "node scripts/vitrine-en-ligne.mjs"
   },
   "dependencies": {
     "@tauri-apps/api": "^2",
