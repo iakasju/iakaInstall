@@ -140,6 +140,21 @@ export default function EcranPilotage({ etat }: { etat: EtatPilotage }) {
   const { modele } = etat;
   if (!modele.debut) return null;
 
+  if (modele.incompatibiliteVersion) {
+    // CA-P9 : refus explicite, les DEUX valeurs nommees — rien d'autre ne
+    // s'affiche (l'ecran refuse de continuer).
+    return (
+      <section aria-label="refus-version" className="refus-version">
+        <h2>Version incompatible</h2>
+        <p>
+          Ressource embarquée en <code>{modele.incompatibiliteVersion.attendue}</code>, mais le
+          processus lancé annonce <code>{modele.incompatibiliteVersion.recue}</code>. Installation
+          refusée.
+        </p>
+      </section>
+    );
+  }
+
   const numerosEtapes = Object.keys(modele.etapes)
     .map(Number)
     .sort((a, b) => a - b);

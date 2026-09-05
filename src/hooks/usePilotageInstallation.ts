@@ -112,7 +112,8 @@ export function usePilotageInstallation(): EtatPilotage {
 
   // Le bouton "Lancer l'installation" n'apparait QU'apres un apercu termine
   // avec succes DANS CETTE SESSION (§ 2 point 4, CA-P5) — jamais avant.
-  const peutLancerReel = phase === "apercu-termine" && modele.fin?.ok === true;
+  const peutLancerReel =
+    phase === "apercu-termine" && modele.fin?.ok === true && !modele.incompatibiliteVersion;
 
   return {
     phase,

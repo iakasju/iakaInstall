@@ -17,3 +17,6 @@ export type EtatEtape = "faite" | "refusee" | "echouee" | "sautee" | "dry-run";
 
 export const CANAUX_FEU_VERT = ["yes", "tty", "stdin", "refus-par-defaut"] as const;
 export type CanalFeuVert = "yes" | "tty" | "stdin" | "refus-par-defaut";
+
+/** Version DECLAREE par la ressource embarquee (resources/cli/package.json) — CA-P9. */
+export const VERSION_RESSOURCE = "0.40.0";

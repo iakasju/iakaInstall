@@ -11,7 +11,7 @@
  * (CA-P2, src/__tests__/vocabulaire-evenements.test.ts) rougit en le nommant.
  */
 import type { EvtType } from "./vocabulaire";
-import { EVENEMENTS } from "./vocabulaire";
+import { EVENEMENTS, VERSION_RESSOURCE } from "./vocabulaire";
 import type {
   AnnonceEtapeVue,
   EtapeVue,
@@ -49,17 +49,25 @@ export function reduire(modele: ModeleInstallation, evt: EvenementBrut): ModeleI
   const type = evt.evt as EvtType;
 
   switch (type) {
-    case "debut":
+    case "debut": {
+      const versionCli = evt.versionCli as string;
       return {
         ...modele,
         debut: {
-          versionCli: evt.versionCli as string,
+          versionCli,
           totalEtapes: evt.totalEtapes as number,
           telechargements: evt.telechargements as number,
           dryRun: evt.dryRun as boolean,
           plateforme: evt.plateforme as string,
         },
+        // CA-P9 : trois valeurs de version, une seule verite. Divergence ⇒
+        // l'ecran refuse et NOMME les deux (jamais un plantage silencieux).
+        incompatibiliteVersion:
+          versionCli !== VERSION_RESSOURCE
+            ? { attendue: VERSION_RESSOURCE, recue: versionCli }
+            : null,
       };
+    }
 
     case "reservoir":
       // `provenance` est affichee TELLE QUELLE (§ 2 point 2, CA-P4) — jamais recomposee.

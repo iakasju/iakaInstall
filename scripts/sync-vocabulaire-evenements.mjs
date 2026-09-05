@@ -71,6 +71,9 @@ export type EtatEtape = ${litteral(ETATS_ETAPE)};
 
 ${tableauTs("CANAUX_FEU_VERT", CANAUX_FEU_VERT)}
 export type CanalFeuVert = ${litteral(CANAUX_FEU_VERT)};
+
+/** Version DECLAREE par la ressource embarquee (resources/cli/package.json) — CA-P9. */
+export const VERSION_RESSOURCE = "${version}";
 `;
 
   writeFileSync(dest, contenu);

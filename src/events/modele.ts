@@ -64,8 +64,15 @@ export interface FinVue {
   reprise: string | null;
 }
 
+/** CA-P9 — trois valeurs de version, une seule verite. Renseigne au `debut`. */
+export interface IncompatibiliteVersionVue {
+  attendue: string;
+  recue: string;
+}
+
 export interface ModeleInstallation {
   debut: DebutVue | null;
+  incompatibiliteVersion: IncompatibiliteVersionVue | null;
   /** `reservoir.provenance` — la phrase au format impose, affichee TELLE QUELLE. */
   provenance: string | null;
   etapes: Partial<Record<number, EtapeVue>>;
@@ -82,6 +89,7 @@ export interface ModeleInstallation {
 
 export const MODELE_INITIAL: ModeleInstallation = {
   debut: null,
+  incompatibiliteVersion: null,
   provenance: null,
   etapes: {},
   logsDelegues: [],
