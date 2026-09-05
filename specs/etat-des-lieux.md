@@ -1,6 +1,6 @@
 # Etat des lieux - iakaInstall
 
-> Genere par iakaframe (CLI) le 2026-09-05 13:24 (motif: pause).
+> Genere par iakaframe (CLI) le 2026-09-05 14:07 (motif: pause).
 > A regenerer a chaque changement de version et a chaque pause/reprise.
 
 ## Etat courant
@@ -9,25 +9,25 @@
 |---|---|
 | Version | v0.1.0 |
 | Branche | main |
-| Dernier commit | 6bad4fd merge: LOT C.2-b — pilotage reel de la facade par le contrat machine du CLI 0.40.0 (gate Legolas PASS au second passage) |
+| Dernier commit | a330ad5 docs(projet): mitigation appliquee — v0.1.0 en pre-release, latest 404, decision de fond ouverte |
 | Arbre | propre |
-| Fichiers (suivis + non ignores) | 117 |
-| Note | LOT C.2-b livre et fusionne (6bad4fd) : la facade pilote REELLEMENT le CLI 0.40.0 embarque (pont Rust std::process, flux --events NDJSON, feu vert par stdin, reducteur pur, garde de vocabulaire a 3 jambes, CA-I8b enfin couvert). Gate FAIL (release.yml ne produisait pas la ressource) puis PASS au 2e passage (beforeBuildCommand = npm run embarquer && npm run build, garde dediee). 70 tests front, 22 cargo, build macOS OK avec ressource. Depot PUBLIC depuis ce jour. Reste au decideur : tag v0.1.0 = premier run CI 4 plateformes (Windows tar non prouve), recette 3 OS, notarisation (C.3). Push Forgejo EN ATTENTE (NAS injoignable) ; GitHub a jour. |
+| Fichiers (suivis + non ignores) | 120 |
+| Note | Correctif Windows fusionne (834e548) : garde d entree ESM muette supprimee, script loquace et rouge si ressource absente, bump 0.1.1, gate PASS. v0.1.0 passee en PRE-RELEASE (latest = 404). Reste au decideur : tag v0.1.1 (run 4 plateformes, seul juge de bsdtar Windows), recette 3 OS, cadrage RELEASE-PARTIELLE-PUBLIEE. Push Forgejo EN ATTENTE ; GitHub a jour. |
 
 ## Commits recents
 
 | Hash | Date | Sujet |
 |---|---|---|
+| `a330ad5` | 2026-09-05 | docs(projet): mitigation appliquee — v0.1.0 en pre-release, latest 404, decision de fond ouverte |
+| `834e548` | 2026-09-05 | merge: fix embarquer-cli muet sous Windows + bump 0.1.1 (gate Legolas PASS) |
+| `71e6779` | 2026-09-05 | docs(qualite): gate fix embarquer-cli windows — PASS |
+| `95c8d5e` | 2026-09-05 | docs: consigner le correctif Windows et le successeur RELEASE-PARTIELLE-PUBLIEE |
+| `41b11bc` | 2026-09-05 | chore(version): bump 0.1.0 -> 0.1.1 |
+| `9a766bf` | 2026-09-05 | fix(embarquer-cli): supprimer la garde d'entree muette (echec Windows, run v0.1.0) |
+| `69d76a1` | 2026-09-05 | chore(iakaframe): update etat des lieux + commit global (pause) |
 | `6bad4fd` | 2026-09-05 | merge: LOT C.2-b — pilotage reel de la facade par le contrat machine du CLI 0.40.0 (gate Legolas PASS au second passage) |
 | `a689d51` | 2026-09-05 | docs(qualite): re-gate lot C.2-b — PASS |
 | `d5050e6` | 2026-09-05 | docs: consigner la correction post-gate FAIL (ressource CLI avant build) |
-| `ed8e4ea` | 2026-09-05 | test(gardes): rougit si la ressource CLI cesse d'etre produite avant le build |
-| `1cdf9c4` | 2026-09-05 | fix(ci): produire la ressource CLI avant tout build Tauri, local et CI |
-| `920a88a` | 2026-09-05 | docs(qualite): gate lot C.2-b — FAIL |
-| `c281135` | 2026-09-05 | docs: CLAUDE.md + PROJET.md a jour pour C.2-b (etape 11) |
-| `fdedf6f` | 2026-09-05 | feat(rejeu): rejeu vivant depuis la ressource embarquee (CA-P4, 2e jambe) |
-| `b8fa01d` | 2026-09-05 | refactor(coverage): retrograde coverage.ts en indice pre-flux (M-F6) |
-| `6ff34e3` | 2026-09-05 | test(ecran): couvre CA-P5/CA-P6/CA-P10 sur le pilotage reel |
 
 ## Reprise du travail (a completer par Cowork)
 
@@ -62,6 +62,7 @@
 
 | Date | Motif | Version | Branche | Note |
 |---|---|---|---|---|
+| 2026-09-05 14:07 | pause | v0.1.0 | main | Correctif Windows fusionne (834e548) : garde d entree ESM muette supprimee, script loquace et rouge si ressource absente, bump 0.1.1, gate PASS. v0.1.0 passee en PRE-RELEASE (latest = 404). Reste au decideur : tag v0.1.1 (run 4 plateformes, seul juge de bsdtar Windows), recette 3 OS, cadrage RELEASE-PARTIELLE-PUBLIEE. Push Forgejo EN ATTENTE ; GitHub a jour. |
 | 2026-09-05 13:24 | pause | v0.1.0 | main | LOT C.2-b livre et fusionne (6bad4fd) : la facade pilote REELLEMENT le CLI 0.40.0 embarque (pont Rust std::process, flux --events NDJSON, feu vert par stdin, reducteur pur, garde de vocabulaire a 3 jambes, CA-I8b enfin couvert). Gate FAIL (release.yml ne produisait pas la ressource) puis PASS au 2e passage (beforeBuildCommand = npm run embarquer && npm run build, garde dediee). 70 tests front, 22 cargo, build macOS OK avec ressource. Depot PUBLIC depuis ce jour. Reste au decideur : tag v0.1.0 = premier run CI 4 plateformes (Windows tar non prouve), recette 3 OS, notarisation (C.3). Push Forgejo EN ATTENTE (NAS injoignable) ; GitHub a jour. |
 | 2026-09-05 00:52 | pause | v0.1.0 | main | LOT C.2-a + B'-a livre et fusionne (72bdc7d) : coquille Tauri 2 en charte studio-clair, ecran d annonce qui dit que l app n installe rien encore, ossature release.yml 4 plateformes epinglee au SHA. Gate Legolas FAIL (CA-I8a, garde de vocabulaire aveugle a l interpolation) puis PASS au second passage apres garde de rendu. 41 tests front + 5 cargo verts, build macOS arm64 OK. Actes du decideur en attente : passage en PUBLIC (AR-I4), premier run CI, builds Windows/Linux/Intel. C.2-b (pilotage reel) attend le contrat machine du CLI (branche feat/contrat-machine-install d iakaframe, en gate). Push Forgejo EN ATTENTE (NAS injoignable) ; GitHub a jour. |
 | 2026-09-05 00:24 | manual | v0.1.0 | feat/facade-tauri-ossature-release | Correction post-gate FAIL (CA-I8a) : garde de vocabulaire etendue au rendu, ecran corrige (Etape n sur N au lieu de [n/N]), tracabilite etape 1 (M-C1..M-C4) documentee. Ecart E-3 du gate (etat des lieux non regenere depuis onboarding) leve. |
