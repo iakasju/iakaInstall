@@ -44,12 +44,25 @@ d'`invoke`/`listen`** vers Rust — `demarrerInstallation`, `repondreFeuVert`,
 ```bash
 npm install                  # installer les deps front
 npm run embarquer            # AR-P2(b) : telecharge + verifie (sha256) + extrait le CLI embarque
-                              #   dans src-tauri/resources/cli/ (gitignore, requis avant build/dev)
+                              #   dans src-tauri/resources/cli/ (gitignore)
+                              #   AUTOMATIQUE avant `npm run tauri build` (voir plus bas) ;
+                              #   a lancer A LA MAIN avant `npm run tauri dev` (beforeDevCommand
+                              #   ne l'appelle pas).
 npm run vocabulaire          # regenere src/events/vocabulaire.ts depuis la ressource embarquee
 npm run dev                  # front Vite seul (port 3040)
 npm run tauri dev            # app desktop Tauri en dev (GUI) — exige IAKAINSTALL_SANDBOX (AR-P4)
+                              #   et `npm run embarquer` prealable (beforeDevCommand ne l'appelle pas)
 npm run build                # build front (tsc + vite)
 npm run tauri build          # bundle desktop (.app + .dmg sur ce poste, macOS arm64)
+                              #   beforeBuildCommand = "npm run embarquer && npm run build" :
+                              #   la ressource CLI est produite AUTOMATIQUEMENT avant chaque
+                              #   build, en local comme en CI (tauri-action invoque le meme
+                              #   beforeBuildCommand) — UNE SEULE commande, une seule verite.
+                              #   Correction post-gate FAIL du 2026-09-05 : le premier run CI
+                              #   (release.yml, matrice 4 plateformes) echouait "resource path
+                              #   `resources/cli` doesn't exist" faute de cette etape. release.yml
+                              #   lui-meme n'a pas ete touche (aucun risque sur les cliquets
+                              #   pin-tauri-action / release-matrice / bloc-latest).
 npm run typecheck            # tsc --noEmit
 npm run lint                 # ESLint
 npm run test                 # vitest (front + scripts/)
@@ -150,6 +163,14 @@ reprise** dans le `.md` (ce qui vient d'être fait, ce qui reste, prochaine éta
       → `specs/instructions/pilotage-reel-facade-contrat-machine.md`
       *(implémenté côté ⚒️ Gimli — REMIS AU GATE 🏹 Legolas, non auto-validé. Gate humain
       restant, DÉCLARÉ non couvert : le run réel avec écriture, sur les trois OS.)*
+      **Correction post-gate FAIL (2026-09-05)** : `beforeBuildCommand` produit désormais la
+      ressource CLI avant tout build (voir « Commandes » ci-dessus) — reproduit sur ce poste
+      (build échoue sans le correctif, réussit avec). **Non couvert, DÉCLARÉ gate humain /
+      premier run CI** : le comportement de `tar` (extraction du tarball par
+      `scripts/embarquer-cli.mjs`) sur `windows-latest` — présent depuis Windows 10 build
+      17063 (`bsdtar`), non exécuté sur ce poste macOS, donc non prouvé ici. Les builds
+      Linux / Windows / macOS Intel de la matrice restent, comme avant, prouvables en CI
+      seulement.
 - [ ] **C.3** — première release réelle, `.dmg` + `.msi`, les 5 autres artefacts.
 - [ ] **B′-b** — vitrine, manifeste updater, canaux, convergence à trois frères
       (mesurable seulement après une release réelle).
