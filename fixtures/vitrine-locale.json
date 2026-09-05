@@ -1,0 +1,77 @@
+{
+  "//": [
+    "PART LOCALE DE LA VITRINE — ce qui distingue CE depot de ses freres (IakaCockpit,",
+    "iakaFrameGUI). Volontairement HORS du registre de convergence des deux soeurs",
+    "(`fixtures/convergence.sha256`, cf. M-13/M-16 de l'instruction) :",
+    "`fixtures/vitrine-assets.json` (la table de motifs) EST byte-identique entre les TROIS",
+    "depots, mais ce fichier-ci ne peut pas l'etre — et le successeur CONVERGENCE-TROIS-FRERES",
+    "(backlog) est charge de decider un jour s'il doit le devenir.",
+    "",
+    "Le nom du produit n'est PAS ici : il est lu dans `productName` de `src-tauri/tauri.conf.json`",
+    "('iakaInstall'), la source que le bundler emploie lui-meme pour nommer ses artefacts. Le",
+    "recopier ici en ferait une seconde source de verite, donc la premiere a diverger."
+  ],
+
+  "depot": "iakasju/iakaInstall",
+
+  "//absents": [
+    "AUCUN absent declare. Re-mesure en anonyme le 2026-09-05 (etape 0.1 de l'instruction) sur la",
+    "release v0.1.1 : les SEPT plateformes de la table sont presentes (les deux `.dmg` compris),",
+    "et les DEUX `.app.tar.gz` sont hors vitrine (M-10). 9 assets = 7 de vitrine + 2 hors vitrine,",
+    "aucun manquant, aucun en trop. La liste vide n'est donc pas un oubli — c'est un constat, et",
+    "c'est ce qui autorise le generateur a ecrire « Tous les systemes sont couverts »."
+  ],
+  "absents": [],
+
+  "//absences_de_signature": [
+    "AR-V2 = (a) DE L'INSTRUCTION amorcage-c3-vitrine-trois-freres.md. CE N'EST PAS `absents` :",
+    "`absents` declare une PLATEFORME NON SERVIE (le fichier n'existe pas) ; ici, le fichier",
+    "EXISTE (les deux `.dmg`, le `.msi`, l'`.exe` sont bien sur la release), mais il n'est signe",
+    "par PERSONNE — ni notarisation Apple, ni certificat de signature Windows. Loger cela dans",
+    "`absents` ferait JETER `rendreBinaires` (cle inconnue de la table, vitrine.mjs:126-131) ou",
+    "mentirait (E-5 rougirait : le fichier declare absent EST present). D'ou la cle NEUVE.",
+    "",
+    "Chaque entree porte quatre champs obligatoires (garde locale, cf. rendreSecurite) : motif,",
+    "depuis, condition_de_levee, procedure. Le CLIQUET OFFLINE (scripts/lib/vitrine.mjs,",
+    "ecartsCliquetSecurite) fait tomber ces entrees si `release.yml` cable un jour un `env:`",
+    "APPLE_*/WINDOWS_* ACTIF sur l'etape tauri-action — sans quoi l'aveu survivrait a sa raison",
+    "d'etre (meme defaut que E-5 pour `absents`, transpose a ce qu'on peut mesurer HORS LIGNE)."
+  ],
+  "absences_de_signature": [
+    {
+      "cle": "macos-notarisation",
+      "libelle": "macOS — notarisation Apple",
+      "motif": "Aucun certificat Apple Developer ID ni adhésion au Apple Developer Program (99 $/an) : les bundles macOS (`.dmg`) ne portent qu'une signature AD HOC. Mesuré sur l'asset RÉEL de la release v0.1.1 le 2026-09-05 (`iakaInstall_0.1.1_aarch64.dmg`, téléchargé, monté, `codesign -dv --verbose=4` : `Signature=adhoc`, `TeamIdentifier=not set` ; `spctl -a -vv` : rejeté, exit non nul). Confirmé côté fabrication : `.github/workflows/release.yml` ne pose aucun secret `APPLE_*`, `src-tauri/tauri.conf.json` ne porte aucune section `bundle.macOS`.",
+      "depuis": "2026-09-05",
+      "condition_de_levee": "Adhésion Apple Developer Program acquise ET secrets `APPLE_CERTIFICATE`/`APPLE_CERTIFICATE_PASSWORD` (plus `APPLE_ID`/`APPLE_PASSWORD`/`APPLE_TEAM_ID` ou `APPLE_API_*`) posés par le décideur dans les réglages du dépôt — acte refusé aux agents. Le jour où ce câblage devient ACTIF dans `release.yml`, le cliquet offline de ce fichier force le retrait de CETTE entrée.",
+      "procedure": "Lancer l'application : macOS affiche « Not Opened ». Aller dans Réglages Système -> Confidentialité et sécurité, trouver l'application dans la section du bas, cliquer « Ouvrir quand même », confirmer, puis s'authentifier avec le mot de passe administrateur. Ce geste doit être fait DANS L'HEURE qui suit le message, et UNE SEULE FOIS par application. Depuis macOS 15 Sequoia, c'est la SEULE voie : aucun autre geste ne contourne ce message."
+    },
+    {
+      "cle": "windows-signature",
+      "libelle": "Windows — signature de code",
+      "motif": "Aucun certificat de signature de code n'est posé : le `.msi` et le `.exe` (NSIS) de la release ne sont pas signés. Confirmé côté fabrication : `.github/workflows/release.yml` ne pose aucun secret de signature Windows, `src-tauri/tauri.conf.json` ne porte aucune section `bundle.windows.certificateThumbprint`.",
+      "depuis": "2026-09-05",
+      "condition_de_levee": "Certificat de signature de code acquis (idéalement EV) ET posé par le décideur — acte refusé aux agents. À dire sans le farder : un certificat NEUF ne fait PAS disparaître SmartScreen immédiatement, la réputation se construit avec le nombre d'installations dans le temps.",
+      "procedure": "Au lancement de l'installeur, Windows affiche « Windows a protégé votre ordinateur » (Microsoft Defender SmartScreen). Cliquer « Informations complémentaires », puis « Exécuter quand même »."
+    }
+  ],
+
+  "gabarits": {
+    "sources": [
+      "```bash",
+      "# 1. Recuperer l'archive de la version depuis la page des releases",
+      "#    (Assets > Source code), puis la decompresser",
+      "cd {APP}-{V}",
+      "",
+      "# 2. Installer les dependances",
+      "npm ci",
+      "",
+      "# 3. Lancer en developpement (necessite IAKAINSTALL_SANDBOX, voir CLAUDE.md)",
+      "npm run embarquer && npm run tauri dev",
+      "",
+      "# 4. Ou produire l'executable de votre plateforme",
+      "npm run tauri build",
+      "```"
+    ]
+  }
+}
