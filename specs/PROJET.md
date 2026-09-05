@@ -232,4 +232,35 @@ Chaque feature reçoit son fichier dans `specs/instructions/` AVANT implémentat
   *Reco : **passer public avant le premier run de B′-a**, après le balayage de secrets (CA-I13) —
   les deux sœurs sont publiques depuis le 2026-08-28, et ce dépôt est neuf. **Acte du décideur**,
   refusé aux agents. (Visibilité actuelle de `iakasju/iakaInstall` : **non mesurée** — le remote
-  existe, `.git/config:15`, mais son état demande un appel authentifié non joué.)*
+  existe, `.git/config:15`, mais son état demande un appel authentifié non joué.)* ⬜ **Toujours
+  ouvert au 2026-09-05** — non touché par le lot C.2-b.
+
+> **AR-I1/AR-I2/AR-I3 — résolus par l'implémentation.** AR-I1 : **(b)** joué — le prérequis
+> `CONTRAT-MACHINE-DU-VERBE-INSTALL` est livré côté `iakaframe` (CLI `0.40.0`), C.2-b (ce lot)
+> pilote réellement la chaîne au travers de lui. AR-I2 : ressource embarquée, précisée en AR-P2/
+> AR-P3 ci-dessous. AR-I3 : la charte retenue à l'implémentation est **`studio-clair`** (et non
+> `naonedge-dark` recommandé alors) — voir `CLAUDE.md` § stack.
+
+### Verdicts du lot C.2-b (2026-09-05) — DÉCIDÉS, non « à décider »
+
+> Rendus par Stéphane le 2026-09-05 (relayés par Aragorn, *« comme reco »*), tranchant les cinq
+> arbitrages de `specs/instructions/pilotage-reel-facade-contrat-machine.md` § 3. Consignés ici
+> pour mémoire — la recommandation motivée complète reste dans l'instruction, elle n'est pas
+> recopiée.
+
+- **AR-P1 → (a)** Rust pilote le processus (`std::process::Command`), zéro plugin, zéro
+  permission ouverte à la webview. *Implémenté : `src-tauri/src/pilote.rs`.*
+- **AR-P2 → (b)** la ressource embarquée est l'arbre extrait **au build** depuis l'asset de
+  release GitHub épinglé (version + `sha256` en fixture, vérifiés **avant** extraction) ; repli
+  (a) (arbre committé) documenté mais non retenu. *Implémenté : `scripts/embarquer-cli.mjs`,
+  `fixtures/cli-embarque.json`.*
+- **AR-P3 → (a)** bump du CLI en `0.40.0` et publication **avant** ce lot — **fait** (release
+  GitHub `v0.40.0`, asset `naonedge-iakaframe-0.40.0.tgz`, `sha256`
+  `21fe0f9421cf14af97a273d7f06bb645e980004ae8c53efc028c359716ca1032`, mesuré deux fois : par
+  Aragorn puis re-mesuré par Gimli à l'étape 0 — identique).
+- **AR-P4 → (a)** bac à sable obligatoire en test/dev (`IAKAINSTALL_SANDBOX` force
+  `--target-claude`/`--apps-dir`/`--backup-dir`, refuse tout chemin sous `$HOME/.claude` ou
+  `$HOME/Applications`) ; le run réel non isolé reste le produit, hors tests, gate humain.
+- **AR-P5 → (a)** ressource épinglée, remontée à chaque release de la façade (un lot, pas un
+  geste) ; successeur nommé `RESSOURCE-CLI-RAFRAICHIE-EN-LIGNE`, condition d'entrée non mesurée
+  (aucune release de la façade n'a encore eu lieu).
