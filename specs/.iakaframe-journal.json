@@ -68,5 +68,15 @@
     "dirty": false,
     "files": 125,
     "note": "RELEASE-PARTIELLE-PUBLIEE livre et fusionne (aa1634b, gate PASS 91 tests) : brouillon cree une fois dans prepare, releaseId passe a la matrice, job publier en needs [build] strict, latest derriere publier, entree casser inerte hors dispatch. Cadrage C.3 + B'-b commite (7d1343a, verdicts comme reco). Reste au decideur : run de preuve casser sur un tag de test (CA-R8), run nominal (CA-R9), successeurs soeurs. Prochain lot : C.3 vitrine (Gimli). Push Forgejo EN ATTENTE."
+  },
+  {
+    "date": "2026-09-05 15:42",
+    "reason": "pause",
+    "version": "v0.1.1",
+    "branch": "main",
+    "commit": "13cf959 merge: LOT C.3 + B'-b — vitrine trois freres, README, absences de signature declarees (gate Legolas PASS)",
+    "dirty": false,
+    "files": 133,
+    "note": "LOT C.3 + B'-b livre et fusionne : README ecrit, vitrine des 7 artefacts, absences de signature (notarisation macOS, SmartScreen Windows) declarees avec cliquet offline, etape CI de notarisation declarative sans env (un secret vide casse le bundler), face en ligne OK sur v0.1.1. Gate PASS 127 tests. LE LOT C EST ENTIEREMENT LIVRE (C.1, install.mjs, contrat machine, C.2-a, C.2-b, RELEASE-PARTIELLE, C.3). Reste au decideur : recette reelle dmg/msi/deb, run de preuve casser, secrets Apple/Windows, successeurs CONVERGENCE-TROIS-FRERES et UPDATER-DE-LA-FACADE. Limite signalee : cliquet de l aveu unidirectionnel. Push Forgejo EN ATTENTE."
   }
 ]

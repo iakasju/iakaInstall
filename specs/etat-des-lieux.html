@@ -24,29 +24,30 @@ code{font-family:'SF Mono',Consolas,monospace;background:rgba(200,164,78,.1);col
 footer{margin-top:3rem;padding-top:1.2rem;border-top:1px solid #1f1f1f;color:#555;font-size:.78rem;}
 </style></head><body>
 <h1>Etat des lieux - <span class="accent">iakaInstall</span></h1>
-<div class="sub">Genere le 2026-09-05 15:05 - motif : pause - a regenerer a chaque version et a chaque pause/reprise.</div>
+<div class="sub">Genere le 2026-09-05 15:42 - motif : pause - a regenerer a chaque version et a chaque pause/reprise.</div>
 <h2>Etat courant</h2>
 <div class="kv">
   <div class="k">Version</div><div>v0.1.1</div>
   <div class="k">Branche</div><div>main</div>
-  <div class="k">Dernier commit</div><div><code>7d1343a docs(instruction): cadrage C.3 + B'-b — vitrine trois freres, 16 criteres, 6 arbitrages tranches comme recommande</code></div>
+  <div class="k">Dernier commit</div><div><code>13cf959 merge: LOT C.3 + B'-b — vitrine trois freres, README, absences de signature declarees (gate Legolas PASS)</code></div>
   <div class="k">Arbre</div><div><span class='ok'>propre</span></div>
-  <div class="k">Fichiers</div><div>125 (suivis + non ignores)</div>
-  <div class='k'>Note</div><div>RELEASE-PARTIELLE-PUBLIEE livre et fusionne (aa1634b, gate PASS 91 tests) : brouillon cree une fois dans prepare, releaseId passe a la matrice, job publier en needs [build] strict, latest derriere publier, entree casser inerte hors dispatch. Cadrage C.3 + B'-b commite (7d1343a, verdicts comme reco). Reste au decideur : run de preuve casser sur un tag de test (CA-R8), run nominal (CA-R9), successeurs soeurs. Prochain lot : C.3 vitrine (Gimli). Push Forgejo EN ATTENTE.</div>
+  <div class="k">Fichiers</div><div>133 (suivis + non ignores)</div>
+  <div class='k'>Note</div><div>LOT C.3 + B'-b livre et fusionne : README ecrit, vitrine des 7 artefacts, absences de signature (notarisation macOS, SmartScreen Windows) declarees avec cliquet offline, etape CI de notarisation declarative sans env (un secret vide casse le bundler), face en ligne OK sur v0.1.1. Gate PASS 127 tests. LE LOT C EST ENTIEREMENT LIVRE (C.1, install.mjs, contrat machine, C.2-a, C.2-b, RELEASE-PARTIELLE, C.3). Reste au decideur : recette reelle dmg/msi/deb, run de preuve casser, secrets Apple/Windows, successeurs CONVERGENCE-TROIS-FRERES et UPDATER-DE-LA-FACADE. Limite signalee : cliquet de l aveu unidirectionnel. Push Forgejo EN ATTENTE.</div>
 </div>
-<h2>Commits recents</h2><table><tr><th>Hash</th><th>Date</th><th>Sujet</th></tr><tr><td><code>7d1343a</code></td><td>2026-09-05</td><td>docs(instruction): cadrage C.3 + B'-b — vitrine trois freres, 16 criteres, 6 arbitrages tranches comme recommande</td></tr>
+<h2>Commits recents</h2><table><tr><th>Hash</th><th>Date</th><th>Sujet</th></tr><tr><td><code>13cf959</code></td><td>2026-09-05</td><td>merge: LOT C.3 + B'-b — vitrine trois freres, README, absences de signature declarees (gate Legolas PASS)</td></tr>
+<tr><td><code>fc2905c</code></td><td>2026-09-05</td><td>docs(qualite): gate lot C.3 + B'-b vitrine — PASS</td></tr>
+<tr><td><code>64baf72</code></td><td>2026-09-05</td><td>docs(memoire): cocher C.3+B'-b, consigner les verdicts et les successeurs</td></tr>
+<tr><td><code>e776285</code></td><td>2026-09-05</td><td>ci(release): etape de notarisation macOS declarative, sans cablage env (AR-V5=b)</td></tr>
+<tr><td><code>f0fe00b</code></td><td>2026-09-05</td><td>test(vitrine): garde locale + garde de l'aveu + cliquet offline (CA-A1..CA-A9)</td></tr>
+<tr><td><code>646bf33</code></td><td>2026-09-05</td><td>docs(readme): ecrire le README (il n'existait pas) — vitrine + ecart AR-C(a)</td></tr>
+<tr><td><code>f44003b</code></td><td>2026-09-05</td><td>feat(vitrine): copier la convention des soeurs + declarer l'absence de signature</td></tr>
+<tr><td><code>ddf3d3d</code></td><td>2026-09-05</td><td>chore(iakaframe): update etat des lieux + commit global (pause)</td></tr>
+<tr><td><code>7d1343a</code></td><td>2026-09-05</td><td>docs(instruction): cadrage C.3 + B'-b — vitrine trois freres, 16 criteres, 6 arbitrages tranches comme recommande</td></tr>
 <tr><td><code>aa1634b</code></td><td>2026-09-05</td><td>merge: RELEASE-PARTIELLE-PUBLIEE — brouillon jusqu a matrice verte, publication par id (gate Legolas PASS)</td></tr>
-<tr><td><code>4271302</code></td><td>2026-09-05</td><td>docs(qualite): gate RELEASE-PARTIELLE-PUBLIEE — PASS</td></tr>
-<tr><td><code>b05229c</code></td><td>2026-09-05</td><td>docs(release): backlog + verdict RELEASE-PARTIELLE-PUBLIEE decide/livre</td></tr>
-<tr><td><code>a7a49dd</code></td><td>2026-09-05</td><td>test(release): garde statique release-publication (CA-R1..R4, R6, R7)</td></tr>
-<tr><td><code>3739313</code></td><td>2026-09-05</td><td>feat(release): brouillon jusqu'a matrice verte, publication par id (AR-1a+AR-2b)</td></tr>
-<tr><td><code>cb138be</code></td><td>2026-09-05</td><td>docs(instruction): cadrage RELEASE-PARTIELLE-PUBLIEE — 12 criteres, 6 arbitrages tranches comme recommande</td></tr>
-<tr><td><code>e67f483</code></td><td>2026-09-05</td><td>chore(iakaframe): update etat des lieux + commit global (version)</td></tr>
-<tr><td><code>5709ab1</code></td><td>2026-09-05</td><td>chore(iakaframe): update etat des lieux + commit global (pause)</td></tr>
-<tr><td><code>a330ad5</code></td><td>2026-09-05</td><td>docs(projet): mitigation appliquee — v0.1.0 en pre-release, latest 404, decision de fond ouverte</td></tr>
 </table>
 <h2>Journal (versions &amp; pauses)</h2>
 <table><tr><th>Date</th><th>Motif</th><th>Version</th><th>Branche</th><th>Note</th></tr>
+<tr><td>2026-09-05 15:42</td><td><span class='r r-pause'>pause</span></td><td>v0.1.1</td><td>main</td><td>LOT C.3 + B'-b livre et fusionne : README ecrit, vitrine des 7 artefacts, absences de signature (notarisation macOS, SmartScreen Windows) declarees avec cliquet offline, etape CI de notarisation declarative sans env (un secret vide casse le bundler), face en ligne OK sur v0.1.1. Gate PASS 127 tests. LE LOT C EST ENTIEREMENT LIVRE (C.1, install.mjs, contrat machine, C.2-a, C.2-b, RELEASE-PARTIELLE, C.3). Reste au decideur : recette reelle dmg/msi/deb, run de preuve casser, secrets Apple/Windows, successeurs CONVERGENCE-TROIS-FRERES et UPDATER-DE-LA-FACADE. Limite signalee : cliquet de l aveu unidirectionnel. Push Forgejo EN ATTENTE.</td></tr>
 <tr><td>2026-09-05 15:05</td><td><span class='r r-pause'>pause</span></td><td>v0.1.1</td><td>main</td><td>RELEASE-PARTIELLE-PUBLIEE livre et fusionne (aa1634b, gate PASS 91 tests) : brouillon cree une fois dans prepare, releaseId passe a la matrice, job publier en needs [build] strict, latest derriere publier, entree casser inerte hors dispatch. Cadrage C.3 + B'-b commite (7d1343a, verdicts comme reco). Reste au decideur : run de preuve casser sur un tag de test (CA-R8), run nominal (CA-R9), successeurs soeurs. Prochain lot : C.3 vitrine (Gimli). Push Forgejo EN ATTENTE.</td></tr>
 <tr><td>2026-09-05 14:19</td><td><span class='r r-version'>version</span></td><td>v0.1.1</td><td>main</td><td>v0.1.1 PUBLIEE : PREMIERE RELEASE COMPLETE, run 33965353603, 4/4 plateformes vertes, 9 assets (dmg x2, app.tar.gz x2, msi, setup.exe, deb, rpm, AppImage), latest = v0.1.1. Le script d embarquement a journalise sur Windows (sha256 verifie avant extraction, 552 entrees) : gate humain bsdtar Windows leve par mesure. v0.1.0 reste en pre-release. Reste : recette humaine (dmg Gatekeeper, msi, deb), cadrage RELEASE-PARTIELLE-PUBLIEE puis C.3. Push Forgejo EN ATTENTE.</td></tr>
 <tr><td>2026-09-05 14:07</td><td><span class='r r-pause'>pause</span></td><td>v0.1.0</td><td>main</td><td>Correctif Windows fusionne (834e548) : garde d entree ESM muette supprimee, script loquace et rouge si ressource absente, bump 0.1.1, gate PASS. v0.1.0 passee en PRE-RELEASE (latest = 404). Reste au decideur : tag v0.1.1 (run 4 plateformes, seul juge de bsdtar Windows), recette 3 OS, cadrage RELEASE-PARTIELLE-PUBLIEE. Push Forgejo EN ATTENTE ; GitHub a jour.</td></tr>

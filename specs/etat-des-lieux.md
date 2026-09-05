@@ -1,6 +1,6 @@
 # Etat des lieux - iakaInstall
 
-> Genere par iakaframe (CLI) le 2026-09-05 15:05 (motif: pause).
+> Genere par iakaframe (CLI) le 2026-09-05 15:42 (motif: pause).
 > A regenerer a chaque changement de version et a chaque pause/reprise.
 
 ## Etat courant
@@ -9,25 +9,25 @@
 |---|---|
 | Version | v0.1.1 |
 | Branche | main |
-| Dernier commit | 7d1343a docs(instruction): cadrage C.3 + B'-b — vitrine trois freres, 16 criteres, 6 arbitrages tranches comme recommande |
+| Dernier commit | 13cf959 merge: LOT C.3 + B'-b — vitrine trois freres, README, absences de signature declarees (gate Legolas PASS) |
 | Arbre | propre |
-| Fichiers (suivis + non ignores) | 125 |
-| Note | RELEASE-PARTIELLE-PUBLIEE livre et fusionne (aa1634b, gate PASS 91 tests) : brouillon cree une fois dans prepare, releaseId passe a la matrice, job publier en needs [build] strict, latest derriere publier, entree casser inerte hors dispatch. Cadrage C.3 + B'-b commite (7d1343a, verdicts comme reco). Reste au decideur : run de preuve casser sur un tag de test (CA-R8), run nominal (CA-R9), successeurs soeurs. Prochain lot : C.3 vitrine (Gimli). Push Forgejo EN ATTENTE. |
+| Fichiers (suivis + non ignores) | 133 |
+| Note | LOT C.3 + B'-b livre et fusionne : README ecrit, vitrine des 7 artefacts, absences de signature (notarisation macOS, SmartScreen Windows) declarees avec cliquet offline, etape CI de notarisation declarative sans env (un secret vide casse le bundler), face en ligne OK sur v0.1.1. Gate PASS 127 tests. LE LOT C EST ENTIEREMENT LIVRE (C.1, install.mjs, contrat machine, C.2-a, C.2-b, RELEASE-PARTIELLE, C.3). Reste au decideur : recette reelle dmg/msi/deb, run de preuve casser, secrets Apple/Windows, successeurs CONVERGENCE-TROIS-FRERES et UPDATER-DE-LA-FACADE. Limite signalee : cliquet de l aveu unidirectionnel. Push Forgejo EN ATTENTE. |
 
 ## Commits recents
 
 | Hash | Date | Sujet |
 |---|---|---|
+| `13cf959` | 2026-09-05 | merge: LOT C.3 + B'-b — vitrine trois freres, README, absences de signature declarees (gate Legolas PASS) |
+| `fc2905c` | 2026-09-05 | docs(qualite): gate lot C.3 + B'-b vitrine — PASS |
+| `64baf72` | 2026-09-05 | docs(memoire): cocher C.3+B'-b, consigner les verdicts et les successeurs |
+| `e776285` | 2026-09-05 | ci(release): etape de notarisation macOS declarative, sans cablage env (AR-V5=b) |
+| `f0fe00b` | 2026-09-05 | test(vitrine): garde locale + garde de l'aveu + cliquet offline (CA-A1..CA-A9) |
+| `646bf33` | 2026-09-05 | docs(readme): ecrire le README (il n'existait pas) — vitrine + ecart AR-C(a) |
+| `f44003b` | 2026-09-05 | feat(vitrine): copier la convention des soeurs + declarer l'absence de signature |
+| `ddf3d3d` | 2026-09-05 | chore(iakaframe): update etat des lieux + commit global (pause) |
 | `7d1343a` | 2026-09-05 | docs(instruction): cadrage C.3 + B'-b — vitrine trois freres, 16 criteres, 6 arbitrages tranches comme recommande |
 | `aa1634b` | 2026-09-05 | merge: RELEASE-PARTIELLE-PUBLIEE — brouillon jusqu a matrice verte, publication par id (gate Legolas PASS) |
-| `4271302` | 2026-09-05 | docs(qualite): gate RELEASE-PARTIELLE-PUBLIEE — PASS |
-| `b05229c` | 2026-09-05 | docs(release): backlog + verdict RELEASE-PARTIELLE-PUBLIEE decide/livre |
-| `a7a49dd` | 2026-09-05 | test(release): garde statique release-publication (CA-R1..R4, R6, R7) |
-| `3739313` | 2026-09-05 | feat(release): brouillon jusqu'a matrice verte, publication par id (AR-1a+AR-2b) |
-| `cb138be` | 2026-09-05 | docs(instruction): cadrage RELEASE-PARTIELLE-PUBLIEE — 12 criteres, 6 arbitrages tranches comme recommande |
-| `e67f483` | 2026-09-05 | chore(iakaframe): update etat des lieux + commit global (version) |
-| `5709ab1` | 2026-09-05 | chore(iakaframe): update etat des lieux + commit global (pause) |
-| `a330ad5` | 2026-09-05 | docs(projet): mitigation appliquee — v0.1.0 en pre-release, latest 404, decision de fond ouverte |
 
 ## Reprise du travail (a completer par Cowork)
 
@@ -62,6 +62,7 @@
 
 | Date | Motif | Version | Branche | Note |
 |---|---|---|---|---|
+| 2026-09-05 15:42 | pause | v0.1.1 | main | LOT C.3 + B'-b livre et fusionne : README ecrit, vitrine des 7 artefacts, absences de signature (notarisation macOS, SmartScreen Windows) declarees avec cliquet offline, etape CI de notarisation declarative sans env (un secret vide casse le bundler), face en ligne OK sur v0.1.1. Gate PASS 127 tests. LE LOT C EST ENTIEREMENT LIVRE (C.1, install.mjs, contrat machine, C.2-a, C.2-b, RELEASE-PARTIELLE, C.3). Reste au decideur : recette reelle dmg/msi/deb, run de preuve casser, secrets Apple/Windows, successeurs CONVERGENCE-TROIS-FRERES et UPDATER-DE-LA-FACADE. Limite signalee : cliquet de l aveu unidirectionnel. Push Forgejo EN ATTENTE. |
 | 2026-09-05 15:05 | pause | v0.1.1 | main | RELEASE-PARTIELLE-PUBLIEE livre et fusionne (aa1634b, gate PASS 91 tests) : brouillon cree une fois dans prepare, releaseId passe a la matrice, job publier en needs [build] strict, latest derriere publier, entree casser inerte hors dispatch. Cadrage C.3 + B'-b commite (7d1343a, verdicts comme reco). Reste au decideur : run de preuve casser sur un tag de test (CA-R8), run nominal (CA-R9), successeurs soeurs. Prochain lot : C.3 vitrine (Gimli). Push Forgejo EN ATTENTE. |
 | 2026-09-05 14:19 | version | v0.1.1 | main | v0.1.1 PUBLIEE : PREMIERE RELEASE COMPLETE, run 33965353603, 4/4 plateformes vertes, 9 assets (dmg x2, app.tar.gz x2, msi, setup.exe, deb, rpm, AppImage), latest = v0.1.1. Le script d embarquement a journalise sur Windows (sha256 verifie avant extraction, 552 entrees) : gate humain bsdtar Windows leve par mesure. v0.1.0 reste en pre-release. Reste : recette humaine (dmg Gatekeeper, msi, deb), cadrage RELEASE-PARTIELLE-PUBLIEE puis C.3. Push Forgejo EN ATTENTE. |
 | 2026-09-05 14:07 | pause | v0.1.0 | main | Correctif Windows fusionne (834e548) : garde d entree ESM muette supprimee, script loquace et rouge si ressource absente, bump 0.1.1, gate PASS. v0.1.0 passee en PRE-RELEASE (latest = 404). Reste au decideur : tag v0.1.1 (run 4 plateformes, seul juge de bsdtar Windows), recette 3 OS, cadrage RELEASE-PARTIELLE-PUBLIEE. Push Forgejo EN ATTENTE ; GitHub a jour. |
