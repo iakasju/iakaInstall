@@ -24,17 +24,18 @@ code{font-family:'SF Mono',Consolas,monospace;background:rgba(200,164,78,.1);col
 footer{margin-top:3rem;padding-top:1.2rem;border-top:1px solid #1f1f1f;color:#555;font-size:.78rem;}
 </style></head><body>
 <h1>Etat des lieux - <span class="accent">iakaInstall</span></h1>
-<div class="sub">Genere le 2026-09-05 15:42 - motif : pause - a regenerer a chaque version et a chaque pause/reprise.</div>
+<div class="sub">Genere le 2026-09-06 01:05 - motif : pause - a regenerer a chaque version et a chaque pause/reprise.</div>
 <h2>Etat courant</h2>
 <div class="kv">
   <div class="k">Version</div><div>v0.1.1</div>
   <div class="k">Branche</div><div>main</div>
-  <div class="k">Dernier commit</div><div><code>13cf959 merge: LOT C.3 + B'-b — vitrine trois freres, README, absences de signature declarees (gate Legolas PASS)</code></div>
+  <div class="k">Dernier commit</div><div><code>c1235f7 chore(iakaframe): update etat des lieux + commit global (pause)</code></div>
   <div class="k">Arbre</div><div><span class='ok'>propre</span></div>
   <div class="k">Fichiers</div><div>133 (suivis + non ignores)</div>
-  <div class='k'>Note</div><div>LOT C.3 + B'-b livre et fusionne : README ecrit, vitrine des 7 artefacts, absences de signature (notarisation macOS, SmartScreen Windows) declarees avec cliquet offline, etape CI de notarisation declarative sans env (un secret vide casse le bundler), face en ligne OK sur v0.1.1. Gate PASS 127 tests. LE LOT C EST ENTIEREMENT LIVRE (C.1, install.mjs, contrat machine, C.2-a, C.2-b, RELEASE-PARTIELLE, C.3). Reste au decideur : recette reelle dmg/msi/deb, run de preuve casser, secrets Apple/Windows, successeurs CONVERGENCE-TROIS-FRERES et UPDATER-DE-LA-FACADE. Limite signalee : cliquet de l aveu unidirectionnel. Push Forgejo EN ATTENTE.</div>
+  <div class='k'>Note</div><div>Banc de preuve CI des etapes 3/4 livre et fusionne (workflow_dispatch seul, SHA epingles verifies, scripts appelant l API reelle du module, bac a sable RUNNER_TEMP, mesures comparees a l attendu, UAC et GUI declares non prouvables). Gate PASS 1157 tests, 2 ecarts mineurs de demonstration (contrefactuel secrets et os.homedir a durcir). LE CADRAGE ETAPES-3-4-WINDOWS-LINUX EST ENTIEREMENT LIVRE (W-L, W-W, banc). Reste au decideur : declencher le banc (gh workflow run banc-etapes-3-4.yml -f os=les-deux -f rollback=true), recette reelle, push Forgejo.</div>
 </div>
-<h2>Commits recents</h2><table><tr><th>Hash</th><th>Date</th><th>Sujet</th></tr><tr><td><code>13cf959</code></td><td>2026-09-05</td><td>merge: LOT C.3 + B'-b — vitrine trois freres, README, absences de signature declarees (gate Legolas PASS)</td></tr>
+<h2>Commits recents</h2><table><tr><th>Hash</th><th>Date</th><th>Sujet</th></tr><tr><td><code>c1235f7</code></td><td>2026-09-05</td><td>chore(iakaframe): update etat des lieux + commit global (pause)</td></tr>
+<tr><td><code>13cf959</code></td><td>2026-09-05</td><td>merge: LOT C.3 + B'-b — vitrine trois freres, README, absences de signature declarees (gate Legolas PASS)</td></tr>
 <tr><td><code>fc2905c</code></td><td>2026-09-05</td><td>docs(qualite): gate lot C.3 + B'-b vitrine — PASS</td></tr>
 <tr><td><code>64baf72</code></td><td>2026-09-05</td><td>docs(memoire): cocher C.3+B'-b, consigner les verdicts et les successeurs</td></tr>
 <tr><td><code>e776285</code></td><td>2026-09-05</td><td>ci(release): etape de notarisation macOS declarative, sans cablage env (AR-V5=b)</td></tr>
@@ -43,10 +44,10 @@ footer{margin-top:3rem;padding-top:1.2rem;border-top:1px solid #1f1f1f;color:#55
 <tr><td><code>f44003b</code></td><td>2026-09-05</td><td>feat(vitrine): copier la convention des soeurs + declarer l'absence de signature</td></tr>
 <tr><td><code>ddf3d3d</code></td><td>2026-09-05</td><td>chore(iakaframe): update etat des lieux + commit global (pause)</td></tr>
 <tr><td><code>7d1343a</code></td><td>2026-09-05</td><td>docs(instruction): cadrage C.3 + B'-b — vitrine trois freres, 16 criteres, 6 arbitrages tranches comme recommande</td></tr>
-<tr><td><code>aa1634b</code></td><td>2026-09-05</td><td>merge: RELEASE-PARTIELLE-PUBLIEE — brouillon jusqu a matrice verte, publication par id (gate Legolas PASS)</td></tr>
 </table>
 <h2>Journal (versions &amp; pauses)</h2>
 <table><tr><th>Date</th><th>Motif</th><th>Version</th><th>Branche</th><th>Note</th></tr>
+<tr><td>2026-09-06 01:05</td><td><span class='r r-pause'>pause</span></td><td>v0.1.1</td><td>main</td><td>Banc de preuve CI des etapes 3/4 livre et fusionne (workflow_dispatch seul, SHA epingles verifies, scripts appelant l API reelle du module, bac a sable RUNNER_TEMP, mesures comparees a l attendu, UAC et GUI declares non prouvables). Gate PASS 1157 tests, 2 ecarts mineurs de demonstration (contrefactuel secrets et os.homedir a durcir). LE CADRAGE ETAPES-3-4-WINDOWS-LINUX EST ENTIEREMENT LIVRE (W-L, W-W, banc). Reste au decideur : declencher le banc (gh workflow run banc-etapes-3-4.yml -f os=les-deux -f rollback=true), recette reelle, push Forgejo.</td></tr>
 <tr><td>2026-09-05 15:42</td><td><span class='r r-pause'>pause</span></td><td>v0.1.1</td><td>main</td><td>LOT C.3 + B'-b livre et fusionne : README ecrit, vitrine des 7 artefacts, absences de signature (notarisation macOS, SmartScreen Windows) declarees avec cliquet offline, etape CI de notarisation declarative sans env (un secret vide casse le bundler), face en ligne OK sur v0.1.1. Gate PASS 127 tests. LE LOT C EST ENTIEREMENT LIVRE (C.1, install.mjs, contrat machine, C.2-a, C.2-b, RELEASE-PARTIELLE, C.3). Reste au decideur : recette reelle dmg/msi/deb, run de preuve casser, secrets Apple/Windows, successeurs CONVERGENCE-TROIS-FRERES et UPDATER-DE-LA-FACADE. Limite signalee : cliquet de l aveu unidirectionnel. Push Forgejo EN ATTENTE.</td></tr>
 <tr><td>2026-09-05 15:05</td><td><span class='r r-pause'>pause</span></td><td>v0.1.1</td><td>main</td><td>RELEASE-PARTIELLE-PUBLIEE livre et fusionne (aa1634b, gate PASS 91 tests) : brouillon cree une fois dans prepare, releaseId passe a la matrice, job publier en needs [build] strict, latest derriere publier, entree casser inerte hors dispatch. Cadrage C.3 + B'-b commite (7d1343a, verdicts comme reco). Reste au decideur : run de preuve casser sur un tag de test (CA-R8), run nominal (CA-R9), successeurs soeurs. Prochain lot : C.3 vitrine (Gimli). Push Forgejo EN ATTENTE.</td></tr>
 <tr><td>2026-09-05 14:19</td><td><span class='r r-version'>version</span></td><td>v0.1.1</td><td>main</td><td>v0.1.1 PUBLIEE : PREMIERE RELEASE COMPLETE, run 33965353603, 4/4 plateformes vertes, 9 assets (dmg x2, app.tar.gz x2, msi, setup.exe, deb, rpm, AppImage), latest = v0.1.1. Le script d embarquement a journalise sur Windows (sha256 verifie avant extraction, 552 entrees) : gate humain bsdtar Windows leve par mesure. v0.1.0 reste en pre-release. Reste : recette humaine (dmg Gatekeeper, msi, deb), cadrage RELEASE-PARTIELLE-PUBLIEE puis C.3. Push Forgejo EN ATTENTE.</td></tr>

@@ -78,5 +78,15 @@
     "dirty": false,
     "files": 133,
     "note": "LOT C.3 + B'-b livre et fusionne : README ecrit, vitrine des 7 artefacts, absences de signature (notarisation macOS, SmartScreen Windows) declarees avec cliquet offline, etape CI de notarisation declarative sans env (un secret vide casse le bundler), face en ligne OK sur v0.1.1. Gate PASS 127 tests. LE LOT C EST ENTIEREMENT LIVRE (C.1, install.mjs, contrat machine, C.2-a, C.2-b, RELEASE-PARTIELLE, C.3). Reste au decideur : recette reelle dmg/msi/deb, run de preuve casser, secrets Apple/Windows, successeurs CONVERGENCE-TROIS-FRERES et UPDATER-DE-LA-FACADE. Limite signalee : cliquet de l aveu unidirectionnel. Push Forgejo EN ATTENTE."
+  },
+  {
+    "date": "2026-09-06 01:05",
+    "reason": "pause",
+    "version": "v0.1.1",
+    "branch": "main",
+    "commit": "c1235f7 chore(iakaframe): update etat des lieux + commit global (pause)",
+    "dirty": false,
+    "files": 133,
+    "note": "Banc de preuve CI des etapes 3/4 livre et fusionne (workflow_dispatch seul, SHA epingles verifies, scripts appelant l API reelle du module, bac a sable RUNNER_TEMP, mesures comparees a l attendu, UAC et GUI declares non prouvables). Gate PASS 1157 tests, 2 ecarts mineurs de demonstration (contrefactuel secrets et os.homedir a durcir). LE CADRAGE ETAPES-3-4-WINDOWS-LINUX EST ENTIEREMENT LIVRE (W-L, W-W, banc). Reste au decideur : declencher le banc (gh workflow run banc-etapes-3-4.yml -f os=les-deux -f rollback=true), recette reelle, push Forgejo."
   }
 ]
