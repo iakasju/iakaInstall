@@ -197,12 +197,49 @@ reprise** dans le `.md` (ce qui vient d'être fait, ce qui reste, prochaine éta
       lecteur) — code rendu défensif (`path.join`, pas de concaténation), non exécuté sur ce
       poste macOS. Bump `0.1.0` → `0.1.1` (le tag `v0.1.0` reste immuable et pointe le code
       fautif) ; aucun tag posé par cet agent.*
-- [ ] `RELEASE-PARTIELLE-PUBLIEE` — le workflow a publié `v0.1.0` **non-brouillon** et avancé
-      `releases/latest` alors qu'un job de la matrice (`build windows`) avait échoué : c'est le
-      risque **R8** du cadrage parent (« on déclare livré ce qui n'est que buildé ») réalisé au
-      premier run. À décider (voir aussi `specs/PROJET.md` § « Ce qui reste à décider ») :
-      release en **brouillon** tant que la matrice n'est pas complète ? `needs` strict sur le
-      job `latest` ? Hors périmètre de ce correctif — consigné, non traité.
+- [x] `RELEASE-PARTIELLE-PUBLIEE` — **décidé et livré** (2026-09-05, ⚒️ Gimli, branche
+      `feat/release-brouillon-jusqua-matrice-verte`, REMIS AU GATE 🏹 Legolas, non auto-validé) :
+      **AR-1 → (a)** `releaseDraft: true` dans l'étape `tauri-action` du job `build`, job neuf
+      **`publier`** en `needs: [build]` **strict** (sans `if:`) inséré **avant** le bloc
+      `latest:`, `latest` passe en `needs: publier` (`if: always()` conservé). **AR-2 → (b)** —
+      lecture au SHA épinglé de `tauri-action` confirmée : `releaseId` court-circuite
+      **entièrement** la recherche/création (`src/index.ts:178`), attache directement les
+      artefacts (`src/index.ts:211`) → le brouillon est créé **une seule fois** dans `prepare`,
+      son `release_id` passé à la matrice ; la course F8 (`tauri-apps/tauri-action#914`) est
+      fermée **par construction**, pas seulement gérée au job `publier` (qui reste le filet de
+      secours nommé sur zéro/deux brouillons trouvés pour un même tag). **AR-3 → (a)** un
+      brouillon laissé par une matrice rouge **reste**, daté, **jamais supprimé** par l'agent.
+      **AR-5 → (a) bornée** : entrée `casser` du `workflow_dispatch` (`aucune` par défaut, ou
+      une clé de plateforme), **inerte hors `workflow_dispatch`** (garde statique dessus),
+      étape de sabotage placée **avant** `tauri-action`. **AR-6 → (a)** garde par lecture du
+      **texte** du workflow (`scripts/lib/release-publication.mjs` +
+      `scripts/__tests__/release-publication.test.mjs`, témoin positif + contrefactuels
+      nommés, limite déclarée dans le fichier de garde).
+      **Règle écrite (CA-R du lot)** : *une release d'`iakaInstall` n'existe publiquement
+      (non-brouillon) et n'est désignée `releases/latest` qu'à la **dernière plateforme
+      construite** — un seul job de la matrice en échec suffit à ce que rien ne devienne
+      visible.* Ce que ce lot **ne garantit pas** : qu'une release publiée soit **complète**
+      en contenu (un build vert mais vide passerait la règle) — successeur nommé
+      `PUBLICATION-VERIFIE-LES-ASSETS` ci-dessous. Ce qu'il **n'empêche pas** : le vol du
+      `latest` par une release créée **à la main** hors de ce workflow — sa portée s'arrête à
+      **ce** workflow.
+      **Procédure du run de preuve, réservée au décideur (CA-R8, non couvert par construction)** :
+      `gh workflow run release.yml --repo iakasju/iakaInstall -f tag=<tag-de-test> -f casser=windows`
+      (ou `linux` / `macos-x64` / `macos-arm64`) sur un tag de test, **jamais sur un tag réel** ;
+      vérifier ensuite que la release du tag reste `isDraft: true`
+      (`gh release view <tag> --json isDraft`), que `releases/latest` **n'a pas bougé**
+      (`gh api repos/iakasju/iakaInstall/releases/latest --jq .tag_name`), et que le job
+      `publier` apparaît `skipped` dans le run. Le brouillon de preuve, s'il reste, n'est
+      supprimé **que par le décideur** (acte de release, refusé aux agents). **Gate humain
+      déclaré, non compté couvert** : seul ce run réel prouve CA-R8 ; de même pour un run 4/4
+      vert nominal (CA-R9, `isDraft: false`, 9 assets, `latest` = le tag publié).
+      **Successeurs demandés nommément à 🟠 Aragorn / au décideur** (CA-R11, canal d'écriture de
+      cet agent borné à ce dépôt) : `RELEASE-BROUILLON-JUSQUA-MATRICE-VERTE-COCKPIT`
+      (`IakaCockpit`) et `…-GUI` (`iakaFrameGUI`) — mesure des runs passés faite en lecture
+      seule le 2026-09-05 (aucun run 4/4 systématique, au moins un job de build rouge par sœur
+      dans l'historique récent ; état de complétude des releases publiées à ce moment-là **non
+      mesurable rétroactivement**, déclaré tel) ; transposition **si et seulement si** un
+      cadrage dédié confirme que la faiblesse a mordu ou peut mordre chez elles.
 - [ ] **C.3** — première release réelle, `.dmg` + `.msi`, les 5 autres artefacts.
 - [ ] **B′-b** — vitrine, manifeste updater, canaux, convergence à trois frères
       (mesurable seulement après une release réelle).
@@ -219,3 +256,10 @@ reprise** dans le `.md` (ce qui vient d'être fait, ce qui reste, prochaine éta
       à jouer sur les trois dépôts à la fois ou sur aucun.
 - [ ] `CONVERGENCE-RELEASE-YML-ALIGNEMENT` — aligner les `release.yml` d'IakaCockpit
       et iakaFrameGUI (déjà divergents entre eux, M-R6), avant d'y inscrire ce 3ᵉ dépôt.
+- [ ] `PUBLICATION-VERIFIE-LES-ASSETS` — successeur nommé au lot `RELEASE-PARTIELLE-PUBLIEE`
+      (2026-09-05) : ce lot ferme le trou « **build rouge → release publiée** », **pas** le
+      trou voisin « **build vert et vide → release publiée** » (un job de matrice qui réussit
+      sans rien produire — cas déjà vécu avec la garde muette de `embarquer-cli.mjs` avant son
+      correctif — passerait la règle du lot). Nécessite une table d'artefacts attendus
+      (`fixtures/vitrine-assets.json`, convention des sœurs) que ce dépôt n'a pas encore
+      (vitrine = B′-b).

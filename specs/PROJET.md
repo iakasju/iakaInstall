@@ -290,5 +290,59 @@ Deux voies possibles, **non tranchées** :
 > gate PASS) sera la première `latest` si la matrice passe à 4/4. La décision de fond (brouillon ou
 > `needs` strict) reste ⬜.
 
-⬜ **Attente Stéphane.** Rien n'a été touché à `.github/workflows/release.yml` pour ce point (le
-correctif `fix/embarquer-cli-windows` ne porte que sur `scripts/embarquer-cli.mjs`).
+> **⬜ « Attente Stéphane » ci-dessus est un ÉTAT ANTÉRIEUR, conservé tel quel** (rien n'était
+> encore touché au workflow à ce moment). **Il est dépassé par le verdict daté ci-dessous.**
+
+### Verdict du lot `RELEASE-PARTIELLE-PUBLIEE` (2026-09-05) — DÉCIDÉ ET LIVRÉ
+
+> Rendu par Stéphane le 2026-09-05 (relayé par Aragorn, *« comme reco »*), tranchant les six
+> arbitrages de `specs/instructions/release-partielle-publiee.md` § 3. Implémenté par ⚒️ Gimli,
+> branche `feat/release-brouillon-jusqua-matrice-verte`, **REMIS AU GATE 🏹 Legolas, non
+> auto-validé** — la recommandation motivée complète reste dans l'instruction, elle n'est pas
+> recopiée ici.
+
+**AR-1 → (a)** `releaseDraft: true` dans l'étape `tauri-action` du job `build` ; job neuf
+`publier` en `needs: [build]` **strict** (sans `if:`), inséré **avant** le bloc `latest:` du
+workflow ; le job `latest` passe en `needs: publier` (`if: always()` conservé, motif daté dans
+le fichier). **AR-2 → (b)** confirmée à l'étape 0 : lecture ligne par ligne de `tauri-action` au
+SHA épinglé `84b9d35b5fc46c1e45415bdb6144030364f7ebc5` — `releaseId` court-circuite
+**entièrement** la recherche/création de release (`src/index.ts:178`,
+`if (tagName && !releaseId)`), et attache directement les artefacts à cet id
+(`src/index.ts:211`). Le brouillon est donc créé **une seule fois**, sérialisé dans le job
+`prepare`, son `release_id` passé aux 4 jobs de la matrice — la course F8
+(`tauri-apps/tauri-action#914`) est fermée **par construction**. Le job `publier` reste le
+filet de secours **nommé** : il échoue explicitement s'il trouve zéro ou plus d'un brouillon
+pour le tag. **AR-3 → (a)** un brouillon laissé par une matrice rouge **reste**, daté (titre
+`releaseName` = tag), **jamais supprimé** par l'agent. **AR-4 → `iakaInstall` seul** — voir
+« Successeurs nommés » ci-dessous. **AR-5 → (a) bornée** : entrée `casser` du
+`workflow_dispatch` (`aucune` par défaut, ou une clé de plateforme), lue **uniquement** sous
+`github.event_name == 'workflow_dispatch'` (garde statique dessus), étape de sabotage placée
+**avant** `tauri-action` ; le run qui l'active est réservé au décideur. **AR-6 → (a)** garde
+statique par lecture du **texte** du workflow (regex, zéro dépendance, cohérente avec les trois
+cliquets déjà en place), limite déclarée **dans le fichier de garde lui-même**
+(`scripts/lib/release-publication.mjs`).
+
+**Étape 0 mesurée par ⚒️ Gimli le 2026-09-05** (jamais reprise du rapport d'un autre agent) :
+état réel des releases concordant avec le rapport d'Aragorn (`v0.1.0` non-brouillon 7 assets,
+passée en pré-release par mitigation manuelle ; `v0.1.1` = `latest`, 9 assets) ; chaîne qualité
+verte avant toute modification ; empreinte du bloc `latest:` confirmée `f5de9ecb…` avant
+modification ; lecture au SHA épinglé de `src/index.ts` et `src/create-release.ts` (citations
+de lignes ci-dessus) ; mesure en lecture seule des runs passés d'`IakaCockpit` et
+`iakaFrameGUI` — aucune n'a d'historique 100 % 4/4, au moins un job de build rouge par sœur
+dans les runs `workflow_dispatch` récents (mécanisme identique à celui corrigé ici, confirmé
+par la lecture de code du § 0.5 de l'instruction) ; endpoint `repos/<depot>/releases` confirmé
+rendant le champ `draft` par release (adressage par `id` retenu, jamais par tag, F7).
+
+**Successeurs nommés, demandés nommément à 🟠 Aragorn / au décideur (CA-R11)** — le canal
+d'écriture de ⚒️ Gimli est borné à `specs/instructions/` **de ce dépôt**, l'inscription aux
+backlogs des sœurs n'est pas son geste :
+- `RELEASE-BROUILLON-JUSQUA-MATRICE-VERTE-COCKPIT` → backlog `IakaCockpit`.
+- `RELEASE-BROUILLON-JUSQUA-MATRICE-VERTE-GUI` → backlog `iakaFrameGUI`.
+- `PUBLICATION-VERIFIE-LES-ASSETS` → backlog de **ce** dépôt (inscrit, `CLAUDE.md` § Backlog) :
+  ce lot ferme « build rouge → release publiée », pas « build vert et vide → release publiée ».
+
+**Non couvert par construction, gate humain déclaré (CA-R8/CA-R9)** : seul un run réel avec un
+build volontairement cassé (`casser`) prouve que la release reste brouillon et que
+`releases/latest` ne bouge pas ; seul un run réel 4/4 vert prouve que `publier` publie et que
+`latest` désigne. Procédure complète et gardes-fous : `CLAUDE.md` § Backlog,
+`specs/instructions/release-partielle-publiee.md` § 5.7 et § 8.
