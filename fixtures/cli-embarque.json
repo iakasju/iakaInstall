@@ -1,0 +1,6 @@
+{
+  "_lire": "AR-P2(b) — le cliquet de la ressource embarquee. Ces trois valeurs designent EXACTEMENT l'asset de release GitHub epingle : monter la version du CLI embarque est un lot (AR-P5), pas un geste — voir CLAUDE.md. La verification du sha256 se fait AVANT toute extraction (CA-P13), jamais apres.",
+  "version": "0.40.0",
+  "url": "https://github.com/iakasju/iakaframe/releases/download/v0.40.0/naonedge-iakaframe-0.40.0.tgz",
+  "sha256": "21fe0f9421cf14af97a273d7f06bb645e980004ae8c53efc028c359716ca1032"
+}
