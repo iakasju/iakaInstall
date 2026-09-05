@@ -264,3 +264,25 @@ Chaque feature reçoit son fichier dans `specs/instructions/` AVANT implémentat
 - **AR-P5 → (a)** ressource épinglée, remontée à chaque release de la façade (un lot, pas un
   geste) ; successeur nommé `RESSOURCE-CLI-RAFRAICHIE-EN-LIGNE`, condition d'entrée non mesurée
   (aucune release de la façade n'a encore eu lieu).
+
+### `RELEASE-PARTIELLE-PUBLIEE` — successeur ⬜ à décider (constaté au premier run réel, 2026-09-05)
+
+> Consigné par ⚒️ Gimli (ordre de mission Aragorn, correctif `fix/embarquer-cli-windows`), **sans
+> le corriger** : hors périmètre du correctif. Le fait est mesuré, pas la décision.
+
+Le tag `v0.1.0` a joué le premier run réel du workflow de release (run `33963420727`) : `prepare`
+et les builds `linux` / `macos-x64` / `macos-arm64` ont réussi, **`build windows` a échoué**
+(ressource CLI absente, cause détaillée dans `CLAUDE.md` § Backlog). Le job `latest` a pourtant
+**réussi** : la release `v0.1.0` a été publiée **non-brouillon**, avec seulement 7 des 9 assets
+attendus (ni `.msi` ni `.exe`), et `releases/latest` a été avancé dessus. C'est exactement le
+risque **R8** du cadrage parent (« on déclare livré ce qui n'est que buildé ») — réalisé, pas
+seulement redouté.
+
+Deux voies possibles, **non tranchées** :
+- publier la release en **brouillon** (`draft: true`) tant que la matrice complète n'a pas
+  réussi, un humain la publie ensuite manuellement ;
+- ou poser un `needs:` **strict** sur le job `latest` couvrant **tous** les jobs de build de la
+  matrice (pas seulement ceux déjà requis), pour qu'un job en échec bloque `latest` lui-même.
+
+⬜ **Attente Stéphane.** Rien n'a été touché à `.github/workflows/release.yml` pour ce point (le
+correctif `fix/embarquer-cli-windows` ne porte que sur `scripts/embarquer-cli.mjs`).
