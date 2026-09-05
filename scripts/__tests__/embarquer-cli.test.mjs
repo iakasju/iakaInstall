@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { embarquer, sha256 } from "../embarquer-cli.mjs";
+import { embarquer, sha256 } from "../lib/embarquer.mjs";
 
 // CA-P13 — la ressource est verifiee AVANT d'etre extraite. Un tarball corrompu
 // (sha256 divergent) est REFUSE, rien n'est ecrit sous `dest`.

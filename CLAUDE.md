@@ -48,6 +48,11 @@ npm run embarquer            # AR-P2(b) : telecharge + verifie (sha256) + extrai
                               #   AUTOMATIQUE avant `npm run tauri build` (voir plus bas) ;
                               #   a lancer A LA MAIN avant `npm run tauri dev` (beforeDevCommand
                               #   ne l'appelle pas).
+                              #   Logique dans scripts/lib/embarquer.mjs (module pur, teste sans
+                              #   reseau) ; scripts/embarquer-cli.mjs est le SEUL point d'entree,
+                              #   appelle embarquer() inconditionnellement (plus de garde
+                              #   d'entree — correction post-gate FAIL Windows, v0.1.0, voir
+                              #   backlog).
 npm run vocabulaire          # regenere src/events/vocabulaire.ts depuis la ressource embarquee
 npm run dev                  # front Vite seul (port 3040)
 npm run tauri dev            # app desktop Tauri en dev (GUI) — exige IAKAINSTALL_SANDBOX (AR-P4)
@@ -171,6 +176,33 @@ reprise** dans le `.md` (ce qui vient d'être fait, ce qui reste, prochaine éta
       17063 (`bsdtar`), non exécuté sur ce poste macOS, donc non prouvé ici. Les builds
       Linux / Windows / macOS Intel de la matrice restent, comme avant, prouvables en CI
       seulement.
+- [x] **Correctif post-premier-run-réel (2026-09-05)** — le tag `v0.1.0` a bien tourné en CI
+      (run `33963420727`) : `prepare` + les trois builds macOS/Linux OK, mais **`build windows`
+      a rougi** — `resources\cli` absent. Cause réelle, distincte de la précédente : la garde
+      d'entrée de `scripts/embarquer-cli.mjs`
+      (`import.meta.url === \`file://${process.argv[1]}\``) est **toujours fausse sur Windows**
+      (URL encodée à slashs vs chemin natif à antislashs), **toujours vraie par accident sur
+      POSIX** — le script se terminait en ~0,4 s, code 0, **sans rien faire ni rien écrire**
+      (garde muette). La release `v0.1.0` a néanmoins été **publiée non-brouillon** avec 7
+      assets (ni `.msi` ni `.exe`) — voir `RELEASE-PARTIELLE-PUBLIEE` ci-dessous.
+      *Correctif (⚒️ Gimli, branche `fix/embarquer-cli-windows`, REMIS AU GATE 🏹 Legolas, non
+      auto-validé) : garde supprimée (pas réparée) ; logique déplacée dans
+      `scripts/lib/embarquer.mjs` (jamais auto-exécuté) ; `scripts/embarquer-cli.mjs` appelle
+      `embarquer()` inconditionnellement et rougit désormais explicitement si
+      `dest/package.json` est absent ou porte la mauvaise version. Journal complet imprimé
+      (version, url, sha256, destination, nombre d'entrées extraites). Rejeu réel sur ce poste :
+      ressource supprimée puis `npm run tauri build -- --target aarch64-apple-darwin` →
+      ressource reproduite et embarquée dans le `.app`. Non couvert, DÉCLARÉ gate humain : le
+      comportement réel de `bsdtar` sur `windows-latest` (chemins à antislashs/lettre de
+      lecteur) — code rendu défensif (`path.join`, pas de concaténation), non exécuté sur ce
+      poste macOS. Bump `0.1.0` → `0.1.1` (le tag `v0.1.0` reste immuable et pointe le code
+      fautif) ; aucun tag posé par cet agent.*
+- [ ] `RELEASE-PARTIELLE-PUBLIEE` — le workflow a publié `v0.1.0` **non-brouillon** et avancé
+      `releases/latest` alors qu'un job de la matrice (`build windows`) avait échoué : c'est le
+      risque **R8** du cadrage parent (« on déclare livré ce qui n'est que buildé ») réalisé au
+      premier run. À décider (voir aussi `specs/PROJET.md` § « Ce qui reste à décider ») :
+      release en **brouillon** tant que la matrice n'est pas complète ? `needs` strict sur le
+      job `latest` ? Hors périmètre de ce correctif — consigné, non traité.
 - [ ] **C.3** — première release réelle, `.dmg` + `.msi`, les 5 autres artefacts.
 - [ ] **B′-b** — vitrine, manifeste updater, canaux, convergence à trois frères
       (mesurable seulement après une release réelle).

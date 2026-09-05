@@ -1,6 +1,6 @@
 [package]
 name = "iakainstall"
-version = "0.1.0"
+version = "0.1.1"
 description = "iakaInstall - facade d'installation de la suite iaka (coquille, C.2-a)"
 authors = ["Stephane / iakateam"]
 edition = "2021"
