@@ -24,29 +24,30 @@ code{font-family:'SF Mono',Consolas,monospace;background:rgba(200,164,78,.1);col
 footer{margin-top:3rem;padding-top:1.2rem;border-top:1px solid #1f1f1f;color:#555;font-size:.78rem;}
 </style></head><body>
 <h1>Etat des lieux - <span class="accent">iakaInstall</span></h1>
-<div class="sub">Genere le 2026-09-05 00:52 - motif : pause - a regenerer a chaque version et a chaque pause/reprise.</div>
+<div class="sub">Genere le 2026-09-05 13:24 - motif : pause - a regenerer a chaque version et a chaque pause/reprise.</div>
 <h2>Etat courant</h2>
 <div class="kv">
   <div class="k">Version</div><div>v0.1.0</div>
   <div class="k">Branche</div><div>main</div>
-  <div class="k">Dernier commit</div><div><code>72bdc7d merge: LOT C.2-a + B'-a — coquille Tauri studio-clair + ossature de release (gate Legolas PASS au second passage)</code></div>
+  <div class="k">Dernier commit</div><div><code>6bad4fd merge: LOT C.2-b — pilotage reel de la facade par le contrat machine du CLI 0.40.0 (gate Legolas PASS au second passage)</code></div>
   <div class="k">Arbre</div><div><span class='ok'>propre</span></div>
-  <div class="k">Fichiers</div><div>94 (suivis + non ignores)</div>
-  <div class='k'>Note</div><div>LOT C.2-a + B'-a livre et fusionne (72bdc7d) : coquille Tauri 2 en charte studio-clair, ecran d annonce qui dit que l app n installe rien encore, ossature release.yml 4 plateformes epinglee au SHA. Gate Legolas FAIL (CA-I8a, garde de vocabulaire aveugle a l interpolation) puis PASS au second passage apres garde de rendu. 41 tests front + 5 cargo verts, build macOS arm64 OK. Actes du decideur en attente : passage en PUBLIC (AR-I4), premier run CI, builds Windows/Linux/Intel. C.2-b (pilotage reel) attend le contrat machine du CLI (branche feat/contrat-machine-install d iakaframe, en gate). Push Forgejo EN ATTENTE (NAS injoignable) ; GitHub a jour.</div>
+  <div class="k">Fichiers</div><div>117 (suivis + non ignores)</div>
+  <div class='k'>Note</div><div>LOT C.2-b livre et fusionne (6bad4fd) : la facade pilote REELLEMENT le CLI 0.40.0 embarque (pont Rust std::process, flux --events NDJSON, feu vert par stdin, reducteur pur, garde de vocabulaire a 3 jambes, CA-I8b enfin couvert). Gate FAIL (release.yml ne produisait pas la ressource) puis PASS au 2e passage (beforeBuildCommand = npm run embarquer &amp;&amp; npm run build, garde dediee). 70 tests front, 22 cargo, build macOS OK avec ressource. Depot PUBLIC depuis ce jour. Reste au decideur : tag v0.1.0 = premier run CI 4 plateformes (Windows tar non prouve), recette 3 OS, notarisation (C.3). Push Forgejo EN ATTENTE (NAS injoignable) ; GitHub a jour.</div>
 </div>
-<h2>Commits recents</h2><table><tr><th>Hash</th><th>Date</th><th>Sujet</th></tr><tr><td><code>72bdc7d</code></td><td>2026-09-05</td><td>merge: LOT C.2-a + B'-a — coquille Tauri studio-clair + ossature de release (gate Legolas PASS au second passage)</td></tr>
-<tr><td><code>e468b6b</code></td><td>2026-09-05</td><td>docs(qualite): re-gate lot C.2-a + B'-a — PASS</td></tr>
-<tr><td><code>30d77bb</code></td><td>2026-09-05</td><td>fix(gardes): lire le registre par import JSON, pas node:fs (typecheck)</td></tr>
-<tr><td><code>31fcb41</code></td><td>2026-09-05</td><td>docs(etat-des-lieux): régénère + récit de reprise (écart E-3 du gate)</td></tr>
-<tr><td><code>a0a21bf</code></td><td>2026-09-05</td><td>docs(qualite): traçabilité étape 1 lot C.2-a (M-C1..M-C4 rejouées)</td></tr>
-<tr><td><code>261c2c5</code></td><td>2026-09-05</td><td>fix(front): ne plus reproduire le format [n/N] du moteur (CA-I8a, R3)</td></tr>
-<tr><td><code>b567771</code></td><td>2026-09-05</td><td>fix(gardes): balayer le RENDU en plus de la source (CA-I8a, R-I5)</td></tr>
-<tr><td><code>18478ca</code></td><td>2026-09-05</td><td>docs(qualite): gate lot C.2-a + B'-a — FAIL</td></tr>
-<tr><td><code>bb98387</code></td><td>2026-09-04</td><td>docs(claude): remplir CLAUDE.md — stack reelle, commandes exposees</td></tr>
-<tr><td><code>b10dda5</code></td><td>2026-09-04</td><td>feat(ci): ossature de release B'-a — matrice 4 plateformes, SHA epingle</td></tr>
+<h2>Commits recents</h2><table><tr><th>Hash</th><th>Date</th><th>Sujet</th></tr><tr><td><code>6bad4fd</code></td><td>2026-09-05</td><td>merge: LOT C.2-b — pilotage reel de la facade par le contrat machine du CLI 0.40.0 (gate Legolas PASS au second passage)</td></tr>
+<tr><td><code>a689d51</code></td><td>2026-09-05</td><td>docs(qualite): re-gate lot C.2-b — PASS</td></tr>
+<tr><td><code>d5050e6</code></td><td>2026-09-05</td><td>docs: consigner la correction post-gate FAIL (ressource CLI avant build)</td></tr>
+<tr><td><code>ed8e4ea</code></td><td>2026-09-05</td><td>test(gardes): rougit si la ressource CLI cesse d'etre produite avant le build</td></tr>
+<tr><td><code>1cdf9c4</code></td><td>2026-09-05</td><td>fix(ci): produire la ressource CLI avant tout build Tauri, local et CI</td></tr>
+<tr><td><code>920a88a</code></td><td>2026-09-05</td><td>docs(qualite): gate lot C.2-b — FAIL</td></tr>
+<tr><td><code>c281135</code></td><td>2026-09-05</td><td>docs: CLAUDE.md + PROJET.md a jour pour C.2-b (etape 11)</td></tr>
+<tr><td><code>fdedf6f</code></td><td>2026-09-05</td><td>feat(rejeu): rejeu vivant depuis la ressource embarquee (CA-P4, 2e jambe)</td></tr>
+<tr><td><code>b8fa01d</code></td><td>2026-09-05</td><td>refactor(coverage): retrograde coverage.ts en indice pre-flux (M-F6)</td></tr>
+<tr><td><code>6ff34e3</code></td><td>2026-09-05</td><td>test(ecran): couvre CA-P5/CA-P6/CA-P10 sur le pilotage reel</td></tr>
 </table>
 <h2>Journal (versions &amp; pauses)</h2>
 <table><tr><th>Date</th><th>Motif</th><th>Version</th><th>Branche</th><th>Note</th></tr>
+<tr><td>2026-09-05 13:24</td><td><span class='r r-pause'>pause</span></td><td>v0.1.0</td><td>main</td><td>LOT C.2-b livre et fusionne (6bad4fd) : la facade pilote REELLEMENT le CLI 0.40.0 embarque (pont Rust std::process, flux --events NDJSON, feu vert par stdin, reducteur pur, garde de vocabulaire a 3 jambes, CA-I8b enfin couvert). Gate FAIL (release.yml ne produisait pas la ressource) puis PASS au 2e passage (beforeBuildCommand = npm run embarquer &amp;&amp; npm run build, garde dediee). 70 tests front, 22 cargo, build macOS OK avec ressource. Depot PUBLIC depuis ce jour. Reste au decideur : tag v0.1.0 = premier run CI 4 plateformes (Windows tar non prouve), recette 3 OS, notarisation (C.3). Push Forgejo EN ATTENTE (NAS injoignable) ; GitHub a jour.</td></tr>
 <tr><td>2026-09-05 00:52</td><td><span class='r r-pause'>pause</span></td><td>v0.1.0</td><td>main</td><td>LOT C.2-a + B'-a livre et fusionne (72bdc7d) : coquille Tauri 2 en charte studio-clair, ecran d annonce qui dit que l app n installe rien encore, ossature release.yml 4 plateformes epinglee au SHA. Gate Legolas FAIL (CA-I8a, garde de vocabulaire aveugle a l interpolation) puis PASS au second passage apres garde de rendu. 41 tests front + 5 cargo verts, build macOS arm64 OK. Actes du decideur en attente : passage en PUBLIC (AR-I4), premier run CI, builds Windows/Linux/Intel. C.2-b (pilotage reel) attend le contrat machine du CLI (branche feat/contrat-machine-install d iakaframe, en gate). Push Forgejo EN ATTENTE (NAS injoignable) ; GitHub a jour.</td></tr>
 <tr><td>2026-09-05 00:24</td><td><span class='r r-manual'>manual</span></td><td>v0.1.0</td><td>feat/facade-tauri-ossature-release</td><td>Correction post-gate FAIL (CA-I8a) : garde de vocabulaire etendue au rendu, ecran corrige (Etape n sur N au lieu de [n/N]), tracabilite etape 1 (M-C1..M-C4) documentee. Ecart E-3 du gate (etat des lieux non regenere depuis onboarding) leve.</td></tr>
 <tr><td>2026-09-03 23:22</td><td><span class='r r-version'>version</span></td><td>v0.1.0</td><td>main</td><td>onboarding initial</td></tr>
