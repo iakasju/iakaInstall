@@ -31,6 +31,14 @@
     {
       "chemin": "src/events/modele.ts",
       "motif": "le modele de vue porte un champ `rollback` (RollbackVue) pour rendre INTEGRALEMENT l'evenement `rollback` du moteur (§ 5 etape 5.3, AR-5 garde 3) — jamais une reimplementation du mecanisme, seulement son affichage"
+    },
+    {
+      "chemin": "src/components/EcranPilotage.tsx",
+      "motif": "rend INTEGRALEMENT l'evenement `rollback` du moteur (resume, defaits, nonDefaits, rapports — § 5 etape 5.3, AR-5 garde 3) : c'est l'ECRAN qui doit nommer ce champ pour l'afficher, jamais une reimplementation du mecanisme de retour arriere"
+    },
+    {
+      "chemin": "src-tauri/src/pilote.rs",
+      "motif": "le pont natif construit l'argv EXACT du moteur (§ 5 etape 2) : `--apps-dir` est le NOM DE L'OPTION du moteur qu'il doit passer telle quelle, et `rollback` apparait dans le commentaire de module documentant le canal stderr (M-C10) — jamais une reimplementation du mecanisme, seulement son invocation et son transport"
     }
   ]
 }

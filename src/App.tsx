@@ -2,13 +2,9 @@ import { ETAPES_ANNONCEES, NB_ETAPES } from "./steps";
 import { etapes34Couvertes, normaliserOs } from "./coverage";
 import { usePrerequisites } from "./hooks/usePrerequisites";
 import { usePlatformInfo } from "./hooks/usePlatformInfo";
+import { usePilotageInstallation } from "./hooks/usePilotageInstallation";
+import EcranPilotage from "./components/EcranPilotage";
 import "./App.css";
-
-const CAUSE_DESARMEMENT =
-  "Le lancement est desactive : le moteur d'installation ne fournit pas encore, " +
-  "aujourd'hui, de moyen pour un programme de valider chaque etape sans terminal. " +
-  "Cette application n'installe rien pour l'instant — elle annonce ce qu'elle fera " +
-  "une fois ce prerequis livre (successeur CONTRAT-MACHINE-DU-VERBE-INSTALL).";
 
 function SectionPrerequis() {
   const state = usePrerequisites();
@@ -59,6 +55,8 @@ function SectionCouverture() {
 }
 
 export default function App() {
+  const pilotage = usePilotageInstallation();
+
   return (
     <main className="ecran-annonce">
       <h1>iakaInstall</h1>
@@ -99,11 +97,19 @@ export default function App() {
       </section>
 
       <section aria-label="lancement">
-        <button type="button" disabled>
-          Lancer l'installation
-        </button>
-        <p className="cause-desarmement">{CAUSE_DESARMEMENT}</p>
+        {pilotage.phase === "avant-tout-flux" && (
+          <button type="button" onClick={pilotage.lancerApercu}>
+            Voir ce qui sera fait (aperçu)
+          </button>
+        )}
+        {pilotage.peutLancerReel && (
+          <button type="button" onClick={pilotage.lancerReel}>
+            Lancer l'installation
+          </button>
+        )}
       </section>
+
+      <EcranPilotage etat={pilotage} />
     </main>
   );
 }

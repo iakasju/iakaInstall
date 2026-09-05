@@ -4,15 +4,33 @@ import App from "../App";
 
 const detectPrerequisites = vi.fn();
 const getPlatformInfo = vi.fn();
+const demarrerInstallation = vi.fn();
+const repondreFeuVert = vi.fn();
+const interrompreInstallation = vi.fn();
+const ecouterEvenementsPilote = vi.fn();
+const ecouterErreursPilote = vi.fn();
+const ecouterCodeSortiePilote = vi.fn();
 
 vi.mock("../api/backend", () => ({
   detectPrerequisites: (...args: unknown[]) => detectPrerequisites(...args),
   getPlatformInfo: (...args: unknown[]) => getPlatformInfo(...args),
+  demarrerInstallation: (...args: unknown[]) => demarrerInstallation(...args),
+  repondreFeuVert: (...args: unknown[]) => repondreFeuVert(...args),
+  interrompreInstallation: (...args: unknown[]) => interrompreInstallation(...args),
+  ecouterEvenementsPilote: (...args: unknown[]) => ecouterEvenementsPilote(...args),
+  ecouterErreursPilote: (...args: unknown[]) => ecouterErreursPilote(...args),
+  ecouterCodeSortiePilote: (...args: unknown[]) => ecouterCodeSortiePilote(...args),
 }));
 
 beforeEach(() => {
   detectPrerequisites.mockReset();
   getPlatformInfo.mockReset();
+  demarrerInstallation.mockReset();
+  repondreFeuVert.mockReset();
+  interrompreInstallation.mockReset();
+  ecouterEvenementsPilote.mockReset().mockResolvedValue(() => {});
+  ecouterErreursPilote.mockReset().mockResolvedValue(() => {});
+  ecouterCodeSortiePilote.mockReset().mockResolvedValue(() => {});
 });
 
 describe("ecran d'annonce", () => {
@@ -56,7 +74,7 @@ describe("ecran d'annonce", () => {
     await waitFor(() => expect(screen.getByText(/sont couvertes\./)).toBeTruthy());
   });
 
-  it("CA-I11 — le bouton de lancement est desarme et la cause est nommee", async () => {
+  it("CA-P8 (= CA-I11 transformee) — avant tout apercu, seul le bouton d'apercu existe, jamais desarme", async () => {
     detectPrerequisites.mockResolvedValue({
       node: { present: true, version: "v20.0.0" },
       npm: { present: true, version: "10.0.0" },
@@ -64,10 +82,16 @@ describe("ecran d'annonce", () => {
     getPlatformInfo.mockResolvedValue({ os: "macos", arch: "aarch64" });
 
     render(<App />);
+    await waitFor(() => expect(getPlatformInfo).toHaveBeenCalled());
 
-    const bouton = screen.getByRole("button", { name: /Lancer l'installation/ });
-    expect(bouton.hasAttribute("disabled")).toBe(true);
-    expect(screen.getByText(/moteur d'installation ne fournit pas encore/)).toBeTruthy();
+    const boutonApercu = screen.getByRole("button", { name: /Voir ce qui sera fait/ });
+    expect(boutonApercu.hasAttribute("disabled")).toBe(false);
+    // Le texte perime (l'application "n'installe rien encore") a disparu :
+    // il cessait d'etre vrai (§ 2 de l'instruction pilotage-reel-facade-contrat-machine.md).
+    expect(document.body.textContent).not.toMatch(/n'installe rien/);
+    // "Lancer l'installation" n'existe QU'apres un apercu termine avec succes
+    // (CA-P5) — jamais avant, jamais desarme par un `disabled`.
+    expect(screen.queryByRole("button", { name: /Lancer l'installation/ })).toBeNull();
   });
 
   it("CA-I12 — l'absence de npm est detectee et DITE, jamais un plantage ni un silence", async () => {
