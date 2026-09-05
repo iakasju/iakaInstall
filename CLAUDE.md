@@ -74,6 +74,16 @@ npm run test                 # vitest (front + scripts/)
 npm run rejeu:vivant         # CA-P4 (2e jambe) : rejoue un apercu reel, HORS npm test (reseau)
 npm run chartes              # re-synchronise la charte depuis iakagraph/theme/studio/clair/
 
+# --- Vitrine (C.3 + B'-b, 2026-09-05) -------------------------------------------------------------
+# La section "Installation" du README est GENEREE entre marqueurs
+# (`<!-- vitrine:debut:<zone> -->`) depuis fixtures/vitrine-assets.json (table des 7 plateformes,
+# copiee byte-identique des soeurs IakaCockpit/iakaFrameGUI) et fixtures/vitrine-locale.json
+# (depot, absents, absences_de_signature). Convention CONVERGENCE-TROIS-FRERES : voir Backlog.
+npm run vitrine               # reecrit les zones du README depuis l'autorite (package.json + fixtures)
+npm run vitrine:check         # compare sans ecrire (code 1 si derive) — c'est la garde du gate
+npm run vitrine:en-ligne      # FACE EN LIGNE, HORS GATE : anonyme, sans jeton, vue d'un visiteur
+# Codes de vitrine:en-ligne : 0 concorde · 1 ecart(s) · 3 NON MESURE (pas de reseau, jamais un vert).
+
 # Côté Rust (depuis src-tauri/) :
 cargo test
 cargo fmt --check
@@ -240,9 +250,70 @@ reprise** dans le `.md` (ce qui vient d'être fait, ce qui reste, prochaine éta
       dans l'historique récent ; état de complétude des releases publiées à ce moment-là **non
       mesurable rétroactivement**, déclaré tel) ; transposition **si et seulement si** un
       cadrage dédié confirme que la faiblesse a mordu ou peut mordre chez elles.
-- [ ] **C.3** — première release réelle, `.dmg` + `.msi`, les 5 autres artefacts.
-- [ ] **B′-b** — vitrine, manifeste updater, canaux, convergence à trois frères
-      (mesurable seulement après une release réelle).
+- [x] **C.3 + B′-b — la vitrine à trois frères** (2026-09-05, ⚒️ Gimli, branche
+      `feat/vitrine-trois-freres`, **REMIS AU GATE 🏹 Legolas, non auto-validé**). Cadré par
+      🔵 Gandalf, 6 arbitrages **TRANCHÉS** par Stéphane le 2026-09-05 :
+      → `specs/instructions/amorcage-c3-vitrine-trois-freres.md`.
+      **C.3 clos** : la release réelle (`v0.1.1`, run `33965353603`, 4/4, 9 assets) était déjà
+      faite ; ce qui en restait (notarisation déclarée, écart AR-C(a) écrit) est la matière de
+      B′-b — les deux étaient un seul geste (**AR-V1 → (a)**).
+      **Livré** : `README.md` **écrit de zéro** (n'existait pas, M-1) avec ses zones `binaires` /
+      `securite` / `sources` générées, le comptage AR-A repris au mot près de `src/App.tsx:84`,
+      et l'écart AR-C(a) écrit en toutes lettres pour l'utilisateur (« ils amorcent ce qui
+      enchaîne ») ; `fixtures/vitrine-assets.json` copié **byte-identique** des sœurs (vérifié
+      par empreinte) ; `fixtures/vitrine-locale.json` avec la clé **neuve**
+      `absences_de_signature` (**AR-V2 → (a)**) — deux entrées (notarisation macOS, signature
+      Windows), chacune avec motif **mesuré sur l'asset réel** (`codesign`/`spctl` sur le `.dmg`
+      arm64 téléchargé : `Signature=adhoc`, `TeamIdentifier=not set`, `spctl` rejette), date,
+      condition de levée honnête et procédure exacte (Sequoia : Réglages Système →
+      Confidentialité et sécurité → Ouvrir quand même, dans l'heure — **jamais** « Control-clic » ;
+      SmartScreen : Informations complémentaires → Exécuter quand même) ; `rendreSecurite()` +
+      zone `securite` ajoutées à la copie locale de `scripts/lib/vitrine.mjs`, avec cartouche de
+      divergence en tête et **cliquet offline** (`ecartsCliquetSecurite`/
+      `detecterCablageSignatureActif`) qui rougit si `release.yml` câble un jour un `env:`
+      APPLE_*/WINDOWS_* actif — **contrefactuel joué et révoqué** (empreinte `sha256`
+      identique). Trois scripts npm (`vitrine`, `vitrine:check`, `vitrine:en-ligne`) exposés et
+      documentés ci-dessus. Étape CI de notarisation dans `release.yml`
+      (**AR-V5 → (b)**, motivé § 0.3 ci-dessous) : elle **imprime son verdict**, ne câble
+      **aucun** `env:` APPLE_* sur `tauri-action` (mesuré : ce câblage, même vide, casserait le
+      build — `tauri-apps/tauri-action#291`), et lit la présence des secrets par expression
+      GitHub Actions (`${{ secrets.X }}`, substitution textuelle, aucune variable
+      d'environnement créée). `iakaInstall` **n'entre PAS** au registre de convergence des sœurs
+      (**AR-V4 → (a)** — successeur `CONVERGENCE-TROIS-FRERES` ci-dessous) ; `IakaCockpit` et
+      `iakaFrameGUI` **intacts** (`fixtures/convergence.sha256` toujours à 90 lignes de part et
+      d'autre, `git diff` vide sur ce fichier des deux côtés).
+      **Preuve mesurée** — `npm run typecheck` `0` ; `npm run lint` `0` ; `npm run test` `0`,
+      **`127 passed (127)`** (avant : 91 — **+36 tests, aucun supprimé**) ; `cargo test` `0`,
+      `22 passed` (**aucun `.rs` ni `tauri.conf.json` modifié par ce lot : pas de build Tauri à
+      rejouer**) ; `npm run vitrine:check` → `0` ; `npm run vitrine:en-ligne` sur `v0.1.1` → **`0`**
+      (concordance réelle, code cité, jamais un `3` présenté comme un succès).
+      **Non couvert, DÉCLARÉ gate humain** (§ 8 de l'instruction) : téléchargement du `.dmg` par
+      navigateur sur un Mac vierge (Gatekeeper + procédure Sequoia telle qu'écrite) ; `.msi` sur
+      Windows réel (SmartScreen) ; `.deb`/AppImage sur Linux réel ; `.dmg` Intel sur Mac Intel ;
+      voir l'étape de notarisation s'exécuter dans un run CI réel (exige un tag, acte du
+      décideur) ; poser les secrets Apple/Windows (acte du décideur).
+      **Successeurs nommés** (backlog, non traités par ce lot) : voir `CONVERGENCE-TROIS-FRERES`
+      et `UPDATER-DE-LA-FACADE` ci-dessous.
+- [ ] `CONVERGENCE-TROIS-FRERES` — successeur nommé d'**AR-V4 → (a)** (lot vitrine, 2026-09-05),
+      **à jouer dans les DEUX SŒURS** (`IakaCockpit`, `iakaFrameGUI`), pas ici : canal d'écriture
+      de ⚒️ Gimli borné à ce dépôt (CA-R11). Mandat en trois points, écrit pour qu'il ne se perde
+      pas : (i) rendre la résolution du frère **N-aire ou autoritaire** dans
+      `scripts/test-convergence.mjs` des deux sœurs, en fermant le hors-couverture *« sans
+      `IAKA_CONVERGENCE_HOME`, on retient le premier voisin qui porte le registre »* (angle mort
+      qu'un 3ᵉ porteur réaliserait sans rien dire, M-14) ; (ii) **remonter `rendreSecurite()`**
+      chez les deux sœurs, qui ont la **même** absence de notarisation/signature non déclarée
+      (M-15, mesuré : `iakaFrameGUI/fixtures/vitrine-locale.json` porte `"absents": []` avec
+      *« AUCUN absent déclaré »*, rien sur la signature) ; (iii) alors seulement inscrire
+      `iakaInstall` au registre de convergence et relever le cliquet. Ordre de grandeur **≈ 0,75 j**.
+- [ ] `UPDATER-DE-LA-FACADE` — successeur nommé d'**AR-V3 → (a)** (lot vitrine, 2026-09-05).
+      La façade n'a **ni `pubkey`, ni `endpoints`, ni `createUpdaterArtifacts`** — Tauri v2 est
+      catégorique : la signature de la charge de l'updater *« cannot be disabled »*, ce qui
+      suppose de **générer une paire de clés minisign et poser deux secrets dans les réglages du
+      dépôt** — acte du décideur, refusé aux agents. **Condition d'entrée** : le décideur pose la
+      paire minisign **ET** une seconde version de la façade est publiée (sinon la question reste
+      hypothétique — un installeur figé se met à jour en le retéléchargeant, ce que la vitrine
+      livre déjà). Emporte avec lui `fixtures/canaux-publication.json` (aucun consommateur sans
+      chaîne de publication). Ordre de grandeur **≈ 1 j**.
 - [ ] `SIDECAR-CLI-AUTONOME` — successeur AR-I2(c), si servir des postes sans Node
       devient une exigence.
 - [ ] `RESSOURCE-CLI-RAFRAICHIE-EN-LIGNE` — successeur AR-P5(b), si la façade vieillit
