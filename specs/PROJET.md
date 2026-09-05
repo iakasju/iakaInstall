@@ -284,5 +284,11 @@ Deux voies possibles, **non tranchées** :
 - ou poser un `needs:` **strict** sur le job `latest` couvrant **tous** les jobs de build de la
   matrice (pas seulement ceux déjà requis), pour qu'un job en échec bloque `latest` lui-même.
 
+> **Mitigation appliquée le 2026-09-05** (verdict Stéphane « pre release », appliqué par 🟠 Aragorn) : la
+> release `v0.1.0` est passée en **pré-release** avec une note explicative ; `releases/latest` répond
+> désormais **404** — aucune release complète n'existe, et c'est exact. `v0.1.1` (correctif Windows,
+> gate PASS) sera la première `latest` si la matrice passe à 4/4. La décision de fond (brouillon ou
+> `needs` strict) reste ⬜.
+
 ⬜ **Attente Stéphane.** Rien n'a été touché à `.github/workflows/release.yml` pour ce point (le
 correctif `fix/embarquer-cli-windows` ne porte que sur `scripts/embarquer-cli.mjs`).
