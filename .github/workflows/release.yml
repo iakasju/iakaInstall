@@ -163,6 +163,42 @@ jobs:
           echo "::error::preuve AR-5/CA-R8 : la release doit rester en brouillon apres ceci."
           exit 1
 
+      # AR-V5(b), 2026-09-05 (amorcage-c3-vitrine-trois-freres.md, etape 0.3 et § 3 AR-V5) —
+      # DECLARATION SEULE, AUCUN CABLAGE `env:` SUR L'ETAPE tauri-action CI-DESSOUS.
+      #
+      # POURQUOI (b) ET PAS (a). Lu au tag @tauri-apps/cli-v2.11.4 (celui que resout
+      # package-lock.json de ce depot) : `crates/tauri-bundler/src/bundle/macos/sign.rs:19-44`,
+      # `keychain()` entre dans la branche de SIGNATURE des qu'`APPLE_CERTIFICATE` ET
+      # `APPLE_CERTIFICATE_PASSWORD` sont TOUTES DEUX PRESENTES (`var_os`, `Some`) dans
+      # l'environnement du process enfant — MEME VIDES. Or GitHub Actions pose une variable
+      # `env:` referencant un secret ABSENT comme une chaine VIDE mais PRESENTE. Cabler ces deux
+      # cles dans un bloc `env:` de l'etape tauri-action, sans que les secrets existent,
+      # ferait donc decoder un certificat p12 VIDE puis echouer `security import` — MATRICE 4/4
+      # VERTE CASSEE pour une etape decorative (tauri-apps/tauri-action#291, cite au cadrage
+      # § 0.4). On ne cable donc RIEN sur l'etape suivante : cette etape-ci se contente de LIRE
+      # la presence des secrets via le CONTEXTE GITHUB ACTIONS (`${{ secrets.X }}`, substitue
+      # TEXTUELLEMENT avant l'execution du shell — CECI N'ECRIT AUCUNE VARIABLE D'ENVIRONNEMENT
+      # dans le process enfant, contrairement a un bloc `env:`), donc SANS le risque mesure
+      # ci-dessus. Voir aussi `fixtures/vitrine-locale.json` § `absences_de_signature` et le
+      # CLIQUET OFFLINE de `scripts/lib/vitrine.mjs` (`ecartsCliquetSecurite`) : si ce fichier
+      # venait un jour a cabler un `env:` APPLE_* actif sur l'etape suivante, ce cliquet force le
+      # retrait de la declaration « macos-notarisation » de la vitrine — jamais un silence.
+      - name: Notarisation macOS — declaration (AR-V5(b), aucun cablage)
+        if: startsWith(matrix.key, 'macos')
+        run: |
+          if [ -n "${{ secrets.APPLE_CERTIFICATE }}" ] && [ -n "${{ secrets.APPLE_CERTIFICATE_PASSWORD }}" ]; then
+            echo "notarisation ACTIVE : APPLE_CERTIFICATE et APPLE_CERTIFICATE_PASSWORD sont poses."
+            echo "::warning::cette etape ne cable RIEN sur tauri-action — un lot dedie (cablage"
+            echo "::warning::env: + rejeu de la matrice) doit le faire avant que ceci ait un effet."
+          else
+            echo "notarisation SAUTEE — aucun certificat Apple pose dans les reglages du depot."
+            echo "voir fixtures/vitrine-locale.json § absences_de_signature (cle macos-notarisation)."
+            echo "condition de levee : adhesion Apple Developer Program acquise ET secrets"
+            echo "APPLE_CERTIFICATE / APPLE_CERTIFICATE_PASSWORD (+ APPLE_ID/APPLE_PASSWORD/"
+            echo "APPLE_TEAM_ID ou APPLE_API_*) poses par le decideur dans les reglages du depot —"
+            echo "acte refuse aux agents (§ 4 Exclu de l'instruction amorcage-c3-vitrine-trois-freres.md)."
+          fi
+
       # Referent IMMUABLE — cliquet dans fixtures/tauri-action-pin.json (copie
       # de la discipline L41 du Cockpit : le SHA epingle est celui contre
       # lequel les entrees ci-dessous ont ete LUES, jamais un tag deplacable).
