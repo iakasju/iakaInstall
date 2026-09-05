@@ -9,6 +9,9 @@
 //! arriere en cas d'echec) est C.2-b, et attend un prerequis cote CLI
 //! (successeur nomme dans l'instruction de ce lot).
 
+mod pilote;
+
+use pilote::{demarrer_installation, interrompre_installation, repondre_feu_vert, Pilote};
 use serde::Serialize;
 use std::process::Command;
 
@@ -80,10 +83,14 @@ fn platform_info() -> PlatformInfo {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .manage(Pilote::default())
         .invoke_handler(tauri::generate_handler![
             ping,
             detect_prerequisites,
-            platform_info
+            platform_info,
+            demarrer_installation,
+            repondre_feu_vert,
+            interrompre_installation
         ])
         .run(tauri::generate_context!())
         .expect("erreur au lancement d'iakaInstall");

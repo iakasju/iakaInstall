@@ -2,13 +2,9 @@ import { ETAPES_ANNONCEES, NB_ETAPES } from "./steps";
 import { etapes34Couvertes, normaliserOs } from "./coverage";
 import { usePrerequisites } from "./hooks/usePrerequisites";
 import { usePlatformInfo } from "./hooks/usePlatformInfo";
+import { usePilotageInstallation, type EtatPilotage } from "./hooks/usePilotageInstallation";
+import EcranPilotage from "./components/EcranPilotage";
 import "./App.css";
-
-const CAUSE_DESARMEMENT =
-  "Le lancement est desactive : le moteur d'installation ne fournit pas encore, " +
-  "aujourd'hui, de moyen pour un programme de valider chaque etape sans terminal. " +
-  "Cette application n'installe rien pour l'instant — elle annonce ce qu'elle fera " +
-  "une fois ce prerequis livre (successeur CONTRAT-MACHINE-DU-VERBE-INSTALL).";
 
 function SectionPrerequis() {
   const state = usePrerequisites();
@@ -37,8 +33,26 @@ function SectionPrerequis() {
   );
 }
 
-function SectionCouverture() {
+function SectionCouverture({ etapes }: { etapes: EtatPilotage["modele"]["etapes"] }) {
   const state = usePlatformInfo();
+
+  // M-F6 / § 5 etape 6 — APRES un flux, la verite vient de `etape-terminee`
+  // (M-C6), jamais de l'indice declaratif de coverage.ts. Une seule etape
+  // (3 ou 4) deja tentee suffit a trancher : ni l'une ni l'autre ne sont
+  // refusees/echouees => couvert ; sinon => refuse, avec le detail RECU.
+  const etape3 = etapes[3];
+  const etape4 = etapes[4];
+  const etatFlux = etape3?.etat ?? etape4?.etat ?? null;
+  if (etatFlux) {
+    const refuse = etatFlux === "refusee" || etatFlux === "echouee";
+    const detail = etape3?.detail ?? etape4?.detail ?? null;
+    return (
+      <p className={refuse ? "couverture-refus" : "couverture-ok"}>
+        D'après le flux, les étapes 3 et 4 sont {refuse ? "REFUSÉES" : "couvertes"}
+        {detail ? ` (${detail})` : ""}.
+      </p>
+    );
+  }
 
   if (state.status === "chargement") {
     return <p>Detection de la plateforme…</p>;
@@ -59,6 +73,8 @@ function SectionCouverture() {
 }
 
 export default function App() {
+  const pilotage = usePilotageInstallation();
+
   return (
     <main className="ecran-annonce">
       <h1>iakaInstall</h1>
@@ -95,15 +111,23 @@ export default function App() {
 
       <section aria-label="couverture">
         <h2>Couverture réelle de cette machine</h2>
-        <SectionCouverture />
+        <SectionCouverture etapes={pilotage.modele.etapes} />
       </section>
 
       <section aria-label="lancement">
-        <button type="button" disabled>
-          Lancer l'installation
-        </button>
-        <p className="cause-desarmement">{CAUSE_DESARMEMENT}</p>
+        {pilotage.phase === "avant-tout-flux" && (
+          <button type="button" onClick={pilotage.lancerApercu}>
+            Voir ce qui sera fait (aperçu)
+          </button>
+        )}
+        {pilotage.peutLancerReel && (
+          <button type="button" onClick={pilotage.lancerReel}>
+            Lancer l'installation
+          </button>
+        )}
       </section>
+
+      <EcranPilotage etat={pilotage} />
     </main>
   );
 }

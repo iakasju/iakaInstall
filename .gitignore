@@ -10,5 +10,10 @@ coverage/
 src-tauri/target/
 src-tauri/gen/
 
+# Ressource CLI embarquee (AR-P2(b)) : produite au build par
+# scripts/embarquer-cli.mjs depuis l'asset de release epingle
+# (fixtures/cli-embarque.json). Jamais commitee : une seule source de verite.
+src-tauri/resources/cli/
+
 # OS
 .DS_Store

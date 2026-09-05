@@ -15,15 +15,33 @@ import registre from "../../fixtures/vocabulaire-interdit.json";
 
 const detectPrerequisites = vi.fn();
 const getPlatformInfo = vi.fn();
+const demarrerInstallation = vi.fn();
+const repondreFeuVert = vi.fn();
+const interrompreInstallation = vi.fn();
+const ecouterEvenementsPilote = vi.fn();
+const ecouterErreursPilote = vi.fn();
+const ecouterCodeSortiePilote = vi.fn();
 
 vi.mock("../api/backend", () => ({
   detectPrerequisites: (...args: unknown[]) => detectPrerequisites(...args),
   getPlatformInfo: (...args: unknown[]) => getPlatformInfo(...args),
+  demarrerInstallation: (...args: unknown[]) => demarrerInstallation(...args),
+  repondreFeuVert: (...args: unknown[]) => repondreFeuVert(...args),
+  interrompreInstallation: (...args: unknown[]) => interrompreInstallation(...args),
+  ecouterEvenementsPilote: (...args: unknown[]) => ecouterEvenementsPilote(...args),
+  ecouterErreursPilote: (...args: unknown[]) => ecouterErreursPilote(...args),
+  ecouterCodeSortiePilote: (...args: unknown[]) => ecouterCodeSortiePilote(...args),
 }));
 
 beforeEach(() => {
   detectPrerequisites.mockReset();
   getPlatformInfo.mockReset();
+  demarrerInstallation.mockReset();
+  repondreFeuVert.mockReset();
+  interrompreInstallation.mockReset();
+  ecouterEvenementsPilote.mockReset().mockResolvedValue(() => {});
+  ecouterErreursPilote.mockReset().mockResolvedValue(() => {});
+  ecouterCodeSortiePilote.mockReset().mockResolvedValue(() => {});
 });
 
 async function rendreEcran(os: string) {

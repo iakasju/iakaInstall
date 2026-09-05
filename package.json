@@ -11,7 +11,10 @@
     "lint": "eslint .",
     "test": "vitest run",
     "tauri": "tauri",
-    "chartes": "bash scripts/sync-chartes.sh"
+    "chartes": "bash scripts/sync-chartes.sh",
+    "embarquer": "node scripts/embarquer-cli.mjs",
+    "vocabulaire": "node scripts/sync-vocabulaire-evenements.mjs",
+    "rejeu:vivant": "node scripts/rejeu-vivant.mjs"
   },
   "dependencies": {
     "@tauri-apps/api": "^2",

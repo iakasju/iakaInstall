@@ -19,6 +19,26 @@
     {
       "chemin": "src/api/backend.ts",
       "motif": "seule couture d'invoke autorisee a NOMMER le moteur, en COMMENTAIRE, pour documenter ce que C.2-b branchera — jamais dans du code executable"
+    },
+    {
+      "chemin": "src/events/vocabulaire.ts",
+      "motif": "GENERE depuis le registre autorite du moteur (EVENEMENTS/ETATS_ETAPE/CANAUX_FEU_VERT, scripts/sync-vocabulaire-evenements.mjs, § 2 point 3) : c'est PRECISEMENT le role de ce fichier de nommer le vocabulaire ferme du moteur, jamais une reimplementation — une copie DECLAREE, jamais editee a la main (CA-P1)"
+    },
+    {
+      "chemin": "src/events/reducteur.ts",
+      "motif": "le reducteur route sur le vocabulaire ferme du moteur (switch exhaustif sur EvtType, y compris 'rollback') pour le transformer en champ de VUE (CA-P2) — jamais une reimplementation du mecanisme de retour arriere, seulement son acheminement vers l'ecran"
+    },
+    {
+      "chemin": "src/events/modele.ts",
+      "motif": "le modele de vue porte un champ `rollback` (RollbackVue) pour rendre INTEGRALEMENT l'evenement `rollback` du moteur (§ 5 etape 5.3, AR-5 garde 3) — jamais une reimplementation du mecanisme, seulement son affichage"
+    },
+    {
+      "chemin": "src/components/EcranPilotage.tsx",
+      "motif": "rend INTEGRALEMENT l'evenement `rollback` du moteur (resume, defaits, nonDefaits, rapports — § 5 etape 5.3, AR-5 garde 3) : c'est l'ECRAN qui doit nommer ce champ pour l'afficher, jamais une reimplementation du mecanisme de retour arriere"
+    },
+    {
+      "chemin": "src-tauri/src/pilote.rs",
+      "motif": "le pont natif construit l'argv EXACT du moteur (§ 5 etape 2) : `--apps-dir` est le NOM DE L'OPTION du moteur qu'il doit passer telle quelle, et `rollback` apparait dans le commentaire de module documentant le canal stderr (M-C10) — jamais une reimplementation du mecanisme, seulement son invocation et son transport"
     }
   ]
 }

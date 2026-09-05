@@ -1,0 +1,6 @@
+[
+  {
+    "type": "garde-ar1",
+    "motif": "signal interne du corollaire AR-1/AR-4 (§ 5.5) : le kit hote reste absent jusqu'a validation explicite de l'etape 2. L'information utile a l'utilisateur (etape 1 sautee/faite) est deja portee par `etape-terminee` ; aucun champ d'ecran dedie n'est requis par ce lot."
+  }
+]
