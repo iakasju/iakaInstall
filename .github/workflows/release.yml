@@ -33,6 +33,24 @@ on:
           - windows
           - linux
           - macos
+      casser:
+        # AR-5(a) / CA-R7 — LEVIER DE SABOTAGE VOLONTAIRE, RESERVE AU DECIDEUR (2026-09-05).
+        # Seul un run REEL avec un build volontairement casse prouve que la release reste en
+        # brouillon (CA-R8) : aucune garde statique ne peut le prouver (elle lit du texte, pas
+        # du comportement — § 5.6/CA-R6). Cette entree n'est honoree que sur `workflow_dispatch`
+        # (jamais sur un `push` de tag, ou `github.event.inputs.casser` est structurellement
+        # vide) — garde par lecture du texte au job `build`, ci-dessous. Le RUN qui l'active est
+        # un acte du decideur, jamais de l'agent (AR-5).
+        description: 'RESERVE AU DECIDEUR — sabote volontairement une plateforme pour prouver que la release reste en brouillon (AR-5/CA-R8). Inerte hors workflow_dispatch.'
+        type: choice
+        required: false
+        default: aucune
+        options:
+          - aucune
+          - windows
+          - linux
+          - macos-x64
+          - macos-arm64
 
 permissions:
   contents: write
@@ -40,8 +58,11 @@ permissions:
 jobs:
   prepare:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     outputs:
       matrix: ${{ steps.set.outputs.matrix }}
+      release_id: ${{ steps.brouillon.outputs.release_id }}
     steps:
       - id: set
         run: |
@@ -60,6 +81,36 @@ jobs:
           fi
           echo "plateformes retenues : $(echo "$M" | jq -r '[.[].key]|join(", ")')"
           echo "matrix=$M" >> "$GITHUB_OUTPUT"
+
+      # AR-1(a) + AR-2(b), 2026-09-05 — CREATION SERIALISEE DU BROUILLON, UNE SEULE FOIS.
+      # Lu au SHA epingle de tauri-action (84b9d35b5fc46c1e45415bdb6144030364f7ebc5,
+      # action-v0.6.2) le 2026-09-05 : `src/index.ts:178` (`if (tagName && !releaseId)`) saute
+      # ENTIEREMENT la recherche/creation de release des que `releaseId` est fourni au job
+      # `build` ci-dessous ; `src/create-release.ts:103-113` (creation) ne passe jamais
+      # `make_latest`. Creer le brouillon ICI, une seule fois, dans un job qui ne tourne jamais
+      # en parallele avec lui-meme, FERME PAR CONSTRUCTION la course F8
+      # (tauri-apps/tauri-action#914 : creation de releases en double sur une matrice
+      # concurrente) — les 4 jobs de `build` n'ont plus jamais a chercher ni creer de release,
+      # ils ne font qu'y deposer des artefacts via `releaseId`. `releaseId`/`releaseDraft` sont
+      # deux entrees DEJA DECLAREES par le SHA epingle (fixtures/tauri-action-pin.json) : rien
+      # a desepingler.
+      - id: brouillon
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.event.inputs.tag || github.ref_name }}
+          DEPOT: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          ID=$(gh api "repos/$DEPOT/releases" -X POST \
+            -f tag_name="$TAG" \
+            -f name="$TAG" \
+            -f target_commitish="$SHA" \
+            -F draft=true \
+            -F prerelease=false \
+            --jq .id)
+          echo "brouillon cree : tag=$TAG id=$ID (repos/$DEPOT/releases, draft=true, prerelease=false)"
+          echo "release_id=$ID" >> "$GITHUB_OUTPUT"
 
   build:
     needs: prepare
@@ -97,6 +148,21 @@ jobs:
       - name: Installer les dependances
         run: npm ci
 
+      # AR-5(a) / CA-R7 — SABOTAGE VOLONTAIRE, RESERVE AU DECIDEUR, AVANT `tauri-action`.
+      # Honore UNIQUEMENT sur `workflow_dispatch` (jamais sur un `push` de tag : sur ce
+      # declencheur `github.event.inputs.casser` est structurellement vide, la comparaison a
+      # `matrix.key` echoue toujours). Place AVANT l'etape ci-dessous : rien n'est televerse
+      # pour la plateforme sacrifiee, le brouillon reste incomplet EXACTEMENT comme un vrai
+      # build rouge (R8). Le RUN qui active ce levier appartient au decideur (AR-5), jamais a
+      # l'agent ; garde statique de cette inertie : scripts/lib/release-publication.mjs.
+      - name: Sabotage volontaire (run de preuve reserve au decideur — AR-5/CA-R8)
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.casser == matrix.key
+        run: |
+          echo "::error::sabotage DELIBERE de la plateforme ${{ matrix.key }} (entree 'casser'"
+          echo "::error::du workflow_dispatch) — CE N'EST PAS un vrai echec, c'est le run de"
+          echo "::error::preuve AR-5/CA-R8 : la release doit rester en brouillon apres ceci."
+          exit 1
+
       # Referent IMMUABLE — cliquet dans fixtures/tauri-action-pin.json (copie
       # de la discipline L41 du Cockpit : le SHA epingle est celui contre
       # lequel les entrees ci-dessous ont ete LUES, jamais un tag deplacable).
@@ -104,9 +170,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: ${{ github.event.inputs.tag || github.ref_name }}
-          releaseName: ${{ github.event.inputs.tag || github.ref_name }}
-          releaseDraft: false
+          # AR-1(a)+AR-2(b), 2026-09-05 — `releaseId` (sortie de `prepare`, ci-dessus) REMPLACE
+          # `tagName`/`releaseName` : au SHA epingle, `src/index.ts:178` saute la recherche/
+          # creation de release des que `releaseId` est fourni, `src/index.ts:211` attache
+          # directement les artefacts a CET id. Plus aucun des 4 jobs ne cherche ni ne cree de
+          # release : la course F8 est fermee par construction, pas seulement geree au job
+          # `publier` (qui reste le filet de secours nomme, cf. le job `publier` plus bas).
+          releaseId: ${{ needs.prepare.outputs.release_id }}
+          # La release existe donc PENDANT les builds, EN BROUILLON : elle recoit les artefacts,
+          # aucun visiteur ne la voit (§ 2.1/2.2 de l'instruction RELEASE-PARTIELLE-PUBLIEE).
+          # Elle ne devient publique QUE si TOUS les jobs de cette matrice reussissent — voir le
+          # job `publier`, `needs: [build]` STRICT, sans `if:` : c'est GitHub lui-meme qui
+          # applique la regle (un seul job de matrice en echec suffit a le faire *skipper*),
+          # pas une condition ecrite par nous. Ce lot ne touche PAS a `prerelease` (reste
+          # `false`, hors perimetre) ni a `includeUpdaterJson` (ci-dessous, inchangee).
+          releaseDraft: true
           prerelease: false
           # A ce SHA (action-v0.6.2), `includeUpdaterJson` (defaut 'true') est
           # la SEULE entree qui gouverne la pose d'un manifeste updater
@@ -114,6 +192,62 @@ jobs:
           # autoritaire (B'-b) : on la coupe, pour ne rien poser du tout.
           includeUpdaterJson: false
           args: ${{ matrix.args }}
+
+  # AR-1(a), 2026-09-05 — LA RELEASE NE DEVIENT PUBLIQUE QU'APRES LE DERNIER BUILD VERT.
+  # `needs: [build]` STRICT, SANS `if:` : par la semantique meme de GitHub Actions (docs
+  # *Use jobs in a workflow* : « if a job fails [...] all jobs that need it are skipped unless
+  # [...] a conditional expression ») un SEUL job de la matrice en echec suffit a faire
+  # *skipper* CE job — c'est la PLATEFORME qui applique la regle, jamais une condition qu'on
+  # a ecrite soi-meme (§ 2.2 de `specs/instructions/release-partielle-publiee.md`).
+  # Adressage PAR `id`, JAMAIS par tag : `gh release list` n'inclut pas les brouillons
+  # (cli/cli#10140), et `gh release edit <tag>` est mal defini sur un brouillon (cli/cli#11589,
+  # #5252) — l'API `repos/<depot>/releases` rend le champ `draft` par release, verifie a
+  # l'etape 0.7 de ce lot. Un brouillon UNIQUE est attendu pour ce tag (cree par `prepare`,
+  # AR-2(b)) : zero = rien a publier (echec nomme), DEUX = la course F8 s'est neanmoins
+  # produite (echec nomme aussi — jamais un choix a l'aveugle entre les deux).
+  publier:
+    needs: [build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Publier le brouillon (par id, jamais par tag)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.event.inputs.tag || github.ref_name }}
+          DEPOT: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          BROUILLONS=$(gh api "repos/$DEPOT/releases" --paginate \
+            --jq --arg tag "$TAG" '[.[] | select(.draft == true and .tag_name == $tag)]')
+          N=$(echo "$BROUILLONS" | jq 'length')
+
+          if [ "$N" -eq 0 ]; then
+            echo "::error::aucun brouillon trouve pour le tag $TAG sur $DEPOT — rien a publier."
+            echo "::error::le job 'prepare' a-t-il bien cree le brouillon (etape 'brouillon') ?"
+            exit 1
+          fi
+
+          if [ "$N" -gt 1 ]; then
+            IDS=$(echo "$BROUILLONS" | jq -r '[.[].id] | join(", ")')
+            echo "::error::$N brouillons trouves pour le tag $TAG (ids: $IDS)."
+            echo "::error::la course F8 (tauri-apps/tauri-action#914) s'est probablement"
+            echo "::error::produite malgre la creation serialisee dans 'prepare'. AUCUN des deux"
+            echo "::error::n'est publie a l'aveugle : nettoyage MANUEL requis (acte de release,"
+            echo "::error::reserve au decideur)."
+            exit 1
+          fi
+
+          ID=$(echo "$BROUILLONS" | jq -r '.[0].id')
+          AVANT=$(gh api "repos/$DEPOT/releases/$ID" --jq '{draft,tag_name,n:(.assets|length)}')
+          echo "avant publication : $AVANT"
+
+          gh api -X PATCH "repos/$DEPOT/releases/$ID" -F draft=false > /dev/null
+
+          APRES=$(gh api "repos/$DEPOT/releases/$ID" --jq '{draft,tag_name,n:(.assets|length)}')
+          echo "tag publie       : $TAG"
+          echo "id de la release : $ID"
+          echo "apres publication: $APRES"
 
   # Le referent est la population des RELEASES (pas des tags) : `GET
   # /releases/latest` ne peut jamais rendre qu'un tag PORTEUR d'une release.
@@ -127,8 +261,25 @@ jobs:
   # il n'y a rien a designer : il sort en SUCCES en le disant (jamais un
   # silence). Historique complet de la decouverte de ce comportement :
   # IakaCockpit/.github/workflows/release.yml (lots L42 a L44).
+  #
+  # MIS A JOUR le 2026-09-05 (RELEASE-PARTIELLE-PUBLIEE) — ETAT ANTERIEUR CI-DESSUS CONSERVE,
+  # CE QUI LE DEPASSE ET CE QUI NE LE DEPASSE PAS :
+  # - `needs` passe de `build` a `publier`. Sans cet ordre, `latest` et `publier` demarreraient
+  #   ENSEMBLE : `latest` lirait la release ENCORE BROUILLON (filtree, donc invisible), designerait
+  #   l'ancienne version — puis `publier` publierait APRES coup, reprenant le pointeur au defaut
+  #   de l'API SANS que personne ne le re-affirme. On aurait fabrique un VOL du `latest` par ce
+  #   workflow lui-meme.
+  # - `if: always()` EST CONSERVE : ce job doit tourner MEME quand `publier` est *skippe* (matrice
+  #   rouge), pour ne pas laisser le pointeur au hasard du defaut de l'API.
+  # - CE QUE CECI DEPASSE : la phrase « elle REPARE mais n'EMPECHE pas le vol » ci-dessus decrivait
+  #   un `latest` qui voyait une release DEJA publiee par le premier build (avant ce lot). Ce n'est
+  #   plus le cas : le referent de ce job filtre deja `select(.draft|not)`, et c'est cette PROPRIETE
+  #   qui, combinee a `releaseDraft: true` + `publier` en amont, EMPECHE desormais une matrice rouge
+  #   de produire un `latest` visible (§ 2.2 de l'instruction).
+  # - CE QUE CECI NE DEPASSE PAS : ce job ne previent TOUJOURS PAS le vol du `latest` par une
+  #   release creee A LA MAIN, hors de ce workflow. Sa portee s'arrete a CE workflow (§ 5.3/§ 10).
   latest:
-    needs: build
+    needs: publier
     if: always()
     runs-on: ubuntu-latest
     permissions:

@@ -8,4 +8,12 @@
 # POUR REGENERER, apres une modification VOULUE du bloc :
 #   node -e "import('./scripts/lib/bloc-latest.mjs').then(m=>console.log(m.empreinte(m.lireBloc('.'))))"
 # puis reporter la valeur ici.
-f5de9ecb81dc4ed25924484a6cf20afa81829f8e188d50b206960795ede32af3  .github/workflows/release.yml#latest
+#
+# RE-FIGEE le 2026-09-05 (RELEASE-PARTIELLE-PUBLIEE) — CE QUI A CHANGE ET POURQUOI :
+# le job `latest` passe de `needs: build` a `needs: publier` (AR-1(a)) : un job neuf `publier`
+# s'insere AVANT ce bloc, et publie le brouillon (AR-2(b)) seulement si toute la matrice est
+# verte. Le cartouche du bloc est mis a jour EN DATANT (l'ancien texte reste, marque comme etat
+# anterieur). Rouge PREALABLE capture avant cette re-fixation (CA-R5) : `npm run test` rougissait
+# sur CA-12 de bloc-latest.test.mjs, empreinte obtenue 8cb5cf2b... contre f5de9ecb... attendue —
+# le cliquet a bien reagi au changement, ce n'etait pas un cliquet muet (I-5 ecartee).
+8cb5cf2b505d25b399a0867b6cebb089964bb374a7147da79532276a1e9623ff  .github/workflows/release.yml#latest
