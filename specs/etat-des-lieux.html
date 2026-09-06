@@ -24,29 +24,30 @@ code{font-family:'SF Mono',Consolas,monospace;background:rgba(200,164,78,.1);col
 footer{margin-top:3rem;padding-top:1.2rem;border-top:1px solid #1f1f1f;color:#555;font-size:.78rem;}
 </style></head><body>
 <h1>Etat des lieux - <span class="accent">iakaInstall</span></h1>
-<div class="sub">Genere le 2026-09-06 01:05 - motif : pause - a regenerer a chaque version et a chaque pause/reprise.</div>
+<div class="sub">Genere le 2026-09-06 11:11 - motif : pause - a regenerer a chaque version et a chaque pause/reprise.</div>
 <h2>Etat courant</h2>
 <div class="kv">
   <div class="k">Version</div><div>v0.1.1</div>
   <div class="k">Branche</div><div>main</div>
-  <div class="k">Dernier commit</div><div><code>c1235f7 chore(iakaframe): update etat des lieux + commit global (pause)</code></div>
+  <div class="k">Dernier commit</div><div><code>ed764b0 merge: ressource CLI 0.41.0 embarquee + facade 0.1.2 — installeur unifie complet Windows/Linux (gate Legolas PASS)</code></div>
   <div class="k">Arbre</div><div><span class='ok'>propre</span></div>
-  <div class="k">Fichiers</div><div>133 (suivis + non ignores)</div>
-  <div class='k'>Note</div><div>NOTE CORRIGEE EN PLACE (2026-09-06) : le checkpoint 4f12648 portait par erreur une note relative a iakaframe (banc CI etapes 3/4), lancee depuis le mauvais repertoire par Aragorn. Etat iakaInstall INCHANGE depuis le lot C.3 (13cf959) : v0.1.1 latest, vitrine, release brouillon. Reste au decideur : run de preuve casser, recette reelle, bump ressource CLI quand 0.41.0 sera publiee (AR-P5), push Forgejo.</div>
+  <div class="k">Fichiers</div><div>136 (suivis + non ignores)</div>
+  <div class='k'>Note</div><div>Ressource CLI remontee a 0.41.0 (sha256 d8799b7d..., verifiee) et facade 0.1.2 preparee : l installeur unifie pose les 4 composants sur macOS, Linux (AppImage) et Windows (.exe NSIS). Indice de couverture corrige (x64 seulement hors macOS). Gate PASS 129 tests apres 3 blocages du harnais ; 2 ecarts de tracabilite des notes corriges avant fusion. Reste au decideur : tag v0.1.2 = PREMIER run reel de la politique release brouillon ; recette reelle 3 OS ; push Forgejo.</div>
 </div>
-<h2>Commits recents</h2><table><tr><th>Hash</th><th>Date</th><th>Sujet</th></tr><tr><td><code>c1235f7</code></td><td>2026-09-05</td><td>chore(iakaframe): update etat des lieux + commit global (pause)</td></tr>
-<tr><td><code>13cf959</code></td><td>2026-09-05</td><td>merge: LOT C.3 + B'-b — vitrine trois freres, README, absences de signature declarees (gate Legolas PASS)</td></tr>
-<tr><td><code>fc2905c</code></td><td>2026-09-05</td><td>docs(qualite): gate lot C.3 + B'-b vitrine — PASS</td></tr>
-<tr><td><code>64baf72</code></td><td>2026-09-05</td><td>docs(memoire): cocher C.3+B'-b, consigner les verdicts et les successeurs</td></tr>
-<tr><td><code>e776285</code></td><td>2026-09-05</td><td>ci(release): etape de notarisation macOS declarative, sans cablage env (AR-V5=b)</td></tr>
-<tr><td><code>f0fe00b</code></td><td>2026-09-05</td><td>test(vitrine): garde locale + garde de l'aveu + cliquet offline (CA-A1..CA-A9)</td></tr>
-<tr><td><code>646bf33</code></td><td>2026-09-05</td><td>docs(readme): ecrire le README (il n'existait pas) — vitrine + ecart AR-C(a)</td></tr>
-<tr><td><code>f44003b</code></td><td>2026-09-05</td><td>feat(vitrine): copier la convention des soeurs + declarer l'absence de signature</td></tr>
-<tr><td><code>ddf3d3d</code></td><td>2026-09-05</td><td>chore(iakaframe): update etat des lieux + commit global (pause)</td></tr>
-<tr><td><code>7d1343a</code></td><td>2026-09-05</td><td>docs(instruction): cadrage C.3 + B'-b — vitrine trois freres, 16 criteres, 6 arbitrages tranches comme recommande</td></tr>
+<h2>Commits recents</h2><table><tr><th>Hash</th><th>Date</th><th>Sujet</th></tr><tr><td><code>ed764b0</code></td><td>2026-09-06</td><td>merge: ressource CLI 0.41.0 embarquee + facade 0.1.2 — installeur unifie complet Windows/Linux (gate Legolas PASS)</td></tr>
+<tr><td><code>3337cfc</code></td><td>2026-09-06</td><td>docs(release): notes v0.1.2 — fixture flux et preuve des runs de banc tracees</td></tr>
+<tr><td><code>e750b31</code></td><td>2026-09-06</td><td>docs(qualite): gate ressource CLI 0.41.0 + bump 0.1.2 — PASS</td></tr>
+<tr><td><code>05d9278</code></td><td>2026-09-06</td><td>docs(release): notes v0.1.2 + backlog/PROJET.md a jour (AR-P5a)</td></tr>
+<tr><td><code>0cbe147</code></td><td>2026-09-06</td><td>chore(fixtures): re-enregistrer flux-apercu.ndjson contre la ressource 0.41.0</td></tr>
+<tr><td><code>2e3c428</code></td><td>2026-09-06</td><td>fix(vitrine): ne plus citer un nom d'asset versionne dans la note de securite</td></tr>
+<tr><td><code>1a59c84</code></td><td>2026-09-06</td><td>chore(release): bump facade 0.1.1 -&gt; 0.1.2 (ressource CLI 0.41.0)</td></tr>
+<tr><td><code>088c7df</code></td><td>2026-09-06</td><td>fix(coverage): l'indice pre-flux reflete Linux x64 / Windows x64 (0.41.0)</td></tr>
+<tr><td><code>6063016</code></td><td>2026-09-06</td><td>chore(vocabulaire): regenerer depuis la ressource CLI 0.41.0</td></tr>
+<tr><td><code>fff6e70</code></td><td>2026-09-06</td><td>chore(cli-embarque): remonter la ressource CLI a 0.41.0 (AR-P5a)</td></tr>
 </table>
 <h2>Journal (versions &amp; pauses)</h2>
 <table><tr><th>Date</th><th>Motif</th><th>Version</th><th>Branche</th><th>Note</th></tr>
+<tr><td>2026-09-06 11:11</td><td><span class='r r-pause'>pause</span></td><td>v0.1.1</td><td>main</td><td>Ressource CLI remontee a 0.41.0 (sha256 d8799b7d..., verifiee) et facade 0.1.2 preparee : l installeur unifie pose les 4 composants sur macOS, Linux (AppImage) et Windows (.exe NSIS). Indice de couverture corrige (x64 seulement hors macOS). Gate PASS 129 tests apres 3 blocages du harnais ; 2 ecarts de tracabilite des notes corriges avant fusion. Reste au decideur : tag v0.1.2 = PREMIER run reel de la politique release brouillon ; recette reelle 3 OS ; push Forgejo.</td></tr>
 <tr><td>2026-09-06 01:05</td><td><span class='r r-pause'>pause</span></td><td>v0.1.1</td><td>main</td><td>NOTE CORRIGEE EN PLACE (2026-09-06) : le checkpoint 4f12648 portait par erreur une note relative a iakaframe (banc CI etapes 3/4), lancee depuis le mauvais repertoire par Aragorn. Etat iakaInstall INCHANGE depuis le lot C.3 (13cf959) : v0.1.1 latest, vitrine, release brouillon. Reste au decideur : run de preuve casser, recette reelle, bump ressource CLI quand 0.41.0 sera publiee (AR-P5), push Forgejo.</td></tr>
 <tr><td>2026-09-05 15:42</td><td><span class='r r-pause'>pause</span></td><td>v0.1.1</td><td>main</td><td>LOT C.3 + B'-b livre et fusionne : README ecrit, vitrine des 7 artefacts, absences de signature (notarisation macOS, SmartScreen Windows) declarees avec cliquet offline, etape CI de notarisation declarative sans env (un secret vide casse le bundler), face en ligne OK sur v0.1.1. Gate PASS 127 tests. LE LOT C EST ENTIEREMENT LIVRE (C.1, install.mjs, contrat machine, C.2-a, C.2-b, RELEASE-PARTIELLE, C.3). Reste au decideur : recette reelle dmg/msi/deb, run de preuve casser, secrets Apple/Windows, successeurs CONVERGENCE-TROIS-FRERES et UPDATER-DE-LA-FACADE. Limite signalee : cliquet de l aveu unidirectionnel. Push Forgejo EN ATTENTE.</td></tr>
 <tr><td>2026-09-05 15:05</td><td><span class='r r-pause'>pause</span></td><td>v0.1.1</td><td>main</td><td>RELEASE-PARTIELLE-PUBLIEE livre et fusionne (aa1634b, gate PASS 91 tests) : brouillon cree une fois dans prepare, releaseId passe a la matrice, job publier en needs [build] strict, latest derriere publier, entree casser inerte hors dispatch. Cadrage C.3 + B'-b commite (7d1343a, verdicts comme reco). Reste au decideur : run de preuve casser sur un tag de test (CA-R8), run nominal (CA-R9), successeurs soeurs. Prochain lot : C.3 vitrine (Gimli). Push Forgejo EN ATTENTE.</td></tr>

@@ -88,5 +88,15 @@
     "dirty": false,
     "files": 133,
     "note": "NOTE CORRIGEE EN PLACE (2026-09-06) : le checkpoint 4f12648 portait par erreur une note relative a iakaframe (banc CI etapes 3/4), lancee depuis le mauvais repertoire par Aragorn. Etat iakaInstall INCHANGE depuis le lot C.3 (13cf959) : v0.1.1 latest, vitrine, release brouillon. Reste au decideur : run de preuve casser, recette reelle, bump ressource CLI quand 0.41.0 sera publiee (AR-P5), push Forgejo."
+  },
+  {
+    "date": "2026-09-06 11:11",
+    "reason": "pause",
+    "version": "v0.1.1",
+    "branch": "main",
+    "commit": "ed764b0 merge: ressource CLI 0.41.0 embarquee + facade 0.1.2 — installeur unifie complet Windows/Linux (gate Legolas PASS)",
+    "dirty": false,
+    "files": 136,
+    "note": "Ressource CLI remontee a 0.41.0 (sha256 d8799b7d..., verifiee) et facade 0.1.2 preparee : l installeur unifie pose les 4 composants sur macOS, Linux (AppImage) et Windows (.exe NSIS). Indice de couverture corrige (x64 seulement hors macOS). Gate PASS 129 tests apres 3 blocages du harnais ; 2 ecarts de tracabilite des notes corriges avant fusion. Reste au decideur : tag v0.1.2 = PREMIER run reel de la politique release brouillon ; recette reelle 3 OS ; push Forgejo."
   }
 ]
