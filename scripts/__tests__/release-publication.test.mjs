@@ -179,3 +179,36 @@ describe("CA-R7 — l'entree `casser` est inerte hors workflow_dispatch", () => 
     expect(etat.presente).toBe(false);
   });
 });
+
+// CA-R10 — CORRECTIF POST-RUN-REEL 34026373514 (2026-09-06, tag v0.1.2). Le run reel a rougi a
+// l'etape `publier` sur `gh: accepts 1 arg(s), received 4` : `gh api` n'a PAS d'option `--arg`
+// (c'est une option de `jq`), et le motif exact `--jq --arg` sur une invocation `gh api` fait
+// avaler "--arg" comme VALEUR de `--jq`, transformant le reste en arguments positionnels en
+// trop. La garde par TEXTE ne pouvait pas voir le COMPORTEMENT (CA-R6) ; elle peut en revanche
+// desormais INTERDIRE LE MOTIF LUI-MEME, pour qu'il ne revienne jamais silencieusement. La
+// preuve de COMPORTEMENT (le bug reproduit puis corrige, en executant le script) vit dans
+// scripts/__tests__/release-publier-shell.test.mjs — cette garde-ci reste TEXTUELLE, comme le
+// reste du fichier, et se limite a ce qu'un texte peut prouver : l'ABSENCE du motif.
+describe("CA-R10 — aucun `gh api ... --jq --arg` dans le fichier (motif exact du run 34026373514)", () => {
+  /** Lignes du texte, hors commentaires (un `#` en tete apres indentation) — les commentaires
+   * de ce meme fichier CITENT le motif fautif a titre d'historique (cf. l'etape `publier`) : ils
+   * ne doivent pas faire rougir cette garde a leur place. */
+  function lignesExecutables(texte) {
+    return texte.split("\n").filter((l) => !/^\s*#/.test(l));
+  }
+
+  it("le motif `--jq --arg` n'apparait dans aucune ligne EXECUTABLE (les commentaires historiques sont exclus)", () => {
+    const fautives = lignesExecutables(WORKFLOW).filter((l) => /--jq\s+--arg/.test(l));
+    expect(fautives, `lignes fautives : ${JSON.stringify(fautives)}`).toEqual([]);
+  });
+
+  it("CONTREFACTUEL — reintroduire le motif exact du bug reel sur une COPIE fait rougir, nomme", () => {
+    const CORRIGE = 'BROUILLONS=$(gh api "repos/$DEPOT/releases" --paginate \\\n            | jq --arg tag "$TAG"';
+    const CASSE = 'BROUILLONS=$(gh api "repos/$DEPOT/releases" --paginate \\\n            --jq --arg tag "$TAG"';
+    expect(WORKFLOW).toContain(CORRIGE); // si ceci echoue, la forme corrigee a change de texte
+    const mute = WORKFLOW.replace(CORRIGE, CASSE);
+    expect(mute).not.toBe(WORKFLOW);
+    const fautives = lignesExecutables(mute).filter((l) => /--jq\s+--arg/.test(l));
+    expect(fautives.length, "le motif reintroduit doit etre detecte").toBeGreaterThan(0); // NOMME
+  });
+});
