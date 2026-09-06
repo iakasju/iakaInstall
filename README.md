@@ -18,23 +18,23 @@ déconseillées pour le public par Microsoft). **Ils amorcent ce qui enchaîne.*
 ## Installation
 
 <!-- vitrine:debut:binaires -->
-La version scellée courante est **[v0.1.1](https://github.com/iakasju/iakaInstall/releases/tag/v0.1.1)** — voir
+La version scellée courante est **[v0.1.2](https://github.com/iakasju/iakaInstall/releases/tag/v0.1.2)** — voir
 [toutes les versions](https://github.com/iakasju/iakaInstall/releases).
 
 ### Binaires prêts à l'emploi
 
 Tous les systèmes sont couverts. Prenez le fichier de votre plateforme sur la
-[page de la release](https://github.com/iakasju/iakaInstall/releases/tag/v0.1.1) :
+[page de la release](https://github.com/iakasju/iakaInstall/releases/tag/v0.1.2) :
 
 | Système | Fichier à télécharger |
 |---|---|
-| **Windows (installeur)** | `iakaInstall_0.1.1_x64-setup.exe` |
-| **Windows (MSI)** | `iakaInstall_0.1.1_x64_en-US.msi` |
-| **macOS Apple Silicon** | `iakaInstall_0.1.1_aarch64.dmg` |
-| **macOS Intel** | `iakaInstall_0.1.1_x64.dmg` |
-| **Linux (Debian/Ubuntu)** | `iakaInstall_0.1.1_amd64.deb` |
-| **Linux (Fedora/RHEL)** | `iakaInstall-0.1.1-1.x86_64.rpm` |
-| **Linux (portable)** | `iakaInstall_0.1.1_amd64.AppImage` |
+| **Windows (installeur)** | `iakaInstall_0.1.2_x64-setup.exe` |
+| **Windows (MSI)** | `iakaInstall_0.1.2_x64_en-US.msi` |
+| **macOS Apple Silicon** | `iakaInstall_0.1.2_aarch64.dmg` |
+| **macOS Intel** | `iakaInstall_0.1.2_x64.dmg` |
+| **Linux (Debian/Ubuntu)** | `iakaInstall_0.1.2_amd64.deb` |
+| **Linux (Fedora/RHEL)** | `iakaInstall-0.1.2-1.x86_64.rpm` |
+| **Linux (portable)** | `iakaInstall_0.1.2_amd64.AppImage` |
 <!-- vitrine:fin:binaires -->
 
 <!-- vitrine:debut:securite -->
@@ -70,7 +70,7 @@ affiche un état par prérequis.
 ```bash
 # 1. Recuperer l'archive de la version depuis la page des releases
 #    (Assets > Source code), puis la decompresser
-cd iakaInstall-0.1.1
+cd iakaInstall-0.1.2
 
 # 2. Installer les dependances
 npm ci
