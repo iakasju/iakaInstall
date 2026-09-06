@@ -345,6 +345,50 @@ reprise** dans le `.md` (ce qui vient d'être fait, ce qui reste, prochaine éta
       `docs/releases/v0.1.2.md` + `.tagmsg`. Non couvert, DÉCLARÉ gate humain : UAC sur
       compte Windows non-administrateur, SmartScreen, Gatekeeper/notarisation macOS, recette
       réelle de l'installeur unifié sur les trois OS.
+- [x] **Correctif post-PREMIER-RUN-RÉEL de `RELEASE-PARTIELLE-PUBLIEE` (2026-09-06, ⚒️ Gimli,
+      branche `fix/publier-gh-api-jq`, REMIS AU GATE 🏹 Legolas, non auto-validé)**. Le tag
+      `v0.1.2` a tourné en CI (run `34026373514`) : `prepare` OK (brouillon créé par id), les 4
+      builds VERTS, 9 assets déposés sur le brouillon — puis l'étape « Publier le brouillon (par
+      id, jamais par tag) » du job `publier` a **rougi** :
+      `gh: accepts 1 arg(s), received 4`. Cause : `gh api "repos/$DEPOT/releases" --paginate
+      --jq --arg tag "$TAG" '[...]'` — `gh api` **n'a pas** d'option `--arg` (c'est une option de
+      `jq`) ; `--jq` a avalé `--arg` comme sa valeur, et les trois tokens restants (`tag`, la
+      valeur de `$TAG`, le filtre) sont devenus des arguments positionnels en trop pour `gh api`
+      (qui n'en accepte qu'un, l'endpoint) : 1 + 3 = 4. **Résultat côté politique** : la release
+      est restée en **brouillon**, `latest` = `v0.1.1` inchangé, le job `latest` (`if: always()`,
+      filtre `select(.draft|not)`) a rendu **success sans rien avancer** — **la moitié fail-safe
+      de la politique est PROUVÉE** (aucune release incomplète n'est devenue visible) ; **la
+      moitié publication a rougi sur une erreur de syntaxe**, corrigée par ce lot. La publication
+      manuelle du brouillon `v0.1.2` par le décideur, une fois le correctif validé, est le **repli
+      (c)** prévu au cadrage de `RELEASE-PARTIELLE-PUBLIEE` (acte de release réservé au décideur)
+      — **attendu une fois**, pas un geste à reproduire à chaque tag.
+      **Pourquoi la garde statique ne pouvait pas le voir** : `scripts/lib/release-publication.mjs`
+      / `scripts/__tests__/release-publication.test.mjs` lisent le **texte** du workflow, jamais
+      son **comportement** — limite écrite dans son propre fichier (CA-R6). C'était exactement le
+      trou déclaré non couvert (CA-R8/CA-R9) : seul un run réel prouve le comportement.
+      **Livré** : (i) `test(ci)` d'abord — `scripts/__tests__/release-publier-shell.test.mjs`,
+      jambe **EXÉCUTION** nouvelle : extrait par marqueur le script shell de chaque étape
+      concernée (`publier`/`prepare`/`latest`) depuis le texte réel de `release.yml`, l'exécute en
+      `bash` avec un **faux `gh`** en tête de `PATH` (reproduit la même règle d'arité que le vrai
+      `gh api` — un seul argument positionnel) et le **vrai `jq`** du poste (SKIP explicite si
+      absent) ; aucun réseau, aucun jeton. État rouge volontaire capturé au commit `test(ci)` :
+      5/6, le cas nominal `publier` reproduisait fidèlement `accepts 1 arg(s), received 4` contre
+      le texte encore bogué. (ii) `fix(ci)` — `release.yml`, étape `publier` : `gh api --paginate`
+      rend désormais le JSON **brut** (plus de `--jq` sur cette commande), filtré en aval par un
+      `jq --arg tag "$TAG" '...'` séparé — **`jq` reste le seul à recevoir `--arg`** (option
+      préférable du cadrage). Relu tout le fichier : aucune autre occurrence de
+      `gh api ... --jq --arg` (`prepare`/`latest` utilisaient déjà `--jq` sans `--arg`). Garde
+      statique renforcée : assertion `CA-R10` (« aucun `gh api ... --jq --arg` dans le fichier »)
+      + contrefactuel qui réintroduit le motif sur une copie et vérifie qu'il est détecté.
+      `fixtures/bloc-latest.sha256` **non touché** (le bloc `latest:` n'est pas modifié par ce
+      correctif) — `git diff` vide dessus, vérifié. **Preuve mesurée** : `npm run typecheck` `0` ;
+      `npm run lint` `0` ; `npm run test` `0`, **137 passed** (avant : 127 — +10, aucun supprimé) ;
+      `npm run build` `0` ; `cargo test` `0`, 22 passed (aucun `.rs` touché). **Non couvert,
+      DÉCLARÉ successeur** : re-jouer la politique **complète** au **prochain tag** — c'est le
+      seul geste qui prouvera, en conditions réelles, que le job `publier` publie désormais sans
+      intervention manuelle (le run `34026373514` avait prouvé le fail-safe mais pas la
+      publication ; ce lot corrige le texte mais n'a **pas** de second run réel pour le prouver
+      à son tour — hors périmètre de cet agent, acte de release réservé au décideur).
 - [ ] `RESSOURCE-CLI-RAFRAICHIE-EN-LIGNE` — successeur AR-P5(b), si la façade vieillit
       plus vite que son moteur (besoin non mesuré, pas encore une seule release).
 - [ ] `MARQUE-IAKAINSTALL` — icône/identité propre à `iakaInstall` (aujourd'hui
