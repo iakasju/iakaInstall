@@ -18,23 +18,23 @@ déconseillées pour le public par Microsoft). **Ils amorcent ce qui enchaîne.*
 ## Installation
 
 <!-- vitrine:debut:binaires -->
-La version scellée courante est **[v0.1.1](https://github.com/iakasju/iakaInstall/releases/tag/v0.1.1)** — voir
+La version scellée courante est **[v0.1.2](https://github.com/iakasju/iakaInstall/releases/tag/v0.1.2)** — voir
 [toutes les versions](https://github.com/iakasju/iakaInstall/releases).
 
 ### Binaires prêts à l'emploi
 
 Tous les systèmes sont couverts. Prenez le fichier de votre plateforme sur la
-[page de la release](https://github.com/iakasju/iakaInstall/releases/tag/v0.1.1) :
+[page de la release](https://github.com/iakasju/iakaInstall/releases/tag/v0.1.2) :
 
 | Système | Fichier à télécharger |
 |---|---|
-| **Windows (installeur)** | `iakaInstall_0.1.1_x64-setup.exe` |
-| **Windows (MSI)** | `iakaInstall_0.1.1_x64_en-US.msi` |
-| **macOS Apple Silicon** | `iakaInstall_0.1.1_aarch64.dmg` |
-| **macOS Intel** | `iakaInstall_0.1.1_x64.dmg` |
-| **Linux (Debian/Ubuntu)** | `iakaInstall_0.1.1_amd64.deb` |
-| **Linux (Fedora/RHEL)** | `iakaInstall-0.1.1-1.x86_64.rpm` |
-| **Linux (portable)** | `iakaInstall_0.1.1_amd64.AppImage` |
+| **Windows (installeur)** | `iakaInstall_0.1.2_x64-setup.exe` |
+| **Windows (MSI)** | `iakaInstall_0.1.2_x64_en-US.msi` |
+| **macOS Apple Silicon** | `iakaInstall_0.1.2_aarch64.dmg` |
+| **macOS Intel** | `iakaInstall_0.1.2_x64.dmg` |
+| **Linux (Debian/Ubuntu)** | `iakaInstall_0.1.2_amd64.deb` |
+| **Linux (Fedora/RHEL)** | `iakaInstall-0.1.2-1.x86_64.rpm` |
+| **Linux (portable)** | `iakaInstall_0.1.2_amd64.AppImage` |
 <!-- vitrine:fin:binaires -->
 
 <!-- vitrine:debut:securite -->
@@ -44,7 +44,7 @@ Les binaires ci-dessus **existent** — ce n'est pas une plateforme manquante, c
 étape de signature non encore posée. Chaque absence est déclarée, datée et levable :
 
 > **⚠️ Non signé — macOS — notarisation Apple, depuis 2026-09-05.**
-> Aucun certificat Apple Developer ID ni adhésion au Apple Developer Program (99 $/an) : les bundles macOS (`.dmg`) ne portent qu'une signature AD HOC. Mesuré sur l'asset RÉEL de la release v0.1.1 le 2026-09-05 (`iakaInstall_0.1.1_aarch64.dmg`, téléchargé, monté, `codesign -dv --verbose=4` : `Signature=adhoc`, `TeamIdentifier=not set` ; `spctl -a -vv` : rejeté, exit non nul). Confirmé côté fabrication : `.github/workflows/release.yml` ne pose aucun secret `APPLE_*`, `src-tauri/tauri.conf.json` ne porte aucune section `bundle.macOS`.
+> Aucun certificat Apple Developer ID ni adhésion au Apple Developer Program (99 $/an) : les bundles macOS (`.dmg`) ne portent qu'une signature AD HOC. Mesuré sur l'asset RÉEL (le `.dmg` arm64) de la release v0.1.1 le 2026-09-05 — téléchargé, monté, `codesign -dv --verbose=4` : `Signature=adhoc`, `TeamIdentifier=not set` ; `spctl -a -vv` : rejeté, exit non nul (nom de fichier volontairement non repété ici : un nom d'asset versionné entre backticks est lu comme une PROMESSE par la garde de vitrine, CA-10 — il se figerait sur une version passée à chaque bump). Confirmé côté fabrication : `.github/workflows/release.yml` ne pose aucun secret `APPLE_*`, `src-tauri/tauri.conf.json` ne porte aucune section `bundle.macOS`.
 >
 > **Levée :** Adhésion Apple Developer Program acquise ET secrets `APPLE_CERTIFICATE`/`APPLE_CERTIFICATE_PASSWORD` (plus `APPLE_ID`/`APPLE_PASSWORD`/`APPLE_TEAM_ID` ou `APPLE_API_*`) posés par le décideur dans les réglages du dépôt — acte refusé aux agents. Le jour où ce câblage devient ACTIF dans `release.yml`, le cliquet offline de ce fichier force le retrait de CETTE entrée.
 >
@@ -70,7 +70,7 @@ affiche un état par prérequis.
 ```bash
 # 1. Recuperer l'archive de la version depuis la page des releases
 #    (Assets > Source code), puis la decompresser
-cd iakaInstall-0.1.1
+cd iakaInstall-0.1.2
 
 # 2. Installer les dependances
 npm ci

@@ -316,6 +316,35 @@ reprise** dans le `.md` (ce qui vient d'être fait, ce qui reste, prochaine éta
       chaîne de publication). Ordre de grandeur **≈ 1 j**.
 - [ ] `SIDECAR-CLI-AUTONOME` — successeur AR-I2(c), si servir des postes sans Node
       devient une exigence.
+- [x] **AR-P5(a) — remontée CLI 0.40.0 → 0.41.0 + release v0.1.2** (2026-09-06, ⚒️ Gimli,
+      branche `chore/ressource-cli-0.41.0`, **REMIS AU GATE 🏹 Legolas, non auto-validé**).
+      La sœur `iakaframe` a publié `v0.41.0` (étapes 3/4 ouvertes à Linux/AppImage et
+      Windows/`.exe` NSIS, en plus de macOS). `fixtures/cli-embarque.json` remonté (asset
+      `naonedge-iakaframe-0.41.0.tgz`, 697 967 octets, sha256
+      `d8799b7d6ac32cb7d336def415588c1f739d78d8cce56336c42253615b2594f7`, re-mesuré) ;
+      vocabulaire régénéré, **inchangé** entre les deux versions (AR-W8) ; `src/coverage.ts`
+      (indice pré-flux) corrigé — il affirmait encore « seule macOS couverte », faux depuis
+      `cleManifestePlateforme` (CLI 0.41.0) qui couvre aussi linux/x64 et windows/x64 ;
+      façade bumpée `0.1.1` → `0.1.2` (package.json, package-lock.json, tauri.conf.json,
+      Cargo.toml, Cargo.lock), README régénéré (`npm run vitrine -- --write`). **Correctif
+      incidentel** : la note de sécurité (`fixtures/vitrine-locale.json`) citait un nom de
+      fichier versionné en dur, lu comme une fausse promesse par la garde CA-10 au bump —
+      reformulée sans nom de fichier versionné, la mesure historique reste dite.
+      `fixtures/flux-apercu.ndjson` ré-enregistrée (rejeu réel en bac à sable) : 7 des 74
+      lignes changent (3 seulement de version ; 4 aussi de chemin, `--root` pointant
+      désormais la ressource embarquée en place plutôt qu'une extraction scratch — pas un
+      changement de comportement du CLI, aucun test n'assure la valeur de ces chemins). Le
+      reste du flux (étapes 3/4, `darwin-arm64`) est structurellement identique. Preuve de la
+      couverture Linux/Windows côté moteur re-vérifiée en lecture seule : runs de banc
+      `33997947501` (rollback NSIS rouge, avant correctif) et `33999564308` (vert, après) ;
+      `v0.41.0` postérieur aux deux et incluant le correctif
+      (`gh api .../compare/<sha run 2>...v0.41.0` → `ahead_by:8, behind_by:0`). Chaîne
+      qualité complète verte, y compris `npm run tauri build -- --target aarch64-apple-darwin`
+      lancé depuis un arbre **sans** ressource CLI préalable (`beforeBuildCommand` l'a
+      reproduite en 0.41.0, vérifié dans le `.app`). Détail + commande de tag :
+      `docs/releases/v0.1.2.md` + `.tagmsg`. Non couvert, DÉCLARÉ gate humain : UAC sur
+      compte Windows non-administrateur, SmartScreen, Gatekeeper/notarisation macOS, recette
+      réelle de l'installeur unifié sur les trois OS.
 - [ ] `RESSOURCE-CLI-RAFRAICHIE-EN-LIGNE` — successeur AR-P5(b), si la façade vieillit
       plus vite que son moteur (besoin non mesuré, pas encore une seule release).
 - [ ] `MARQUE-IAKAINSTALL` — icône/identité propre à `iakaInstall` (aujourd'hui

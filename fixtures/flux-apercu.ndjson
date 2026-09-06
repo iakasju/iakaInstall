@@ -1,74 +1,74 @@
-{"evt":"debut","ts":"2026-09-05T10:13:11.972Z","etape":null,"versionCli":"0.40.0","totalEtapes":4,"telechargements":3,"dryRun":true,"plateforme":"darwin-arm64","mode":"events"}
-{"evt":"reservoir","ts":"2026-09-05T10:13:11.974Z","etape":1,"source":"embarque","vivantRoot":null,"vivantVersion":null,"embarqueDir":"/private/tmp/claude-501/-Users-sjupin-work/491bc970-2cd2-4bfd-8669-ae053380e4f6/scratchpad/release/extrait/package","embarqueVersion":"0.40.0","installMjsPath":"/private/tmp/claude-501/-Users-sjupin-work/491bc970-2cd2-4bfd-8669-ae053380e4f6/scratchpad/release/extrait/package/_bundled/install.mjs","provenance":"réservoir : embarqué (v0.40.0) — aucun réservoir vivant trouvé (install.mjs absent sous /private/tmp/claude-501/-Users-sjupin-work/491bc970-2cd2-4bfd-8669-ae053380e4f6/scratchpad/release/extrait/package)"}
-{"evt":"etape-annoncee","ts":"2026-09-05T10:13:12.526Z","etape":1,"quoi":"CLI (paquet npm global @naonedge/iakaframe)","ou":"npm global","version":"0.40.0","ceQuiSeraFusionne":"aucune mise a jour disponible : le paquet global reste tel quel","sourceRetenue":null,"sourcesConsultees":[{"nom":"tarball GitHub (voie publique, AR-H)","repond":true,"exploitable":true,"version":"0.40.0"}]}
-{"evt":"etape-terminee","ts":"2026-09-05T10:13:12.526Z","etape":1,"etat":"sautee","detail":"déjà à jour (v0.40.0)"}
-{"evt":"garde-ar1","ts":"2026-09-05T10:13:12.526Z","etape":1,"desarme":true,"raison":"AR-1 désarmé pour la durée de la chaîne (corollaire AR-1/AR-4, § 5.5) : le kit hôte reste absent jusqu'à validation explicite de l'étape 2"}
-{"evt":"etape-annoncee","ts":"2026-09-05T10:13:12.527Z","etape":2,"quoi":"kit(s) hôte(s) [claude]","ou":"/private/tmp/claude-501/-Users-sjupin-work/491bc970-2cd2-4bfd-8669-ae053380e4f6/scratchpad/fixture-sbx/claude","version":"v0.40.0","ceQuiSeraFusionne":"--merge par défaut (rien d'existant n'est écrasé sans --overwrite)","sourceRetenue":{"nom":"embarque","pourquoi":"réservoir : embarqué (v0.40.0) — aucun réservoir vivant trouvé (install.mjs absent sous /private/tmp/claude-501/-Users-sjupin-work/491bc970-2cd2-4bfd-8669-ae053380e4f6/scratchpad/release/extrait/package)"},"sourcesConsultees":[]}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.592Z","etape":2,"flux":"stdout","ligne":"== iakaframe — installeur multi-host (fan-out) =="}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"Kits  : /private/tmp/claude-501/-Users-sjupin-work/491bc970-2cd2-4bfd-8669-ae053380e4f6/scratchpad/release/extrait/package/_bundled/kits"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"---- host: claude — present (--target-claude) ----"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"================ host: claude ================"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"Kit   : /private/tmp/claude-501/-Users-sjupin-work/491bc970-2cd2-4bfd-8669-ae053380e4f6/scratchpad/release/extrait/package/_bundled/kits/iakaframe-claude"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"Cible : /private/tmp/claude-501/-Users-sjupin-work/491bc970-2cd2-4bfd-8669-ae053380e4f6/scratchpad/fixture-sbx/claude"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"Mode  : merge  (dry-run : rien ne sera ecrit)"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"[Contrat (CLAUDE.md)]"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + CLAUDE.md — ajout du bloc iakaframe"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"[Reglages (settings.json)]"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + settings.json — ajout (hooks iakaframe)"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"[Hooks]"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + delegation-guard.mjs — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + guard-core.mjs — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + identity-guard.mjs — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + identity-remind.mjs — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + perimeter-guard.mjs — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + plan-courante.mjs — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"[Commands]"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-add.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-agents.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-assemble.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-attach.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-banner.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-brief.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-cadre.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-close.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-config.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-deploie.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-detach.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-etat.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-guide.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-help.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-init.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-jalon.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-list.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-memory.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-models.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-open.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-portfolio.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-produit.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-qualite.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-recall.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-recap.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-remove.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-root.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-services.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-show.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-skills.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-switch.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka-update.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + iaka.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + learning.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  + retrait.md — ajout"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"[Skills]"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  (rien a poser)"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"[Agents]"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  (rien a poser)"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"  (dry-run) host claude : aucun fichier ecrit, aucun backup."}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"== Termine =="}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"Hosts traites : (aucun)"}
-{"evt":"log-delegue","ts":"2026-09-05T10:13:12.593Z","etape":2,"flux":"stdout","ligne":"(dry-run) Aucun fichier ecrit, aucun backup cree."}
-{"evt":"etape-terminee","ts":"2026-09-05T10:13:12.594Z","etape":2,"etat":"dry-run","detail":"kit méthode déployé/à jour"}
-{"evt":"etape-annoncee","ts":"2026-09-05T10:13:21.056Z","etape":3,"quoi":"IakaCockpit v0.32.2 (plateforme darwin-aarch64)","ou":"/private/tmp/claude-501/-Users-sjupin-work/491bc970-2cd2-4bfd-8669-ae053380e4f6/scratchpad/fixture-sbx/apps/IakaCockpit.app","version":"0.32.2","ceQuiSeraFusionne":"pose neuve, rien n'existait à cette adresse","sourceRetenue":{"nom":"raw.githubusercontent.com","pourquoi":"manifeste exploitable retenu (ordre M10, AR-H)"},"sourcesConsultees":[{"nom":"192.168.1.139:3001","repond":false,"exploitable":false,"motif":"injoignable"},{"nom":"raw.githubusercontent.com","repond":true,"exploitable":true,"motif":"ok"}]}
-{"evt":"etape-terminee","ts":"2026-09-05T10:13:21.056Z","etape":3,"etat":"dry-run","detail":"IakaCockpit v0.32.2 décrit, rien écrit"}
-{"evt":"etape-annoncee","ts":"2026-09-05T10:13:29.419Z","etape":4,"quoi":"iakaFrameGUI v0.1.8 (plateforme darwin-aarch64)","ou":"/private/tmp/claude-501/-Users-sjupin-work/491bc970-2cd2-4bfd-8669-ae053380e4f6/scratchpad/fixture-sbx/apps/iakaFrameGUI.app","version":"0.1.8","ceQuiSeraFusionne":"pose neuve, rien n'existait à cette adresse","sourceRetenue":{"nom":"raw.githubusercontent.com","pourquoi":"manifeste exploitable retenu (ordre M10, AR-H)"},"sourcesConsultees":[{"nom":"192.168.1.139:3001","repond":false,"exploitable":false,"motif":"injoignable"},{"nom":"raw.githubusercontent.com","repond":true,"exploitable":true,"motif":"ok"}]}
-{"evt":"etape-terminee","ts":"2026-09-05T10:13:29.419Z","etape":4,"etat":"dry-run","detail":"iakaFrameGUI v0.1.8 décrit, rien écrit"}
-{"evt":"fin","ts":"2026-09-05T10:13:29.420Z","etape":null,"ok":true,"etatAtteint":{"derniereEtapeTentee":4,"etapesFaites":[],"etapesNonTentees":[]},"reprise":null}
+{"evt":"debut","ts":"2026-09-06T00:51:22.998Z","etape":null,"versionCli":"0.41.0","totalEtapes":4,"telechargements":3,"dryRun":true,"plateforme":"darwin-arm64","mode":"events"}
+{"evt":"reservoir","ts":"2026-09-06T00:51:23.001Z","etape":1,"source":"embarque","vivantRoot":null,"vivantVersion":null,"embarqueDir":"/Users/sjupin/work/iakaInstall/src-tauri/resources/cli","embarqueVersion":"0.41.0","installMjsPath":"/Users/sjupin/work/iakaInstall/src-tauri/resources/cli/_bundled/install.mjs","provenance":"réservoir : embarqué (v0.41.0) — aucun réservoir vivant trouvé (install.mjs absent sous /Users/sjupin/work/iakaInstall/src-tauri/resources/cli)"}
+{"evt":"etape-annoncee","ts":"2026-09-06T00:51:23.397Z","etape":1,"quoi":"CLI (paquet npm global @naonedge/iakaframe)","ou":"npm global","version":"0.41.0","ceQuiSeraFusionne":"aucune mise a jour disponible : le paquet global reste tel quel","sourceRetenue":null,"sourcesConsultees":[{"nom":"tarball GitHub (voie publique, AR-H)","repond":true,"exploitable":true,"version":"0.41.0"}]}
+{"evt":"etape-terminee","ts":"2026-09-06T00:51:23.398Z","etape":1,"etat":"sautee","detail":"déjà à jour (v0.41.0)"}
+{"evt":"garde-ar1","ts":"2026-09-06T00:51:23.398Z","etape":1,"desarme":true,"raison":"AR-1 désarmé pour la durée de la chaîne (corollaire AR-1/AR-4, § 5.5) : le kit hôte reste absent jusqu'à validation explicite de l'étape 2"}
+{"evt":"etape-annoncee","ts":"2026-09-06T00:51:23.398Z","etape":2,"quoi":"kit(s) hôte(s) [claude]","ou":"/private/tmp/claude-501/-Users-sjupin-work/491bc970-2cd2-4bfd-8669-ae053380e4f6/scratchpad/fixture-sbx/claude","version":"v0.41.0","ceQuiSeraFusionne":"--merge par défaut (rien d'existant n'est écrasé sans --overwrite)","sourceRetenue":{"nom":"embarque","pourquoi":"réservoir : embarqué (v0.41.0) — aucun réservoir vivant trouvé (install.mjs absent sous /Users/sjupin/work/iakaInstall/src-tauri/resources/cli)"},"sourcesConsultees":[]}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"== iakaframe — installeur multi-host (fan-out) =="}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"Kits  : /Users/sjupin/work/iakaInstall/src-tauri/resources/cli/_bundled/kits"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"---- host: claude — present (--target-claude) ----"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"================ host: claude ================"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"Kit   : /Users/sjupin/work/iakaInstall/src-tauri/resources/cli/_bundled/kits/iakaframe-claude"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"Cible : /private/tmp/claude-501/-Users-sjupin-work/491bc970-2cd2-4bfd-8669-ae053380e4f6/scratchpad/fixture-sbx/claude"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"Mode  : merge  (dry-run : rien ne sera ecrit)"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"[Contrat (CLAUDE.md)]"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + CLAUDE.md — ajout du bloc iakaframe"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"[Reglages (settings.json)]"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + settings.json — ajout (hooks iakaframe)"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"[Hooks]"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + delegation-guard.mjs — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + guard-core.mjs — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + identity-guard.mjs — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + identity-remind.mjs — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + perimeter-guard.mjs — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + plan-courante.mjs — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"[Commands]"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-add.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-agents.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-assemble.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-attach.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-banner.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-brief.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-cadre.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-close.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-config.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-deploie.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-detach.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-etat.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-guide.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-help.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-init.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-jalon.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-list.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-memory.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-models.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-open.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-portfolio.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-produit.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-qualite.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-recall.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-recap.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-remove.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-root.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-services.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-show.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-skills.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-switch.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka-update.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + iaka.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + learning.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  + retrait.md — ajout"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"[Skills]"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  (rien a poser)"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"[Agents]"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  (rien a poser)"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"  (dry-run) host claude : aucun fichier ecrit, aucun backup."}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"== Termine =="}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"Hosts traites : (aucun)"}
+{"evt":"log-delegue","ts":"2026-09-06T00:51:23.449Z","etape":2,"flux":"stdout","ligne":"(dry-run) Aucun fichier ecrit, aucun backup cree."}
+{"evt":"etape-terminee","ts":"2026-09-06T00:51:23.450Z","etape":2,"etat":"dry-run","detail":"kit méthode déployé/à jour"}
+{"evt":"etape-annoncee","ts":"2026-09-06T00:51:31.683Z","etape":3,"quoi":"IakaCockpit v0.32.2 (plateforme darwin-aarch64)","ou":"/private/tmp/claude-501/-Users-sjupin-work/491bc970-2cd2-4bfd-8669-ae053380e4f6/scratchpad/fixture-sbx/apps/IakaCockpit.app","version":"0.32.2","ceQuiSeraFusionne":"pose neuve, rien n'existait à cette adresse","sourceRetenue":{"nom":"raw.githubusercontent.com","pourquoi":"manifeste exploitable retenu (ordre M10, AR-H)"},"sourcesConsultees":[{"nom":"192.168.1.139:3001","repond":false,"exploitable":false,"motif":"injoignable"},{"nom":"raw.githubusercontent.com","repond":true,"exploitable":true,"motif":"ok"}]}
+{"evt":"etape-terminee","ts":"2026-09-06T00:51:31.684Z","etape":3,"etat":"dry-run","detail":"IakaCockpit v0.32.2 décrit, rien écrit"}
+{"evt":"etape-annoncee","ts":"2026-09-06T00:51:39.853Z","etape":4,"quoi":"iakaFrameGUI v0.1.8 (plateforme darwin-aarch64)","ou":"/private/tmp/claude-501/-Users-sjupin-work/491bc970-2cd2-4bfd-8669-ae053380e4f6/scratchpad/fixture-sbx/apps/iakaFrameGUI.app","version":"0.1.8","ceQuiSeraFusionne":"pose neuve, rien n'existait à cette adresse","sourceRetenue":{"nom":"raw.githubusercontent.com","pourquoi":"manifeste exploitable retenu (ordre M10, AR-H)"},"sourcesConsultees":[{"nom":"192.168.1.139:3001","repond":false,"exploitable":false,"motif":"injoignable"},{"nom":"raw.githubusercontent.com","repond":true,"exploitable":true,"motif":"ok"}]}
+{"evt":"etape-terminee","ts":"2026-09-06T00:51:39.853Z","etape":4,"etat":"dry-run","detail":"iakaFrameGUI v0.1.8 décrit, rien écrit"}
+{"evt":"fin","ts":"2026-09-06T00:51:39.854Z","etape":null,"ok":true,"etatAtteint":{"derniereEtapeTentee":4,"etapesFaites":[],"etapesNonTentees":[]},"reprise":null}

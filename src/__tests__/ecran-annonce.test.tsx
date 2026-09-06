@@ -50,7 +50,19 @@ describe("ecran d'annonce", () => {
     await waitFor(() => expect(getPlatformInfo).toHaveBeenCalled());
   });
 
-  it("CA-I10 — sur une plateforme non couverte, l'ecran porte le refus (jamais un succes simule)", async () => {
+  it("CA-I10 — sur une plateforme non couverte (Windows arm64), l'ecran porte le refus (jamais un succes simule)", async () => {
+    detectPrerequisites.mockResolvedValue({
+      node: { present: true, version: "v20.0.0" },
+      npm: { present: true, version: "10.0.0" },
+    });
+    getPlatformInfo.mockResolvedValue({ os: "windows", arch: "aarch64" });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByText(/REFUSEES/)).toBeTruthy());
+  });
+
+  it("AR-P5(a) (ressource CLI 0.41.0) — Windows x64 est desormais couvert, plus de refus a priori", async () => {
     detectPrerequisites.mockResolvedValue({
       node: { present: true, version: "v20.0.0" },
       npm: { present: true, version: "10.0.0" },
@@ -59,7 +71,21 @@ describe("ecran d'annonce", () => {
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByText(/REFUSEES/)).toBeTruthy());
+    await waitFor(() => expect(screen.getByText(/sont couvertes\./)).toBeTruthy());
+    expect(screen.queryByText(/REFUSEES/)).toBeNull();
+  });
+
+  it("AR-P5(a) (ressource CLI 0.41.0) — Linux x64 est desormais couvert, plus de refus a priori", async () => {
+    detectPrerequisites.mockResolvedValue({
+      node: { present: true, version: "v20.0.0" },
+      npm: { present: true, version: "10.0.0" },
+    });
+    getPlatformInfo.mockResolvedValue({ os: "linux", arch: "x86_64" });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByText(/sont couvertes\./)).toBeTruthy());
+    expect(screen.queryByText(/REFUSEES/)).toBeNull();
   });
 
   it("CA-I10 (contraire) — sur macOS, la couverture est affirmee, pas simulee ailleurs", async () => {
