@@ -33,8 +33,9 @@ beforeEach(() => {
     node: { present: true, version: "v20.0.0" },
     npm: { present: true, version: "10.0.0" },
   });
-  // OS annonce "windows" (pre-flux : REFUSE par coverage.ts).
-  getPlatformInfo.mockReset().mockResolvedValue({ os: "windows", arch: "x86_64" });
+  // OS annonce "windows/arm64" (pre-flux : REFUSE par coverage.ts — seul le
+  // x64 est couvert cote Windows depuis la ressource CLI 0.41.0, AR-P5(a)).
+  getPlatformInfo.mockReset().mockResolvedValue({ os: "windows", arch: "aarch64" });
   demarrerInstallation.mockReset().mockResolvedValue(undefined);
   repondreFeuVert.mockReset();
   interrompreInstallation.mockReset();
@@ -47,9 +48,9 @@ beforeEach(() => {
 });
 
 describe("couverture post-flux prime sur l'indice declaratif (M-F6)", () => {
-  it("avant tout flux : l'indice de coverage.ts (REFUSEES sur windows)", async () => {
+  it("avant tout flux : l'indice de coverage.ts (REFUSEES sur windows/arm64)", async () => {
     render(<App />);
-    await waitFor(() => expect(screen.getByText(/REFUSEES : seule macOS/)).toBeTruthy());
+    await waitFor(() => expect(screen.getByText(/REFUSEES : seuls macOS, Linux x64 et Windows x64/)).toBeTruthy());
   });
 
   it("apres un `etape-terminee` faite pour l'etape 3, la couverture RENDUE est celle du flux", async () => {
@@ -82,6 +83,6 @@ describe("couverture post-flux prime sur l'indice declaratif (M-F6)", () => {
     });
 
     await waitFor(() => expect(screen.getByText(/D'après le flux/)).toBeTruthy());
-    expect(screen.queryByText(/REFUSEES : seule macOS/)).toBeNull();
+    expect(screen.queryByText(/REFUSEES : seuls macOS, Linux x64 et Windows x64/)).toBeNull();
   });
 });

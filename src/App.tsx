@@ -62,12 +62,15 @@ function SectionCouverture({ etapes }: { etapes: EtatPilotage["modele"]["etapes"
   }
 
   const famille = normaliserOs(state.info.os);
-  const couverte = etapes34Couvertes(famille);
+  const couverte = etapes34Couvertes(famille, state.info.arch);
 
   return (
     <p className={couverte ? "couverture-ok" : "couverture-refus"}>
       Sur cette machine ({state.info.os} / {state.info.arch}), les etapes 3 et 4 (IakaCockpit,
-      iakaFrameGUI) sont {couverte ? "couvertes." : "REFUSEES : seule macOS est couverte aujourd'hui."}
+      iakaFrameGUI) sont{" "}
+      {couverte
+        ? "couvertes."
+        : "REFUSEES : seuls macOS, Linux x64 et Windows x64 sont couverts aujourd'hui."}
     </p>
   );
 }
