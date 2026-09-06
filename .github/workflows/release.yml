@@ -254,8 +254,15 @@ jobs:
           DEPOT: ${{ github.repository }}
         run: |
           set -euo pipefail
+          # CORRECTIF post-run-reel 34026373514 (2026-09-06) — `gh api` n'a PAS d'option
+          # `--arg` (c'est une option de `jq`) : l'ancienne forme `--jq --arg tag "$TAG" '...'`
+          # faisait avaler "--arg" comme VALEUR de `--jq`, et le reste ("tag", la valeur de
+          # $TAG, le filtre) devenait des arguments POSITIONNELS de `gh api` (qui n'en accepte
+          # qu'un, l'endpoint) -> "accepts 1 arg(s), received 4", release restee en brouillon.
+          # Fix : `gh api --paginate` rend le JSON BRUT (aucun `--jq` sur cette commande), et
+          # SEUL `jq`, en aval, recoit `--arg` -- exactement l'option a laquelle elle appartient.
           BROUILLONS=$(gh api "repos/$DEPOT/releases" --paginate \
-            --jq --arg tag "$TAG" '[.[] | select(.draft == true and .tag_name == $tag)]')
+            | jq --arg tag "$TAG" '[.[] | select(.draft == true and .tag_name == $tag)]')
           N=$(echo "$BROUILLONS" | jq 'length')
 
           if [ "$N" -eq 0 ]; then
