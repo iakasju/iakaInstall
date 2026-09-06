@@ -1,0 +1,36 @@
+iakaInstall v0.1.2 — ressource CLI remontee a 0.41.0 (installeur unifie complet)
+
+AR-P5(a) de specs/instructions/pilotage-reel-facade-contrat-machine.md : la ressource CLI
+embarquee est un lot, pas un geste. La soeur `iakaframe` a publie v0.41.0, qui ouvre les
+etapes 3/4 (IakaCockpit, iakaFrameGUI) a Linux (AppImage) et Windows (.exe NSIS
+currentUser), en plus de macOS.
+
+Ce que ce lot fait :
+
+- fixtures/cli-embarque.json remonte a 0.41.0 (naonedge-iakaframe-0.41.0.tgz, 697967 octets,
+  sha256 d8799b7d6ac32cb7d336def415588c1f739d78d8cce56336c42253615b2594f7, re-mesure).
+  npm run embarquer verifie AVANT extraction (CA-P13), 552 entrees extraites.
+- src/events/vocabulaire.ts regenere (vocabulaire ferme inchange entre 0.40.0 et 0.41.0,
+  AR-W8 : seul VERSION_RESSOURCE bouge).
+- src/coverage.ts mis a jour : l'indice pre-flux affirmait encore "seule macOS couverte" ;
+  il reflete desormais Linux x64 et Windows x64 (etapes34Couvertes prend l'architecture en
+  compte), conformement a cleManifestePlateforme cote CLI 0.41.0.
+- Facade bumpee 0.1.1 -> 0.1.2 (package.json, package-lock.json, tauri.conf.json,
+  Cargo.toml, Cargo.lock). README regenere par npm run vitrine -- --write.
+- Correctif incident : la note de securite citait un nom de fichier versionne en dur
+  (iakaInstall_0.1.1_aarch64.dmg), que la garde anti-derive de la vitrine (CA-10) lit comme
+  une promesse ; reformule sans repeter de nom de fichier versionne, la mesure historique
+  reste dite.
+- fixtures/flux-apercu.ndjson re-enregistree contre la ressource 0.41.0 (rejeu reel en bac a
+  sable) : flux macOS structurellement identique, seuls les numeros de version changent.
+
+Preuve : typecheck 0, lint 0, test 0 (129 passed, avant 127), build 0, cargo test 0 (22
+passed), cargo fmt --check 0, cargo clippy -D warnings 0. npm run tauri build --target
+aarch64-apple-darwin lance depuis un arbre SANS ressource CLI prealable -> 0 ; le
+beforeBuildCommand l'a reproduite en 0.41.0 (verifie dans le .app : Resources/cli/
+package.json = 0.41.0). vitrine:check -> 0. vitrine:en-ligne -> 1, ATTENDU et HORS gate tant
+que le tag n'est pas publie.
+
+Reste gate humain : UAC sur compte Windows non-administrateur, SmartScreen (aucun
+certificat de signature Windows pose), Gatekeeper/notarisation macOS (signature AD HOC), et
+la recette reelle de l'installeur unifie sur les trois OS.

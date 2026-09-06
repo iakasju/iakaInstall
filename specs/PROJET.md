@@ -418,3 +418,31 @@ poser les secrets Apple/Windows dans les réglages du dépôt (acte du décideur
 **Successeurs nommés (backlog `CLAUDE.md`, non traités par ce lot)** : `CONVERGENCE-TROIS-FRERES`
 (à jouer dans les deux sœurs) et `UPDATER-DE-LA-FACADE` (condition d'entrée : paire minisign posée
 par le décideur + seconde version publiée).
+
+### Exécution AR-P5(a) — remontée CLI 0.40.0 → 0.41.0 + release v0.1.2 (2026-09-06)
+
+> Premier lot qui joue réellement AR-P5(a) (« ressource épinglée, remontée à chaque release de
+> la façade, un lot pas un geste ») : la sœur `iakaframe` a publié `v0.41.0`, qui ouvre les
+> étapes 3/4 (IakaCockpit, iakaFrameGUI) à **Linux** (AppImage) et **Windows** (`.exe` NSIS), en
+> plus de macOS. Implémenté par ⚒️ Gimli, branche `chore/ressource-cli-0.41.0`, **REMIS AU GATE
+> 🏹 Legolas, non auto-validé**.
+
+`fixtures/cli-embarque.json` remonté à `0.41.0` (`naonedge-iakaframe-0.41.0.tgz`, 697 967 octets,
+sha256 `d8799b7d6ac32cb7d336def415588c1f739d78d8cce56336c42253615b2594f7`, re-mesuré). Vocabulaire
+fermé **inchangé** entre 0.40.0 et 0.41.0 (conforme AR-W8) — seul `VERSION_RESSOURCE` bouge.
+`src/coverage.ts` (indice pré-flux) **corrigé** : il affirmait encore « seule macOS couverte »,
+devenu faux avec `cleManifestePlateforme` côté CLI 0.41.0 (couvre désormais aussi linux/x64 et
+windows/x64) — l'indice mentait par omission, `etapes34Couvertes` prend maintenant l'architecture
+en compte. Façade bumpée `0.1.1` → `0.1.2` (5 fichiers), README régénéré par la vitrine.
+**Correctif incidentel** : la note de sécurité citait un nom de fichier versionné en dur
+(`iakaInstall_0.1.1_aarch64.dmg`) que la garde CA-10 lit comme une promesse — reformulée sans
+répéter de nom de fichier versionné. `fixtures/flux-apercu.ndjson` ré-enregistrée contre 0.41.0
+(rejeu réel en bac à sable) : flux macOS structurellement identique, seuls les numéros de version
+changent. Chaîne qualité complète verte (typecheck/lint/129 tests/build/cargo test·fmt·clippy/
+`tauri build --target aarch64-apple-darwin` depuis un arbre sans ressource préalable — `.app`
+vérifié en 0.41.0/vitrine:check). Détail complet, preuve mesurée et commande de tag :
+`docs/releases/v0.1.2.md` + `.tagmsg`.
+
+**Non couvert, gate humain déclaré** : UAC sur compte Windows non-administrateur, SmartScreen
+(aucun certificat Windows posé), Gatekeeper/notarisation macOS (signature AD HOC), recette réelle
+de l'installeur unifié sur les trois OS.
