@@ -330,11 +330,18 @@ reprise** dans le `.md` (ce qui vient d'être fait, ce qui reste, prochaine éta
       incidentel** : la note de sécurité (`fixtures/vitrine-locale.json`) citait un nom de
       fichier versionné en dur, lu comme une fausse promesse par la garde CA-10 au bump —
       reformulée sans nom de fichier versionné, la mesure historique reste dite.
-      `fixtures/flux-apercu.ndjson` ré-enregistrée (rejeu réel en bac à sable) : flux macOS
-      structurellement identique, seuls les numéros de version changent. Chaîne qualité
-      complète verte, y compris `npm run tauri build -- --target aarch64-apple-darwin` lancé
-      depuis un arbre **sans** ressource CLI préalable (`beforeBuildCommand` l'a reproduite
-      en 0.41.0, vérifié dans le `.app`). Détail + commande de tag :
+      `fixtures/flux-apercu.ndjson` ré-enregistrée (rejeu réel en bac à sable) : 7 des 74
+      lignes changent (3 seulement de version ; 4 aussi de chemin, `--root` pointant
+      désormais la ressource embarquée en place plutôt qu'une extraction scratch — pas un
+      changement de comportement du CLI, aucun test n'assure la valeur de ces chemins). Le
+      reste du flux (étapes 3/4, `darwin-arm64`) est structurellement identique. Preuve de la
+      couverture Linux/Windows côté moteur re-vérifiée en lecture seule : runs de banc
+      `33997947501` (rollback NSIS rouge, avant correctif) et `33999564308` (vert, après) ;
+      `v0.41.0` postérieur aux deux et incluant le correctif
+      (`gh api .../compare/<sha run 2>...v0.41.0` → `ahead_by:8, behind_by:0`). Chaîne
+      qualité complète verte, y compris `npm run tauri build -- --target aarch64-apple-darwin`
+      lancé depuis un arbre **sans** ressource CLI préalable (`beforeBuildCommand` l'a
+      reproduite en 0.41.0, vérifié dans le `.app`). Détail + commande de tag :
       `docs/releases/v0.1.2.md` + `.tagmsg`. Non couvert, DÉCLARÉ gate humain : UAC sur
       compte Windows non-administrateur, SmartScreen, Gatekeeper/notarisation macOS, recette
       réelle de l'installeur unifié sur les trois OS.

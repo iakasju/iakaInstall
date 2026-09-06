@@ -437,11 +437,34 @@ en compte. Façade bumpée `0.1.1` → `0.1.2` (5 fichiers), README régénéré
 **Correctif incidentel** : la note de sécurité citait un nom de fichier versionné en dur
 (`iakaInstall_0.1.1_aarch64.dmg`) que la garde CA-10 lit comme une promesse — reformulée sans
 répéter de nom de fichier versionné. `fixtures/flux-apercu.ndjson` ré-enregistrée contre 0.41.0
-(rejeu réel en bac à sable) : flux macOS structurellement identique, seuls les numéros de version
-changent. Chaîne qualité complète verte (typecheck/lint/129 tests/build/cargo test·fmt·clippy/
-`tauri build --target aarch64-apple-darwin` depuis un arbre sans ressource préalable — `.app`
-vérifié en 0.41.0/vitrine:check). Détail complet, preuve mesurée et commande de tag :
-`docs/releases/v0.1.2.md` + `.tagmsg`.
+(rejeu réel en bac à sable) : **7 des 74 lignes changent** (1, 2, 3, 4, 6, 8, 11) — 3 (1, 3, 4)
+ne changent que le numéro de version, 4 (2, 6, 8, 11) changent aussi de **chemin**
+(`reservoir.embarqueDir`/`installMjsPath`/`provenance`, `sourceRetenue.pourquoi` de l'étape 2,
+deux lignes de log `Kits`/`Kit`) parce que ce rejeu pointe `--root` directement sur la ressource
+embarquée **en place** (`src-tauri/resources/cli`, comme le fait déjà défaut
+`scripts/rejeu-vivant.mjs`) plutôt que sur une extraction scratch comme le premier enregistrement
+(0.40.0) — **pas** un changement de comportement du CLI. Aucun test n'assure la **valeur** de ces
+chemins : vérifié par grep (rien) et par lecture de `scripts/__tests__/rejeu-flux-apercu.test.mjs`,
+qui ne compare qu'**en auto-référence** (le modèle rejoué contre l'événement de la même fixture),
+jamais contre une valeur figée en dur. Le reste du flux (étapes 3/4, `darwin-arm64`) est
+structurellement identique. Chaîne qualité complète verte (typecheck/lint/129 tests/build/cargo
+test·fmt·clippy/`tauri build --target aarch64-apple-darwin` depuis un arbre sans ressource
+préalable — `.app` vérifié en 0.41.0/vitrine:check). Détail complet, preuve mesurée et commande de
+tag : `docs/releases/v0.1.2.md` + `.tagmsg`.
+
+**Preuve de ce que « installeur complet Windows/Linux » veut dire côté moteur** — re-vérifiée en
+lecture seule (`gh run view`, `gh api compare`), pas reprise telle quelle du rapport d'un autre
+agent : deux runs réels du banc CI d'`iakaframe` (`banc-etapes-3-4.yml`). Run `33997947501`
+(`headSha e34c1af9…`, 2026-09-05T23:10:29Z) — `banc (ubuntu-latest)` `success`, `banc
+(windows-latest)` `failure` (rollback NSIS : `uninstall.exe /S` sans `_?=<InstallLocation>`, code
+`0` mais clé de registre encore présente — **avant** correctif). Run `33999564308` (`headSha
+3baf20ec…`, 2026-09-05T23:46:48Z) — `banc (windows-latest)` `success`, 16 mesures dont 15 `PASS`
+(1 `NON-MESURE` : UAC compte non-admin — **après** correctif). Le tag `v0.41.0` est **postérieur
+aux deux runs et inclut le correctif** :
+`gh api repos/iakasju/iakaframe/compare/3baf20ec5a773f11c82bfe63471ad1a252b20588...v0.41.0` →
+`{"ahead_by":8,"behind_by":0,"status":"ahead"}` — le `headSha` du run 2 (post-correctif) est un
+**ancêtre direct** de `v0.41.0`. La ressource remontée dans ce lot embarque donc bien le correctif
+de rollback Windows mesuré vert, pas seulement le code d'avant le fix.
 
 **Non couvert, gate humain déclaré** : UAC sur compte Windows non-administrateur, SmartScreen
 (aucun certificat Windows posé), Gatekeeper/notarisation macOS (signature AD HOC), recette réelle
