@@ -98,5 +98,15 @@
     "dirty": false,
     "files": 136,
     "note": "Ressource CLI remontee a 0.41.0 (sha256 d8799b7d..., verifiee) et facade 0.1.2 preparee : l installeur unifie pose les 4 composants sur macOS, Linux (AppImage) et Windows (.exe NSIS). Indice de couverture corrige (x64 seulement hors macOS). Gate PASS 129 tests apres 3 blocages du harnais ; 2 ecarts de tracabilite des notes corriges avant fusion. Reste au decideur : tag v0.1.2 = PREMIER run reel de la politique release brouillon ; recette reelle 3 OS ; push Forgejo."
+  },
+  {
+    "date": "2026-09-06 12:36",
+    "reason": "pause",
+    "version": "v0.1.2",
+    "branch": "main",
+    "commit": "11647bf merge: fix job publier — gh api n accepte pas --arg, jambe d execution shell du gate release (gate Legolas PASS)",
+    "dirty": false,
+    "files": 138,
+    "note": "Premier run reel de RELEASE-PARTIELLE-PUBLIEE (tag v0.1.2, run 34026373514) : fail-safe PROUVE (brouillon 0 asset pendant les builds, latest inchange), 4/4 builds verts, 9 assets ; job publier ROUGE sur gh api --jq --arg (syntaxe jamais exercee). Correctif fusionne (gate PASS 137 tests) avec une jambe d EXECUTION shell (faux gh) qui rougit sur le bug reel. Brouillon v0.1.2 (id 383537762) intact, publication manuelle = acte du decideur (repli c). Politique complete a rejouer au prochain tag. Push Forgejo EN ATTENTE."
   }
 ]

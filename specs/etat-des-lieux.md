@@ -1,33 +1,33 @@
 # Etat des lieux - iakaInstall
 
-> Genere par iakaframe (CLI) le 2026-09-06 11:11 (motif: pause).
+> Genere par iakaframe (CLI) le 2026-09-06 12:36 (motif: pause).
 > A regenerer a chaque changement de version et a chaque pause/reprise.
 
 ## Etat courant
 
 | Champ | Valeur |
 |---|---|
-| Version | v0.1.1 |
+| Version | v0.1.2 |
 | Branche | main |
-| Dernier commit | ed764b0 merge: ressource CLI 0.41.0 embarquee + facade 0.1.2 — installeur unifie complet Windows/Linux (gate Legolas PASS) |
+| Dernier commit | 11647bf merge: fix job publier — gh api n accepte pas --arg, jambe d execution shell du gate release (gate Legolas PASS) |
 | Arbre | propre |
-| Fichiers (suivis + non ignores) | 136 |
-| Note | Ressource CLI remontee a 0.41.0 (sha256 d8799b7d..., verifiee) et facade 0.1.2 preparee : l installeur unifie pose les 4 composants sur macOS, Linux (AppImage) et Windows (.exe NSIS). Indice de couverture corrige (x64 seulement hors macOS). Gate PASS 129 tests apres 3 blocages du harnais ; 2 ecarts de tracabilite des notes corriges avant fusion. Reste au decideur : tag v0.1.2 = PREMIER run reel de la politique release brouillon ; recette reelle 3 OS ; push Forgejo. |
+| Fichiers (suivis + non ignores) | 138 |
+| Note | Premier run reel de RELEASE-PARTIELLE-PUBLIEE (tag v0.1.2, run 34026373514) : fail-safe PROUVE (brouillon 0 asset pendant les builds, latest inchange), 4/4 builds verts, 9 assets ; job publier ROUGE sur gh api --jq --arg (syntaxe jamais exercee). Correctif fusionne (gate PASS 137 tests) avec une jambe d EXECUTION shell (faux gh) qui rougit sur le bug reel. Brouillon v0.1.2 (id 383537762) intact, publication manuelle = acte du decideur (repli c). Politique complete a rejouer au prochain tag. Push Forgejo EN ATTENTE. |
 
 ## Commits recents
 
 | Hash | Date | Sujet |
 |---|---|---|
+| `11647bf` | 2026-09-06 | merge: fix job publier — gh api n accepte pas --arg, jambe d execution shell du gate release (gate Legolas PASS) |
+| `3e5a068` | 2026-09-06 | docs(qualite): gate fix publier gh api jq — PASS |
+| `f2ad0a7` | 2026-09-06 | docs: consigner le premier run reel de RELEASE-PARTIELLE-PUBLIEE (run 34026373514) |
+| `edf9a90` | 2026-09-06 | fix(ci): gh api n'accepte pas --arg (option de jq) — publier le brouillon par id |
+| `d9cbaaa` | 2026-09-06 | test(ci): jambe execution du gate release — rougit sur le bug reel gh api --jq --arg |
+| `f6a1fc4` | 2026-09-06 | chore(iakaframe): update etat des lieux + commit global (pause) |
 | `ed764b0` | 2026-09-06 | merge: ressource CLI 0.41.0 embarquee + facade 0.1.2 — installeur unifie complet Windows/Linux (gate Legolas PASS) |
 | `3337cfc` | 2026-09-06 | docs(release): notes v0.1.2 — fixture flux et preuve des runs de banc tracees |
 | `e750b31` | 2026-09-06 | docs(qualite): gate ressource CLI 0.41.0 + bump 0.1.2 — PASS |
 | `05d9278` | 2026-09-06 | docs(release): notes v0.1.2 + backlog/PROJET.md a jour (AR-P5a) |
-| `0cbe147` | 2026-09-06 | chore(fixtures): re-enregistrer flux-apercu.ndjson contre la ressource 0.41.0 |
-| `2e3c428` | 2026-09-06 | fix(vitrine): ne plus citer un nom d'asset versionne dans la note de securite |
-| `1a59c84` | 2026-09-06 | chore(release): bump facade 0.1.1 -> 0.1.2 (ressource CLI 0.41.0) |
-| `088c7df` | 2026-09-06 | fix(coverage): l'indice pre-flux reflete Linux x64 / Windows x64 (0.41.0) |
-| `6063016` | 2026-09-06 | chore(vocabulaire): regenerer depuis la ressource CLI 0.41.0 |
-| `fff6e70` | 2026-09-06 | chore(cli-embarque): remonter la ressource CLI a 0.41.0 (AR-P5a) |
 
 ## Reprise du travail (a completer par Cowork)
 
@@ -62,6 +62,7 @@
 
 | Date | Motif | Version | Branche | Note |
 |---|---|---|---|---|
+| 2026-09-06 12:36 | pause | v0.1.2 | main | Premier run reel de RELEASE-PARTIELLE-PUBLIEE (tag v0.1.2, run 34026373514) : fail-safe PROUVE (brouillon 0 asset pendant les builds, latest inchange), 4/4 builds verts, 9 assets ; job publier ROUGE sur gh api --jq --arg (syntaxe jamais exercee). Correctif fusionne (gate PASS 137 tests) avec une jambe d EXECUTION shell (faux gh) qui rougit sur le bug reel. Brouillon v0.1.2 (id 383537762) intact, publication manuelle = acte du decideur (repli c). Politique complete a rejouer au prochain tag. Push Forgejo EN ATTENTE. |
 | 2026-09-06 11:11 | pause | v0.1.1 | main | Ressource CLI remontee a 0.41.0 (sha256 d8799b7d..., verifiee) et facade 0.1.2 preparee : l installeur unifie pose les 4 composants sur macOS, Linux (AppImage) et Windows (.exe NSIS). Indice de couverture corrige (x64 seulement hors macOS). Gate PASS 129 tests apres 3 blocages du harnais ; 2 ecarts de tracabilite des notes corriges avant fusion. Reste au decideur : tag v0.1.2 = PREMIER run reel de la politique release brouillon ; recette reelle 3 OS ; push Forgejo. |
 | 2026-09-06 01:05 | pause | v0.1.1 | main | NOTE CORRIGEE EN PLACE (2026-09-06) : le checkpoint 4f12648 portait par erreur une note relative a iakaframe (banc CI etapes 3/4), lancee depuis le mauvais repertoire par Aragorn. Etat iakaInstall INCHANGE depuis le lot C.3 (13cf959) : v0.1.1 latest, vitrine, release brouillon. Reste au decideur : run de preuve casser, recette reelle, bump ressource CLI quand 0.41.0 sera publiee (AR-P5), push Forgejo. |
 | 2026-09-05 15:42 | pause | v0.1.1 | main | LOT C.3 + B'-b livre et fusionne : README ecrit, vitrine des 7 artefacts, absences de signature (notarisation macOS, SmartScreen Windows) declarees avec cliquet offline, etape CI de notarisation declarative sans env (un secret vide casse le bundler), face en ligne OK sur v0.1.1. Gate PASS 127 tests. LE LOT C EST ENTIEREMENT LIVRE (C.1, install.mjs, contrat machine, C.2-a, C.2-b, RELEASE-PARTIELLE, C.3). Reste au decideur : recette reelle dmg/msi/deb, run de preuve casser, secrets Apple/Windows, successeurs CONVERGENCE-TROIS-FRERES et UPDATER-DE-LA-FACADE. Limite signalee : cliquet de l aveu unidirectionnel. Push Forgejo EN ATTENTE. |
