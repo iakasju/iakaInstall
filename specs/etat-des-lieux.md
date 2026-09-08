@@ -1,6 +1,6 @@
 # Etat des lieux - iakaInstall
 
-> Genere par iakaframe (CLI) le 2026-09-06 12:36 (motif: pause).
+> Genere par iakaframe (CLI) le 2026-09-08 10:31 (motif: pause).
 > A regenerer a chaque changement de version et a chaque pause/reprise.
 
 ## Etat courant
@@ -9,25 +9,25 @@
 |---|---|
 | Version | v0.1.2 |
 | Branche | main |
-| Dernier commit | 11647bf merge: fix job publier — gh api n accepte pas --arg, jambe d execution shell du gate release (gate Legolas PASS) |
+| Dernier commit | 117bdd3 merge: CONVERGENCE-TROIS-FRERES lot 2 — iakaInstall entre a la convergence (registre local 7, intersection) + registre exclu (gate Legolas PASS transverse) |
 | Arbre | propre |
-| Fichiers (suivis + non ignores) | 138 |
-| Note | Premier run reel de RELEASE-PARTIELLE-PUBLIEE (tag v0.1.2, run 34026373514) : fail-safe PROUVE (brouillon 0 asset pendant les builds, latest inchange), 4/4 builds verts, 9 assets ; job publier ROUGE sur gh api --jq --arg (syntaxe jamais exercee). Correctif fusionne (gate PASS 137 tests) avec une jambe d EXECUTION shell (faux gh) qui rougit sur le bug reel. Brouillon v0.1.2 (id 383537762) intact, publication manuelle = acte du decideur (repli c). Politique complete a rejouer au prochain tag. Push Forgejo EN ATTENTE. |
+| Fichiers (suivis + non ignores) | 148 |
+| Note | CONVERGENCE A TROIS FRERES ACHEVEE le 2026-09-08 (Odin) : registre exclu de sa propre comparaison (instrument, pas objet ; correctif byte-identique dans les 3 depots, test rouge d abord), iakaInstall entre a la convergence avec un registre local de 7 entrees (intersection, AR-C3b). Les six sens de test:convergence rendent 0 ecart. Gates Legolas PASS transverses. Reste au decideur : prochain tag de chaque soeur = 1er run reel de leur politique brouillon (IakaCockpit annonce 0.33.0 sans tag) ; CONVERGENCE-RELEASE-YML-ALIGNEMENT ; remontee du bloc contrefactuel de vitrine-en-ligne.test.mjs chez les soeurs. |
 
 ## Commits recents
 
 | Hash | Date | Sujet |
 |---|---|---|
-| `11647bf` | 2026-09-06 | merge: fix job publier — gh api n accepte pas --arg, jambe d execution shell du gate release (gate Legolas PASS) |
-| `3e5a068` | 2026-09-06 | docs(qualite): gate fix publier gh api jq — PASS |
-| `f2ad0a7` | 2026-09-06 | docs: consigner le premier run reel de RELEASE-PARTIELLE-PUBLIEE (run 34026373514) |
-| `edf9a90` | 2026-09-06 | fix(ci): gh api n'accepte pas --arg (option de jq) — publier le brouillon par id |
-| `d9cbaaa` | 2026-09-06 | test(ci): jambe execution du gate release — rougit sur le bug reel gh api --jq --arg |
-| `f6a1fc4` | 2026-09-06 | chore(iakaframe): update etat des lieux + commit global (pause) |
-| `ed764b0` | 2026-09-06 | merge: ressource CLI 0.41.0 embarquee + facade 0.1.2 — installeur unifie complet Windows/Linux (gate Legolas PASS) |
-| `3337cfc` | 2026-09-06 | docs(release): notes v0.1.2 — fixture flux et preuve des runs de banc tracees |
-| `e750b31` | 2026-09-06 | docs(qualite): gate ressource CLI 0.41.0 + bump 0.1.2 — PASS |
-| `05d9278` | 2026-09-06 | docs(release): notes v0.1.2 + backlog/PROJET.md a jour (AR-P5a) |
+| `117bdd3` | 2026-09-08 | merge: CONVERGENCE-TROIS-FRERES lot 2 — iakaInstall entre a la convergence (registre local 7, intersection) + registre exclu (gate Legolas PASS transverse) |
+| `e5fb2f0` | 2026-09-08 | docs(qualite): gate convergence lot 2 + registre exclu — PASS |
+| `0f89526` | 2026-09-08 | docs: CONVERGENCE-REGISTRE-EXCLU-DE-LUI-MEME traitee dans ce lot (CLAUDE.md:364) |
+| `4eea8ff` | 2026-09-08 | chore(convergence): registre refixe apres correctif de test-convergence.mjs |
+| `f2b876f` | 2026-09-08 | fix(convergence): exclure le registre de la comparaison croisee (il est l'instrument, pas l'objet) |
+| `83166f8` | 2026-09-08 | test(convergence): frere au registre sous-ensemble strict est ROUGE (registre compare a tort) |
+| `3d5acc0` | 2026-09-08 | docs: consigne le lot 2 de CONVERGENCE-TROIS-FRERES et son successeur |
+| `3ef907f` | 2026-09-08 | docs(vitrine): rectifie en la datant la phrase perimee sur iakaInstall |
+| `3763e92` | 2026-09-08 | feat(convergence): registre local et face locale d'iakaInstall |
+| `a3e8ab5` | 2026-09-08 | feat(convergence): liste nommee des freres + copie de la face croisee |
 
 ## Reprise du travail (a completer par Cowork)
 
@@ -62,6 +62,7 @@
 
 | Date | Motif | Version | Branche | Note |
 |---|---|---|---|---|
+| 2026-09-08 10:31 | pause | v0.1.2 | main | CONVERGENCE A TROIS FRERES ACHEVEE le 2026-09-08 (Odin) : registre exclu de sa propre comparaison (instrument, pas objet ; correctif byte-identique dans les 3 depots, test rouge d abord), iakaInstall entre a la convergence avec un registre local de 7 entrees (intersection, AR-C3b). Les six sens de test:convergence rendent 0 ecart. Gates Legolas PASS transverses. Reste au decideur : prochain tag de chaque soeur = 1er run reel de leur politique brouillon (IakaCockpit annonce 0.33.0 sans tag) ; CONVERGENCE-RELEASE-YML-ALIGNEMENT ; remontee du bloc contrefactuel de vitrine-en-ligne.test.mjs chez les soeurs. |
 | 2026-09-06 12:36 | pause | v0.1.2 | main | Premier run reel de RELEASE-PARTIELLE-PUBLIEE (tag v0.1.2, run 34026373514) : fail-safe PROUVE (brouillon 0 asset pendant les builds, latest inchange), 4/4 builds verts, 9 assets ; job publier ROUGE sur gh api --jq --arg (syntaxe jamais exercee). Correctif fusionne (gate PASS 137 tests) avec une jambe d EXECUTION shell (faux gh) qui rougit sur le bug reel. Brouillon v0.1.2 (id 383537762) intact, publication manuelle = acte du decideur (repli c). Politique complete a rejouer au prochain tag. Push Forgejo EN ATTENTE. |
 | 2026-09-06 11:11 | pause | v0.1.1 | main | Ressource CLI remontee a 0.41.0 (sha256 d8799b7d..., verifiee) et facade 0.1.2 preparee : l installeur unifie pose les 4 composants sur macOS, Linux (AppImage) et Windows (.exe NSIS). Indice de couverture corrige (x64 seulement hors macOS). Gate PASS 129 tests apres 3 blocages du harnais ; 2 ecarts de tracabilite des notes corriges avant fusion. Reste au decideur : tag v0.1.2 = PREMIER run reel de la politique release brouillon ; recette reelle 3 OS ; push Forgejo. |
 | 2026-09-06 01:05 | pause | v0.1.1 | main | NOTE CORRIGEE EN PLACE (2026-09-06) : le checkpoint 4f12648 portait par erreur une note relative a iakaframe (banc CI etapes 3/4), lancee depuis le mauvais repertoire par Aragorn. Etat iakaInstall INCHANGE depuis le lot C.3 (13cf959) : v0.1.1 latest, vitrine, release brouillon. Reste au decideur : run de preuve casser, recette reelle, bump ressource CLI quand 0.41.0 sera publiee (AR-P5), push Forgejo. |
