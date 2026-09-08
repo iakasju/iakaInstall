@@ -305,6 +305,30 @@ reprise** dans le `.md` (ce qui vient d'être fait, ce qui reste, prochaine éta
       (M-15, mesuré : `iakaFrameGUI/fixtures/vitrine-locale.json` porte `"absents": []` avec
       *« AUCUN absent déclaré »*, rien sur la signature) ; (iii) alors seulement inscrire
       `iakaInstall` au registre de convergence et relever le cliquet. Ordre de grandeur **≈ 0,75 j**.
+      ⚠️ **Ce lot-ci (LOT 2, registre à trois d'`iakaInstall`) reste OUVERT** — seul son
+      successeur `GARDE-FACE-EN-LIGNE-VITRINE-INSTALL` (ci-dessous) a été joué.
+- [x] **`GARDE-FACE-EN-LIGNE-VITRINE-INSTALL`** — **soldé le 2026-09-08** (⚒️ Gimli, branche
+      `test/garde-face-en-ligne-vitrine`, **REMIS AU GATE 🏹 Legolas, non auto-validé**). Successeur
+      inscrit par le cadrage `specs/instructions/convergence-trois-freres.md` § 8 (M-C5) : la copie
+      de `scripts/vitrine-en-ligne.mjs` depuis les sœurs (2026-09-05, lot C.3 + B′-b) avait repris
+      le cartouche « aucune divergence fonctionnelle » **sans** reprendre la garde qui l'exerce —
+      rouvrant, dans ce troisième dépôt, le défaut F-3 déjà fermé chez `IakaCockpit`/`iakaFrameGUI`
+      le même jour.
+      **Livré** : `scripts/__tests__/vitrine-en-ligne.test.mjs`, copie de la garde des sœurs
+      (18 tests), adaptée sur le **seul** cartouche d'en-tête — mesuré par `diff` : entre
+      `iakaFrameGUI/scripts/vitrine-en-ligne.mjs` et sa copie ici, l'écart ne porte que sur les
+      lignes 4-11 (cartouche), confirmant que « aucune divergence fonctionnelle » est **vrai**, pas
+      seulement déclaré. Cas couverts : réseau injoignable ⇒ code `3` + « NON MESURE » ; release
+      `latest` simulée conforme ⇒ `0` ; asset manquant ⇒ `1` nommé (`E-3`) ; **contrefactuel** —
+      l'assertion qui distinguerait un SKIP travesti en succès (code `0` **et** texte `OK —`) est
+      vérifiée fausse, avec un témoin de contraste (frères présents, mesure réelle) qui reste vert
+      pour prouver que la clause de SKIP n'est pas devenue inconditionnelle ; témoin vide écarté.
+      **Preuve mesurée** : `npm run typecheck` `0` ; `npm run lint` `0` ; `npm run test` `0`,
+      **155 passed (155)** (avant : 137 — **+18, aucun supprimé**) ; `npm run build` `0` ;
+      `scripts/__tests__/commandes-documentees.test.mjs` `0`, 2 passed (2), **inchangé** — aucun
+      script npm ajouté par ce lot. **Hors périmètre, non touché** : `cargo test`/Tauri (aucun
+      fichier Rust concerné), `IakaCockpit` et `iakaFrameGUI` (lecture seule, `git status`/`git
+      diff` non re-mesurés par cet agent — canal d'écriture borné à ce dépôt, CA-R11).
 - [ ] `UPDATER-DE-LA-FACADE` — successeur nommé d'**AR-V3 → (a)** (lot vitrine, 2026-09-05).
       La façade n'a **ni `pubkey`, ni `endpoints`, ni `createUpdaterArtifacts`** — Tauri v2 est
       catégorique : la signature de la charge de l'updater *« cannot be disabled »*, ce qui
