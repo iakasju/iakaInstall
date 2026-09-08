@@ -19,6 +19,16 @@
 // │ IakaCockpit et iakaFrameGUI au 2026-09-05, etape 0.4 de l'instruction).                         │
 // └──────────────────────────────────────────────────────────────────────────────────────────────┘
 //
+// ⚠️ RECTIFICATION DATEE (2026-09-08, CONVERGENCE-TROIS-FRERES, lot 2). La phrase ci-dessus,
+// « `iakaInstall` N'ENTRE PAS a ce registre », etait VRAIE au sens absolu jusqu'a ce lot : depuis,
+// `iakaInstall` porte SON PROPRE `fixtures/convergence.sha256` (AR-C3=b, registre LOCAL, sous-
+// ensemble MESURE byte-identique avec les soeurs) — la phrase est donc FAUSSE prise au pied de la
+// lettre. Elle reste VRAIE pour CE FICHIER-CI PRECISEMENT : la divergence delibere decrite dans le
+// cartouche ci-dessus (SENTINELLE_SECURITE, rendreSecurite, cliquet offline) n'a PAS ete remontee
+// au point de rendre ce fichier byte-identique avec les soeurs (mesure a l'etape 0.3 du lot 2 :
+// `diff` non vide des deux cotes) — il reste donc, lui, HORS du registre a trois, pour la meme
+// raison de fond qu'avant, mais plus par exclusion totale du depot. On date, on n'efface pas.
+//
 // LE DEFAUT FERME ICI (L42, defauts H-1 et H-4). La section « Installation » des trois README du
 // portefeuille etait de la PROSE RECOPIEE A LA MAIN : un numero de version en quatre endroits et un
 // tableau de noms de fichiers versionnes. Elle se perimait en silence, et rien ne rougissait. Le

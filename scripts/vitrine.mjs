@@ -12,6 +12,13 @@
 // │ d'elle-meme des que `absencesDeSignature` est present dans le contexte.                        │
 // └──────────────────────────────────────────────────────────────────────────────────────────────┘
 //
+// ⚠️ RECTIFICATION DATEE (2026-09-08, CONVERGENCE-TROIS-FRERES, lot 2). « `iakaInstall` N'ENTRE
+// PAS a ce registre » n'est plus vrai au sens absolu : `iakaInstall` porte desormais SON PROPRE
+// `fixtures/convergence.sha256` (registre LOCAL, AR-C3=b). Ce fichier-ci, lui, reste HORS de ce
+// registre : la divergence d'une ligne decrite ci-dessus n'a pas ete remontee au point de le
+// rendre byte-identique avec les soeurs (mesure a l'etape 0.3 du lot 2, `diff` non vide). On date,
+// on n'efface pas.
+//
 // Usage :
 //   node scripts/vitrine.mjs --check    # compare le README au rendu, code 1 si ecart
 //   node scripts/vitrine.mjs --write    # reecrit les zones du README
