@@ -361,27 +361,42 @@ reprise** dans le `.md` (ce qui vient d'être fait, ce qui reste, prochaine éta
       ⇒ SKIP nommé exit 0 ; un frère retiré de `freres.json` ⇒ mesure du seul frère restant, aucun
       repli deviné (angle mort M-14 fermé). **`IakaCockpit` et `iakaFrameGUI` INTACTS** (`git
       status --porcelain` vide des deux côtés, canal d'écriture borné CA-R11).
-- [ ] `CONVERGENCE-REGISTRE-EXCLU-DE-LUI-MEME` — successeur nommé, découvert **au passage** par le
-      lot 2 de `CONVERGENCE-TROIS-FRERES` (2026-09-08), **inscrit ici, non traité** (l'inscrire EST
-      le geste). `scripts/test-convergence.mjs` (byte-identique aux sœurs, copié sans adaptation)
-      inclut INCONDITIONNELLEMENT `fixtures/convergence.sha256` dans l'ensemble des chemins
-      comparés entre deux dépôts — `lireRegistre()` préfixe `EMPREINTES` aux deux listes AVANT de
-      calculer l'intersection, donc le fichier-registre lui-même est TOUJOURS dans l'intersection,
-      jamais dans le « hors comparaison », quel que soit son contenu réel. Conçu et éprouvé pour
-      DEUX sœurs dont les registres DOIVENT être byte-identiques (CA-D4), ce comportement produit
-      un **écart nommé garanti** dès qu'un troisième dépôt porte un registre DÉLIBÉRÉMENT plus
-      petit (AR-C3=b, ce lot-ci) : `iakaInstall` (7 entrées) et les sœurs (29 entrées) ne peuvent
-      jamais avoir un `fixtures/convergence.sha256` byte-identique par construction — la mesure
-      « depuis iakaInstall » ET « depuis une sœur » rendent chacune `exit 1` avec 1 écart nommé sur
-      ce seul fichier, alors que le reste de la mesure (0 hors comparaison, intersection correcte)
-      est vert. **Ce que le lot 1 n'a jamais exercé** : son propre gate ne testait que le cas SKIP
-      (`iakaInstall` absent du disque) — jamais le cas où `iakaInstall` PORTE un registre plus
-      petit. **Remède pressenti, non tranché ici** : exclure `EMPREINTES` de la comparaison quand
-      les deux registres ont des CONTENUS différents par déclaration (asymétrie assumée), ou
-      comparer le registre du frère à SON PROPRE contenu plutôt qu'au sien. Touche
-      `scripts/test-convergence.mjs`, un fichier CONVERGENT inscrit dans les registres des
-      **trois** dépôts : à jouer en un seul commit logique sur les trois, hors du canal d'écriture
-      borné d'un seul agent (CA-R11) — matière de portefeuille (🔷 Odin) ou de cadrage dédié.
+- [x] `CONVERGENCE-REGISTRE-EXCLU-DE-LUI-MEME` — **traité dans ce lot** (2026-09-08, ⚒️ Gimli,
+      ordre de mission portefeuille 🔷 Odin, branche `feat/convergence-trois-freres-lot2` (ce
+      dépôt) + `fix/convergence-registre-exclu` (les deux sœurs), **REMIS AU GATE 🏹 Legolas, non
+      auto-validé**, commit logique unique sur les trois dépôts). Successeur découvert au passage
+      par le lot 2 de `CONVERGENCE-TROIS-FRERES` : `scripts/test-convergence.mjs` incluait
+      INCONDITIONNELLEMENT `fixtures/convergence.sha256` dans l'ensemble des chemins comparés
+      entre deux dépôts (`lireRegistre()` préfixait `EMPREINTES` aux deux listes AVANT
+      l'intersection) — un écart nommé GARANTI dès qu'un troisième dépôt porte un registre
+      délibérément plus petit (AR-C3=b) : `iakaInstall` (7 entrées) et les sœurs (29 entrées) ne
+      peuvent jamais avoir un `fixtures/convergence.sha256` byte-identique par construction.
+      **Test rouge d'abord** (`scripts/__tests__/convergence-croisee.test.mjs`, byte-identique aux
+      sœurs) : un frère synthétique au registre SOUS-ENSEMBLE STRICT, intersection réelle
+      byte-identique, capturé ROUGE — `fixtures/convergence.sha256 : DIVERGENT (4266 o ici, 704 o
+      chez le frere)`, 1 écart, exit 1. **Correctif** : le registre est désormais EXCLU de
+      l'intersection ET du hors comparaison pour chaque frère mesuré — instrument de la
+      comparaison, pas objet qu'elle compare — et la sortie le dit explicitement (« `<EMPREINTES>`
+      exclu de la comparaison par construction — instrument, pas objet »). Script byte-identique
+      sur les trois dépôts, vérifié `diff` vide + `shasum`
+      `f93d5f0771ba8281388a6f00b63d8cd230e2717f36e0500d415f438f05dbab56`. **Registres refixés** :
+      cliquet rouge préalable capturé (`CA-C5`, `convergence-locale.test.mjs` :
+      `scripts/test-convergence.mjs : 31a520498326… → f93d5f0771ba…`), les trois
+      `fixtures/convergence.sha256` régénérés à la commande canonique, comptes **inchangés**
+      (7 ici, 29/29 chez les sœurs). **Mesure finale, les six sens** — `npm run test:convergence`
+      depuis les trois dépôts, chacun mesurant les deux autres, **exit 0** partout : ici, 14
+      chemins comparés (7+7), 0 hors comparaison ; chez chaque sœur, 36 chemins comparés (29+7),
+      22 hors comparaison nommés côté `iakaInstall` (chemins du sous-ensemble AR-C3=b). Chemins
+      « hors comparaison » toujours déclarés, jamais un écart. **Contrefactuel joué et révoqué** :
+      un octet muté dans `fixtures/vitrine-assets.json` (fichier de l'intersection) ⇒ `DIVERGENT`,
+      exit 1, nommé chez les deux sœurs ; révoqué, retour au vert vérifié — le correctif n'a pas
+      rendu la face aveugle à une vraie divergence. **Preuve mesurée** : `npm run typecheck` `0` ;
+      `npm run lint` `0` ; `npm run test` `0`, **158 passed (158)** (avant : 157 — +1, le test
+      croisé ci-dessus, aucun supprimé) ; `npm run build` `0` (Rust **non touché**, aucun `.rs`
+      concerné). **`IakaCockpit` et `iakaFrameGUI`** : mêmes deux commits (`fix(convergence)` +
+      `chore(convergence)`) sur `fix/convergence-registre-exclu` depuis `main`, `npm run
+      typecheck`/`lint` `0`, `npm run test` `1064`/`1364 passed` respectivement (avant : 1063/1363
+      — +1 chacun), branches non fusionnées, `main` intact des deux côtés.
 - [x] **`GARDE-FACE-EN-LIGNE-VITRINE-INSTALL`** — **soldé le 2026-09-08** (⚒️ Gimli, branche
       `test/garde-face-en-ligne-vitrine`, **REMIS AU GATE 🏹 Legolas, non auto-validé**). Successeur
       inscrit par le cadrage `specs/instructions/convergence-trois-freres.md` § 8 (M-C5) : la copie
