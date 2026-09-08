@@ -1,0 +1,30 @@
+{
+  "_comment": [
+    "REGISTRE DES FRERES — CONVERGENCE-TROIS-FRERES, LOT 2 (AR-C1 = a, 2026-09-08). LOCAL A CE",
+    "DEPOT, NON PARTAGE : chaque depot nomme SES voisins, et leurs chemins relatifs different",
+    "selon d'ou on les lit — un fichier partage serait faux, meme raison que",
+    "fixtures/canaux-publication.json (motif chez les soeurs, `convergence.sha256:47-49`) et",
+    "fixtures/vitrine-locale.json (motif `:27-29`). Ce fichier N'ENTRE PAS au registre de",
+    "convergence de `fixtures/convergence.sha256`.",
+    "",
+    "`scripts/test-convergence.mjs` LIT ce fichier et ne nomme aucun depot en dur — toute la",
+    "topologie vit ICI (copie byte-identique de la version issue du lot 1 des soeurs).",
+    "",
+    "Un frere NOMME mais ABSENT DU DISQUE (repertoire inexistant, ou ne portant pas encore",
+    "fixtures/convergence.sha256) produit un SKIP NOMME dans la face croisee — JAMAIS un rouge,",
+    "JAMAIS un vert muet (AR-C2 = a)."
+  ],
+
+  "freres": [
+    {
+      "nom": "IakaCockpit",
+      "chemin": "../IakaCockpit",
+      "raison": "l'une des deux applications sœurs — meme bundler, meme convention de release transposee depuis ce depot (AR-C6=a) ; registre de convergence compare sur l'INTERSECTION (AR-C3=b), ce depot n'y porte qu'un sous-ensemble mesure byte-identique"
+    },
+    {
+      "nom": "iakaFrameGUI",
+      "chemin": "../iakaFrameGUI",
+      "raison": "l'autre application sœur — meme bundler, meme convention de release transposee depuis ce depot (AR-C6=a) ; registre de convergence compare sur l'INTERSECTION (AR-C3=b), ce depot n'y porte qu'un sous-ensemble mesure byte-identique"
+    }
+  ]
+}
