@@ -314,15 +314,24 @@ reprise** dans le `.md` (ce qui vient d'être fait, ce qui reste, prochaine éta
       le cartouche « aucune divergence fonctionnelle » **sans** reprendre la garde qui l'exerce —
       rouvrant, dans ce troisième dépôt, le défaut F-3 déjà fermé chez `IakaCockpit`/`iakaFrameGUI`
       le même jour.
-      **Livré** : `scripts/__tests__/vitrine-en-ligne.test.mjs`, copie de la garde des sœurs
-      (18 tests), adaptée sur le **seul** cartouche d'en-tête — mesuré par `diff` : entre
-      `iakaFrameGUI/scripts/vitrine-en-ligne.mjs` et sa copie ici, l'écart ne porte que sur les
-      lignes 4-11 (cartouche), confirmant que « aucune divergence fonctionnelle » est **vrai**, pas
-      seulement déclaré. Cas couverts : réseau injoignable ⇒ code `3` + « NON MESURE » ; release
-      `latest` simulée conforme ⇒ `0` ; asset manquant ⇒ `1` nommé (`E-3`) ; **contrefactuel** —
-      l'assertion qui distinguerait un SKIP travesti en succès (code `0` **et** texte `OK —`) est
-      vérifiée fausse, avec un témoin de contraste (frères présents, mesure réelle) qui reste vert
-      pour prouver que la clause de SKIP n'est pas devenue inconditionnelle ; témoin vide écarté.
+      **Livré, deux diffs DISTINCTS, à ne pas confondre (gate 🏹 Legolas FAIL du 2026-09-08,
+      rapport `docs/qualite/gate-garde-face-en-ligne-vitrine.md`, `f97835a`)** : le **SCRIPT**
+      `scripts/vitrine-en-ligne.mjs` reste, lui, une copie **stricte** — `diff` avec
+      `iakaFrameGUI/scripts/vitrine-en-ligne.mjs` ne porte que sur son cartouche (lignes 4-11),
+      confirmant que « aucune divergence fonctionnelle » est **vrai**, pas seulement déclaré. Le
+      **TEST** `scripts/__tests__/vitrine-en-ligne.test.mjs` (18 tests ici contre **16** chez
+      chaque sœur) porte, LUI, une **divergence fonctionnelle assumée et nommée dans son propre
+      cartouche** : le bloc `describe("Contrefactuel — un SKIP travesti en succès…")` (2 `it`),
+      ajouté sur exigence explicite d'🟠 Aragorn (ordre de mission du 2026-09-08), **absent des
+      deux sœurs**. Hors ce bloc et ce cartouche, `diff` avec la copie des sœurs est vide — les
+      16 tests partagés n'ont **aucune** assertion changée. Candidat à remonter chez les sœurs :
+      voir Annexe C de `specs/instructions/convergence-trois-freres.md`, ligne datée 2026-09-08.
+      Cas couverts par les 16 tests partagés : réseau injoignable ⇒ code `3` + « NON MESURE » ;
+      release `latest` simulée conforme ⇒ `0` ; asset manquant ⇒ `1` nommé (`E-3`). Cas couverts
+      par les 2 tests propres à `iakaInstall` : l'assertion qui distinguerait un SKIP travesti en
+      succès (code `0` **et** texte `OK —`) est vérifiée fausse, avec un témoin de contraste
+      (frères présents, mesure réelle) qui reste vert pour prouver que la clause de SKIP n'est
+      pas devenue inconditionnelle ; témoin vide écarté.
       **Preuve mesurée** : `npm run typecheck` `0` ; `npm run lint` `0` ; `npm run test` `0`,
       **155 passed (155)** (avant : 137 — **+18, aucun supprimé**) ; `npm run build` `0` ;
       `scripts/__tests__/commandes-documentees.test.mjs` `0`, 2 passed (2), **inchangé** — aucun

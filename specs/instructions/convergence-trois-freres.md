@@ -760,6 +760,17 @@ face croisée des deux côtés. **Aucune des deux ne se fusionne seule.**
    un fichier **neuf** est inscrit ; `CLAUDE.md` des deux sœurs mis à jour (§ Convergence : la règle
    à trois).
 
+**⚠️ AJOUT DATÉ (2026-09-08, gate 🏹 Legolas FAIL sur `iakaInstall`,
+`docs/qualite/gate-garde-face-en-ligne-vitrine.md`, `f97835a`) — un bloc à REMONTER, candidat pour
+ce lot 1.** `scripts/__tests__/vitrine-en-ligne.test.mjs` (successeur `GARDE-FACE-EN-LIGNE-
+VITRINE-INSTALL`) porte, chez `iakaInstall` seul, un bloc `describe("Contrefactuel — un SKIP
+travesti en succès…")` (2 `it`) **absent des deux sœurs** — ajouté sur exigence explicite d'🟠
+Aragorn, pas par le cadrage d'origine du F-3. Il verrouille que le code `3`/« NON MESURE » ne
+puisse jamais se travestir en succès (`0` + `OK —`), avec un témoin de contraste anti-vide.
+**Candidat à porter dans le `vitrine-en-ligne.test.mjs` des deux sœurs** dans ce lot 1, pour que
+les trois dépôts restent alignés sur la même garde — **non tranché ici**, décision du décideur/du
+cadrage qui jouera ce lot.
+
 ### C.2 Critères
 
 - [ ] **CA-D1** — plus aucun `readdirSync` de voisin dans `test-convergence.mjs`.

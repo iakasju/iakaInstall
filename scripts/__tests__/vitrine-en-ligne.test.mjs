@@ -2,11 +2,21 @@
 // GARDE-FACE-EN-LIGNE-VITRINE-INSTALL, inscrit § 8 du cadrage `convergence-trois-freres.md`,
 // M-C5).
 //
-// ┌─ FICHIER CONVERGENT (chez les soeurs) — COPIE STRICTE ICI, AUCUNE DIVERGENCE FONCTIONNELLE ───┐
-// │ Byte-identique entre IakaCockpit et iakaFrameGUI (mesure : `diff` des deux copies vide),      │
-// │ inscrit dans LEUR `fixtures/convergence.sha256`. `iakaInstall` N'ENTRE PAS a ce registre       │
-// │ (AR-V4=(a), successeur CONVERGENCE-TROIS-FRERES) : cette copie n'a RECU AUCUNE MODIFICATION   │
-// │ DE LOGIQUE — seul ce cartouche differe du texte des soeurs (mesure ci-dessous).                │
+// ┌─ FICHIER CONVERGENT (chez les soeurs) — COPIE DIVERGENTE ICI, ECART NOMME ─────────────────────┐
+// │ Byte-identique entre IakaCockpit et iakaFrameGUI (mesure : `diff` des deux copies vide, 16     │
+// │ tests de part et d'autre), inscrit dans LEUR `fixtures/convergence.sha256`. `iakaInstall`      │
+// │ N'ENTRE PAS a ce registre (AR-V4=(a), successeur CONVERGENCE-TROIS-FRERES). Cette copie        │
+// │ DIVERGE DELIBEREMENT des deux soeurs, EXACTEMENT sur ce qui suit, et RIEN d'autre :             │
+// │   1. le bloc `describe("Contrefactuel — un SKIP travesti en succes...")` (lignes 342-379,      │
+// │      2 `it`), AJOUTE sur exigence explicite d'🟠 Aragorn (ordre de mission du 2026-09-08, non   │
+// │      demande par le cadrage initial) — les soeurs n'ont PAS ce bloc (16 tests chacune contre    │
+// │      18 ici). Candidat a remonter chez les soeurs dans le LOT 1 de CONVERGENCE-TROIS-FRERES,    │
+// │      cf. `specs/instructions/convergence-trois-freres.md`, Annexe C.                            │
+// │ Tout le reste — les 16 `it` du bloc `describe("CA-5/CA-6...")` et du bloc `describe("vitrine-   │
+// │ en-ligne.mjs — le script S'EXECUTE...")` — est repris VERBATIM des soeurs (mesure : `diff`      │
+// │ vide entre la copie d'IakaCockpit et celle d'iakaFrameGUI ; et, en excluant ce cartouche et le  │
+// │ bloc contrefactuel, `diff` vide avec la copie de ce depot). AUCUNE assertion des 16 tests       │
+// │ partages n'a ete changee.                                                                       │
 // └──────────────────────────────────────────────────────────────────────────────────────────────┘
 //
 // LE DEFAUT REOUVERT PAR LA COPIE (M-C5, cadrage CONVERGENCE-TROIS-FRERES, 2026-09-08).
@@ -16,13 +26,10 @@
 // TROISIEME depot, exactement le defaut que les soeurs venaient de fermer : le script pouvait
 // etre desarme EN PLACE, dans `iakaInstall`, sans qu'aucune face ne bronge — tout restait vert.
 //
-// MESURE AVANT D'ECRIRE (etape 0 du successeur). `diff` entre le
-// `scripts/vitrine-en-ligne.mjs` d'`iakaFrameGUI` et sa copie dans ce depot ne porte QUE sur le
-// bloc de cartouche (lignes 4-11 de chaque fichier) : confirme que « aucune divergence
-// fonctionnelle » est VRAI ici, pas seulement declare. Ce fichier de garde est donc repris
-// VERBATIM des soeurs (mesure : `diff` vide entre la copie d'IakaCockpit et celle d'iakaFrameGUI),
-// adapte UNIQUEMENT sur ce cartouche — rien d'autre, aucune assertion changee, aucun cas ajoute
-// ni retire.
+// ⚠️ CE FICHIER-CI N'EST PAS DANS LE MEME CAS QUE LE SCRIPT QU'IL GARDE. `scripts/vitrine-en-
+// ligne.mjs:4-11` reste une copie STRICTE, sans divergence fonctionnelle (mesure : `diff` ne
+// porte que sur son cartouche). CE fichier de test, lui, PORTE une divergence fonctionnelle
+// assumee et nommee ci-dessus — ne pas confondre les deux cartouches.
 //
 // ┌─ CE QUE CE FICHIER PROUVE, ET CE QU'IL NE PROUVE PAS — a lire ICI, PAS SEULEMENT au rapport ──┐
 // │                                                                                                │
