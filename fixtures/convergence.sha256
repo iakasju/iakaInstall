@@ -28,7 +28,7 @@
 5421f10d73254ebcceea0313c981203192bbb2b6d23192e37ad85e6d53de03f5  scripts/lib/release-publication.mjs
 39627147da1b294ba0738d0418c196876e3fe9b62fede8e9c23720d0ae6ad31c  scripts/__tests__/release-publication.test.mjs
 891d75e89e4b0d7eecb354ca041f8f2390f29e91dc811412298b56f1112d3f94  scripts/__tests__/release-publier-shell.test.mjs
-31a5204983261ace7e99285e7f66475a1083bcd8bb1268042ee9a4ec4645aaf2  scripts/test-convergence.mjs
+f93d5f0771ba8281388a6f00b63d8cd230e2717f36e0500d415f438f05dbab56  scripts/test-convergence.mjs
 #
 # POURQUOI CHACUN CONVERGE :
 #   — `fixtures/vitrine-assets.json` : la table des 7 plateformes, copiée byte-identique des
