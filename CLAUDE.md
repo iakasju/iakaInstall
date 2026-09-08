@@ -84,6 +84,26 @@ npm run vitrine:check         # compare sans ecrire (code 1 si derive) — c'est
 npm run vitrine:en-ligne      # FACE EN LIGNE, HORS GATE : anonyme, sans jeton, vue d'un visiteur
 # Codes de vitrine:en-ligne : 0 concorde · 1 ecart(s) · 3 NON MESURE (pas de reseau, jamais un vert).
 
+# --- Convergence a trois freres (CONVERGENCE-TROIS-FRERES, lot 2, 2026-09-08) ---------------------
+# Un jeu de fichiers est byte-identique entre ce depot et AU MOINS UNE des deux applications
+# soeurs (IakaCockpit, iakaFrameGUI). Le registre qui en fait la liste POUR CE DEPOT (la seule
+# qui fasse foi ici, aucun compte n'est recopie ailleurs) vit dans fixtures/convergence.sha256.
+# La garde a DEUX faces :
+#   - LOCALE, dans `npm run test` (scripts/__tests__/convergence-locale.test.mjs) : recalcule
+#     les empreintes et NOMME le fichier qui a derive. Cliquet de completude pose a 7.
+#   - CROISEE, ci-dessous : comparaison octet a octet avec chaque soeur nommee dans
+#     fixtures/freres.json (LOCAL, hors registre). HORS gate (depend d'un depot frere), SKIP
+#     NOMME (exit 0) si un frere nomme est absent du disque — jamais un rouge, jamais un vert
+#     muet. IAKA_CONVERGENCE_HOME reste AUTORITAIRE pour un frere EXPLICITE (exit 2 sans repli).
+npm run test:convergence      # mesure IakaCockpit et iakaFrameGUI sur l'INTERSECTION des registres
+# REGLE OPERATOIRE : tout fichier inscrit dans PLUSIEURS registres se modifie DANS TOUS CES
+# DEPOTS au meme commit logique, puis on regenere les empreintes (commande en tete de chaque
+# fixtures/convergence.sha256).
+# ASYMETRIE ASSUMEE (AR-C3=b) : ce registre ne porte PAS les 26-29 entrees des soeurs mais le
+# SOUS-ENSEMBLE mesure byte-identique — ce depot n'a ni updater ni chaine de publication
+# (AR-V3=a, successeur UPDATER-DE-LA-FACADE), les chemins qui en dependent sont HORS
+# COMPARAISON pour la face croisee, jamais un ecart.
+
 # Côté Rust (depuis src-tauri/) :
 cargo test
 cargo fmt --check
@@ -294,19 +314,74 @@ reprise** dans le `.md` (ce qui vient d'être fait, ce qui reste, prochaine éta
       décideur) ; poser les secrets Apple/Windows (acte du décideur).
       **Successeurs nommés** (backlog, non traités par ce lot) : voir `CONVERGENCE-TROIS-FRERES`
       et `UPDATER-DE-LA-FACADE` ci-dessous.
-- [ ] `CONVERGENCE-TROIS-FRERES` — successeur nommé d'**AR-V4 → (a)** (lot vitrine, 2026-09-05),
-      **à jouer dans les DEUX SŒURS** (`IakaCockpit`, `iakaFrameGUI`), pas ici : canal d'écriture
-      de ⚒️ Gimli borné à ce dépôt (CA-R11). Mandat en trois points, écrit pour qu'il ne se perde
-      pas : (i) rendre la résolution du frère **N-aire ou autoritaire** dans
-      `scripts/test-convergence.mjs` des deux sœurs, en fermant le hors-couverture *« sans
-      `IAKA_CONVERGENCE_HOME`, on retient le premier voisin qui porte le registre »* (angle mort
-      qu'un 3ᵉ porteur réaliserait sans rien dire, M-14) ; (ii) **remonter `rendreSecurite()`**
-      chez les deux sœurs, qui ont la **même** absence de notarisation/signature non déclarée
-      (M-15, mesuré : `iakaFrameGUI/fixtures/vitrine-locale.json` porte `"absents": []` avec
-      *« AUCUN absent déclaré »*, rien sur la signature) ; (iii) alors seulement inscrire
-      `iakaInstall` au registre de convergence et relever le cliquet. Ordre de grandeur **≈ 0,75 j**.
-      ⚠️ **Ce lot-ci (LOT 2, registre à trois d'`iakaInstall`) reste OUVERT** — seul son
-      successeur `GARDE-FACE-EN-LIGNE-VITRINE-INSTALL` (ci-dessous) a été joué.
+- [x] `CONVERGENCE-TROIS-FRERES` — successeur nommé d'**AR-V4 → (a)** (lot vitrine, 2026-09-05).
+      **LOT 1** (les deux sœurs — résolution nommée N-aire, `rendreSecurite()` remontée, convention
+      de release transposée) déposé et joué par 🔷 Odin dans `IakaCockpit`/`iakaFrameGUI`, **gate
+      🏹 Legolas PASS des deux côtés** avant ce lot (canal d'écriture de ⚒️ Gimli borné à ce dépôt,
+      CA-R11). **LOT 2 (ce dépôt) — SOLDÉ le 2026-09-08** (⚒️ Gimli, branche
+      `feat/convergence-trois-freres-lot2`, **REMIS AU GATE 🏹 Legolas, non auto-validé**). Cadré
+      par 🔵 Gandalf, 6 arbitrages TRANCHÉS par Stéphane :
+      → `specs/instructions/convergence-trois-freres.md`.
+      **Livré** : `fixtures/freres.json` (registre local, hors convergence, nomme les deux sœurs) ;
+      `scripts/test-convergence.mjs` copié **byte-identique** (empreinte
+      `31a5204983261ace7e99…`, vérifiée, identique aux deux sœurs) ; `fixtures/convergence.sha256`
+      **local**, **7 entrées MESURÉES byte-identiques** (étape 0.3, jamais supposées) :
+      `fixtures/vitrine-assets.json`, `scripts/lib/pin-tauri-action.mjs` + son test,
+      `scripts/lib/release-publication.mjs` + son test + `release-publier-shell.test.mjs` (la
+      convention de release NÉE ici, TRANSPOSÉE aux sœurs par le lot 1, AR-C6=a), et
+      `scripts/test-convergence.mjs` lui-même ; face LOCALE
+      `scripts/__tests__/convergence-locale.test.mjs` (cliquet posé à 7) ; script npm
+      `test:convergence` (hors `npm test`, documenté ci-dessus).
+      **Candidats mesurés DIVERGENTS, donc NON inscrits** : `fixtures/tauri-action-pin.json` (porte
+      une note de notarisation absente chez les sœurs — divergence de contenu, pas cosmétique) ;
+      `scripts/vitrine-en-ligne.mjs` (seul le cartouche diverge, déjà daté par
+      `GARDE-FACE-EN-LIGNE-VITRINE-INSTALL`, non retouché ici) ; `scripts/lib/vitrine.mjs`,
+      `scripts/vitrine.mjs`, `scripts/__tests__/vitrine.test.mjs` (divergence délibérée déclarée,
+      non remontée par ce lot) ; `fixtures/bloc-latest.sha256` et ses deux gardes (divergents par
+      construction / en-tête local). Cartouches des trois derniers **rectifiés en les datant**
+      (2026-09-08) : « `iakaInstall` N'ENTRE PAS à ce registre » était vrai au sens absolu avant ce
+      lot, faux depuis (ce dépôt porte désormais SON registre), et reste vrai seulement POUR CES
+      TROIS FICHIERS précisément.
+      **Défaut mesuré, reporté honnêtement, NON corrigé par ce lot** : `npm run test:convergence`
+      mesure bien les deux sœurs (8 chemins comparés, 0 hors comparaison — l'intersection tient,
+      AR-C3=b vérifié) mais rend **exit 1** dans les deux sens, avec **1 écart nommé** :
+      `fixtures/convergence.sha256` lui-même. Cause : `test-convergence.mjs` inclut
+      INCONDITIONNELLEMENT le fichier-registre dans son propre ensemble comparé — comportement
+      conçu pour deux sœurs dont les registres DOIVENT être identiques, jamais exercé jusqu'ici
+      contre un troisième dépôt dont le registre est DÉLIBÉRÉMENT plus petit (7 contre 29
+      entrées, par construction non byte-identiques). Non résolu ici : le correctif toucherait
+      `test-convergence.mjs`, qui doit rester byte-identique aux sœurs (CA-R11) — appartient à un
+      lot touchant les trois dépôts à la fois. **Successeur nommé, non traité** (inscrit ci-dessous).
+      **Preuve mesurée** : `npm run typecheck` `0` ; `npm run lint` `0` ; `npm run test` `0`,
+      **157 passed (157)** (avant : 155 — +2, aucun supprimé) ; `npm run build` `0` ; `cargo test`
+      `0`, 22 passed (Rust **non touché**). **Contrefactuels joués et révoqués** (preuve
+      `diff`/`sha256` identiques avant/après) : octet muté dans `fixtures/vitrine-assets.json` ⇒
+      face locale rouge nommée ; ligne retirée du registre ⇒ cliquet rouge (`6 < 7`) nommé ; deux
+      frères pointés vers un répertoire inexistant ⇒ SKIP GLOBAL nommé exit 0 ; `freres.json` vidé
+      ⇒ SKIP nommé exit 0 ; un frère retiré de `freres.json` ⇒ mesure du seul frère restant, aucun
+      repli deviné (angle mort M-14 fermé). **`IakaCockpit` et `iakaFrameGUI` INTACTS** (`git
+      status --porcelain` vide des deux côtés, canal d'écriture borné CA-R11).
+- [ ] `CONVERGENCE-REGISTRE-EXCLU-DE-LUI-MEME` — successeur nommé, découvert **au passage** par le
+      lot 2 de `CONVERGENCE-TROIS-FRERES` (2026-09-08), **inscrit ici, non traité** (l'inscrire EST
+      le geste). `scripts/test-convergence.mjs` (byte-identique aux sœurs, copié sans adaptation)
+      inclut INCONDITIONNELLEMENT `fixtures/convergence.sha256` dans l'ensemble des chemins
+      comparés entre deux dépôts — `lireRegistre()` préfixe `EMPREINTES` aux deux listes AVANT de
+      calculer l'intersection, donc le fichier-registre lui-même est TOUJOURS dans l'intersection,
+      jamais dans le « hors comparaison », quel que soit son contenu réel. Conçu et éprouvé pour
+      DEUX sœurs dont les registres DOIVENT être byte-identiques (CA-D4), ce comportement produit
+      un **écart nommé garanti** dès qu'un troisième dépôt porte un registre DÉLIBÉRÉMENT plus
+      petit (AR-C3=b, ce lot-ci) : `iakaInstall` (7 entrées) et les sœurs (29 entrées) ne peuvent
+      jamais avoir un `fixtures/convergence.sha256` byte-identique par construction — la mesure
+      « depuis iakaInstall » ET « depuis une sœur » rendent chacune `exit 1` avec 1 écart nommé sur
+      ce seul fichier, alors que le reste de la mesure (0 hors comparaison, intersection correcte)
+      est vert. **Ce que le lot 1 n'a jamais exercé** : son propre gate ne testait que le cas SKIP
+      (`iakaInstall` absent du disque) — jamais le cas où `iakaInstall` PORTE un registre plus
+      petit. **Remède pressenti, non tranché ici** : exclure `EMPREINTES` de la comparaison quand
+      les deux registres ont des CONTENUS différents par déclaration (asymétrie assumée), ou
+      comparer le registre du frère à SON PROPRE contenu plutôt qu'au sien. Touche
+      `scripts/test-convergence.mjs`, un fichier CONVERGENT inscrit dans les registres des
+      **trois** dépôts : à jouer en un seul commit logique sur les trois, hors du canal d'écriture
+      borné d'un seul agent (CA-R11) — matière de portefeuille (🔷 Odin) ou de cadrage dédié.
 - [x] **`GARDE-FACE-EN-LIGNE-VITRINE-INSTALL`** — **soldé le 2026-09-08** (⚒️ Gimli, branche
       `test/garde-face-en-ligne-vitrine`, **REMIS AU GATE 🏹 Legolas, non auto-validé**). Successeur
       inscrit par le cadrage `specs/instructions/convergence-trois-freres.md` § 8 (M-C5) : la copie
