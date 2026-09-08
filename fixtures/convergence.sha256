@@ -1,0 +1,52 @@
+# REGISTRE DE CONVERGENCE — les fichiers BYTE-IDENTIQUES entre ce depot et AU MOINS UNE des deux
+# applications sœurs (`IakaCockpit`, `iakaFrameGUI`). C'est la SEULE liste qui fasse foi POUR CE
+# DEPOT : aucun compte n'en est recopie ailleurs. La garde a deux faces — LOCALE (`npm run test`,
+# empreintes recalculees ici) et CROISEE (`npm run test:convergence`, comparaison des arbres,
+# HORS gate, SKIP propre si un frere est absent du disque). Le plancher de completude vit dans
+# la face locale.
+#
+# ⚠️ CE REGISTRE N'EST PAS UNE EGALITE AVEC CELUI DES SŒURS (AR-C3=b, CONVERGENCE-TROIS-FRERES,
+# cadre le 2026-09-08). Leur registre porte 29 entrees ; celui-ci n'en porte que le SOUS-ENSEMBLE
+# MESURE byte-identique avec ce depot (etape 0.3 du cadrage) — l'asymetrie est ASSUMEE et DECLAREE
+# (AR-C3), pas un oubli. Ce depot n'a ni updater, ni chaine de publication (AR-V3=a) : les 15
+# chemins qui en dependent chez les sœurs sont normalement absents ici, et la face croisee les
+# traite comme HORS COMPARAISON, jamais comme un ecart.
+#
+# RÈGLE : tout fichier listé ici se modifie DANS TOUS LES DÉPÔTS QUI L'INSCRIVENT au même commit
+# logique. PUIS on régénère les empreintes EN PLACE — ordre et commentaires préservés, aucune
+# dépendance, cross-OS :
+#
+#   node -e "const f='fixtures/convergence.sha256',fs=require('fs'),c=require('crypto');fs.writeFileSync(f,fs.readFileSync(f,'utf8').split('\n').map(l=>{const m=l.match(/^[0-9a-f]{64}\s+(.+)$/);return m?c.createHash('sha256').update(fs.readFileSync(m[1])).digest('hex')+'  '+m[1]:l}).join('\n'))"
+#
+# …et on rejoue les deux faces. Les lignes `#` sont ignorées par les deux faces.
+#
+# 2026-09-08 — LOT 2 de CONVERGENCE-TROIS-FRERES. Sept entrées, toutes MESURÉES par empreinte à
+# l'étape 0.3 du cadrage (jamais supposées) :
+56b0cca8b2dbada23161d6a30ffde710e03bded209d4112a67cbb57f8b84c439  fixtures/vitrine-assets.json
+91e41e4974d8b4233201a416684fb295daead28a7537310b341855ff1eccce80  scripts/lib/pin-tauri-action.mjs
+8a963aa34616d53cdfe65832c3509ff45d60d88b72d11b1bd32a21d1c4ee5746  scripts/__tests__/pin-tauri-action.test.mjs
+5421f10d73254ebcceea0313c981203192bbb2b6d23192e37ad85e6d53de03f5  scripts/lib/release-publication.mjs
+39627147da1b294ba0738d0418c196876e3fe9b62fede8e9c23720d0ae6ad31c  scripts/__tests__/release-publication.test.mjs
+891d75e89e4b0d7eecb354ca041f8f2390f29e91dc811412298b56f1112d3f94  scripts/__tests__/release-publier-shell.test.mjs
+f93d5f0771ba8281388a6f00b63d8cd230e2717f36e0500d415f438f05dbab56  scripts/test-convergence.mjs
+#
+# POURQUOI CHACUN CONVERGE :
+#   — `fixtures/vitrine-assets.json` : la table des 7 plateformes, copiée byte-identique des
+#     sœurs depuis le lot C.3 + B′-b (2026-09-05), jamais retouchée depuis.
+#   — `scripts/lib/pin-tauri-action.mjs` + `scripts/__tests__/pin-tauri-action.test.mjs` :
+#     l'épinglage du SHA de `tauri-apps/tauri-action` et sa garde — logique générique, aucun nom
+#     de dépôt en dur (⚠️ `fixtures/tauri-action-pin.json`, le RÉFÉRENT DE DONNÉES qu'ils
+#     vérifient, N'EST PAS inscrit ici : il diverge — ce dépôt y porte une note de notarisation
+#     mesurée le 2026-09-05 que les sœurs n'ont pas, mesuré à l'étape 0.3 de ce lot).
+#   — `scripts/lib/release-publication.mjs` + son test + `scripts/__tests__/release-publier-
+#     shell.test.mjs` : la garde de la convention de release (statique + jambe d'exécution) NÉE
+#     dans CE dépôt (`RELEASE-PARTIELLE-PUBLIEE`, 2026-09-05) puis TRANSPOSÉE aux deux sœurs par
+#     le lot 1 de CONVERGENCE-TROIS-FRERES (AR-C6=a, 2026-09-08) — la convention monte d'ici vers
+#     elles, jamais l'inverse (M-C6 du cadrage).
+#   — `scripts/test-convergence.mjs` : la face croisée elle-même, copiée byte-identique depuis
+#     le lot 1 des sœurs (résolution nommée par `fixtures/freres.json`, N-1, SKIP nommé). Il est
+#     lui-même inscrit ici, comme chez les sœurs : la face croisée le compare EN PLUS des chemins
+#     qu'il liste (c'est la troisième grandeur documentée au cadrage, M-C1).
+#
+# CLIQUET DE COMPLÉTUDE — posé à la valeur MESURÉE du 2026-09-08 : SEPT entrées. Ce nombre ne
+# descend que sur décision explicite, dans le commit qui la porte (voir la face locale du gate).

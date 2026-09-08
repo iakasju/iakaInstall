@@ -17,7 +17,8 @@
     "rejeu:vivant": "node scripts/rejeu-vivant.mjs",
     "vitrine": "node scripts/vitrine.mjs --write",
     "vitrine:check": "node scripts/vitrine.mjs --check",
-    "vitrine:en-ligne": "node scripts/vitrine-en-ligne.mjs"
+    "vitrine:en-ligne": "node scripts/vitrine-en-ligne.mjs",
+    "test:convergence": "node scripts/test-convergence.mjs"
   },
   "dependencies": {
     "@tauri-apps/api": "^2",

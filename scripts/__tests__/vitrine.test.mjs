@@ -12,6 +12,14 @@
 // │ « CA-A4/CA-A9 — l'ecran et le README disent la meme chose » (comptage AR-A, ecart AR-C(a)).     │
 // └──────────────────────────────────────────────────────────────────────────────────────────────┘
 //
+// ⚠️ RECTIFICATION DATEE (2026-09-08, CONVERGENCE-TROIS-FRERES, lot 2). « `iakaInstall` N'ENTRE
+// PAS a ce registre » n'est plus vrai au sens absolu : `iakaInstall` porte desormais SON PROPRE
+// `fixtures/convergence.sha256` (registre LOCAL, AR-C3=b, sous-ensemble MESURE byte-identique
+// avec les soeurs). Ce fichier-ci, lui, reste HORS de ce registre : la divergence decrite
+// ci-dessus (les blocs AR-V2/CA-A4/CA-A9 ajoutes par cette copie) n'a pas ete remontee au point
+// de le rendre byte-identique avec les soeurs (mesure a l'etape 0.3 du lot 2, `diff` non vide des
+// deux cotes). On date, on n'efface pas.
+//
 // LE DEFAUT FERME (H-1, H-4). La section « Installation » du README etait recopiee a la main. Le
 // 2026-08-29, les trois depots du portefeuille annoncaient une version perimee et TOUTES LES SUITES
 // ETAIENT VERTES : IakaCockpit 866 tests verts en annoncant v0.31.2 alors qu'il portait 0.32.1,
