@@ -530,3 +530,44 @@ reprise** dans le `.md` (ce qui vient d'être fait, ce qui reste, prochaine éta
       correctif — passerait la règle du lot). Nécessite une table d'artefacts attendus
       (`fixtures/vitrine-assets.json`, convention des sœurs) que ce dépôt n'a pas encore
       (vitrine = B′-b).
+- [x] **Dépendances Linux externalisées + jambe d'exécution étendue** (2026-09-09, ⚒️ Gimli,
+      branche `fix/deps-linux-et-jambe-etendue`, **REMIS AU GATE 🏹 Legolas, non auto-validé**).
+      Les sœurs (branche `feat/convergence-release-yml-alignement`, Cockpit `1a9b45e` / GUI
+      `92f133d`, non fusionnée à ce jour) ont sorti leurs paquets Linux de `release.yml` vers un
+      fichier local `.github/deps-linux.txt`, gardé par `scripts/lib/deps-linux.mjs` (AR-Y5) et
+      rejoué en exécution par une jambe étendue de `scripts/__tests__/release-publier-shell.test.mjs`
+      (fichier PARTAGÉ, déjà au registre de convergence local de ce dépôt).
+      **Livré** : `.github/deps-linux.txt` **mesuré réel** — 5 paquets (webkit2gtk, indicateur,
+      rsvg, patchelf, gtk3), en-tête déclarant l'absence de `cpal`/`whisper-rs`
+      (`src-tauri/Cargo.toml` grep vide, mesuré) — même chiffre que la GUI, jamais les 8 du
+      Cockpit ; `release.yml:132` (`Dependances systeme Linux`) lit désormais ce fichier via
+      `xargs -r -a` (même forme que les deux sœurs), **rien d'autre touché** dans le fichier
+      (gardes `release-publication`, `bloc-latest`, `pin-tauri-action` non retouchées, vertes) ;
+      `release.yml` d'`iakaInstall` reste **divergent par construction** des sœurs (AR-Y4 → non
+      traité par ce lot, successeur `CONVERGENCE-RELEASE-YML-TROIS-FRERES` ci-dessous).
+      `scripts/lib/deps-linux.mjs` + `scripts/__tests__/deps-linux.test.mjs` copiés
+      **byte-identiques** des sœurs (`shasum` vérifié, `diff` vide) — 7 tests neufs (témoin
+      positif + contrefactuel nommé par assertion). `scripts/__tests__/release-publier-shell.test.mjs`
+      recopié lui aussi byte-identique (registre) : sa jambe d'exécution étend le rejeu à l'étape
+      Linux — **SKIP explicite** ici (macOS, `xargs` BSD sans `-r -a` GNU findutils, jamais un
+      vert muet), preuve définitive réservée au run `ubuntu-22.04` (CA-Y13). `fixtures/convergence.sha256`
+      **7 → 9** (deux entrées neuves), cliquet `CA-C6` du même coup relevé à 9, cliquet `CA-C5`
+      capturé **rouge** au préalable (le fichier déjà inscrit `release-publier-shell.test.mjs`
+      avait changé de contenu chez les sœurs) puis refixé, motif daté au registre.
+      **`npm run test:convergence`** mesuré contre les deux sœurs **sur leur branche réelle**
+      (déjà positionnées dessus au moment de ce lot, aucune worktree nécessaire) : **exit 0**,
+      18 chemins comparés (9+9), 0 hors comparaison, 0 frère SKIP.
+      **Preuve mesurée** : `npm run typecheck` `0` ; `npm run lint` `0` ; `npm run test` `0`,
+      **165 passed | 3 skipped (168)** (avant : 158 — **+7, aucun supprimé**, les 3 skip sont la
+      jambe Linux nommée ci-dessus) ; `npm run build` `0`. **Non touché** : `cargo test`/Tauri
+      (aucun fichier Rust concerné). **`IakaCockpit` et `iakaFrameGUI`** : lecture seule
+      (`git show`/mesure des HEAD uniquement, canal d'écriture borné à ce dépôt).
+      **Successeur nommé** : `CONVERGENCE-RELEASE-YML-TROIS-FRERES` ci-dessous.
+- [ ] `CONVERGENCE-RELEASE-YML-TROIS-FRERES` — successeur nommé du lot ci-dessus. Reste non
+      traité : (i) la fusion de `feat/convergence-release-yml-alignement` côté sœurs (branche non
+      fusionnée à ce jour, hors canal d'écriture de cet agent) ; (ii) la question, une fois
+      fusionnée, de savoir si `release.yml` d'`iakaInstall` doit un jour cesser d'être divergent
+      par construction (AR-Y4) — ce lot ne tranche pas cette question, il l'a seulement
+      redocumentée ; (iii) le run de preuve réel sur `ubuntu-22.04` (CA-Y13) qui seul prouve que
+      `xargs -r -a .github/deps-linux.txt sudo apt-get install -y` installe effectivement les 5
+      paquets attendus — non joué sur ce poste macOS (SKIP nommé).
