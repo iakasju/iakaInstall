@@ -537,3 +537,64 @@ deux frères pointés vers un répertoire inexistant ⇒ SKIP GLOBAL nommé, exi
 vidé (`{"freres":[]}`) ⇒ SKIP nommé, exit 0 ; un frère retiré de `freres.json` ⇒ mesure du seul
 frère restant, AUCUN repli sur le frère retiré (angle mort M-14 fermé). **`IakaCockpit` et
 `iakaFrameGUI` INTACTS** : ce lot n'écrit dans aucun des deux (canal d'écriture borné CA-R11).
+
+### Dépendances Linux externalisées + jambe d'exécution étendue (2026-09-09)
+
+> Ordre de mission 🟠 Aragorn, implémenté par ⚒️ Gimli, branche `fix/deps-linux-et-jambe-etendue`,
+> **REMIS AU GATE 🏹 Legolas, non auto-validé**. Point de départ : les sœurs ont sorti leurs
+> paquets Linux de `release.yml` vers `.github/deps-linux.txt` sur la branche
+> `feat/convergence-release-yml-alignement` (Cockpit `1a9b45e`, GUI `92f133d`, **non fusionnée**
+> à ce jour), avec une garde `scripts/lib/deps-linux.mjs` (AR-Y5) et une jambe d'exécution
+> étendue dans `scripts/__tests__/release-publier-shell.test.mjs` — fichier PARTAGÉ, déjà inscrit
+> au registre de convergence local de ce dépôt.
+
+`.github/deps-linux.txt` d'`iakaInstall` porte les **5 paquets réellement mesurés**
+(`libwebkit2gtk-4.1-dev`, `libappindicator3-dev`, `librsvg2-dev`, `patchelf`, `libgtk-3-dev`) —
+comme la GUI, jamais les 8 du Cockpit : `grep -i "cpal\|whisper" src-tauri/Cargo.toml` ne
+retourne rien, ce dépôt n'a besoin ni de `libasound2-dev`, ni de `cmake`, ni de `pkg-config`.
+L'en-tête du fichier le déclare en toutes lettres. `release.yml:132` (étape « Dependances systeme
+Linux ») lit désormais ce fichier via `xargs -r -a .github/deps-linux.txt sudo apt-get install -y`
+— **même forme exacte** que chez les deux sœurs — et rien d'autre n'a été touché dans le fichier :
+les gardes `scripts/lib/release-publication.mjs`, `scripts/lib/bloc-latest.mjs`
+(`fixtures/bloc-latest.sha256` inchangée) et `scripts/lib/pin-tauri-action.mjs` restent vertes
+sans modification. `release.yml` d'`iakaInstall` **reste divergent par construction** des sœurs
+(AR-Y4 non traité par ce lot — successeur `CONVERGENCE-RELEASE-YML-TROIS-FRERES`, `CLAUDE.md`
+§ Backlog).
+
+**Copies byte-identiques, vérifiées par `shasum`, `diff` vide** : `scripts/lib/deps-linux.mjs`
+(`88b5dcd174a1…`), `scripts/__tests__/deps-linux.test.mjs` (`a4d019ec572b…`, 7 tests neufs, témoin
+positif + contrefactuel nommé pour chacune des trois assertions AR-Y5) et
+`scripts/__tests__/release-publier-shell.test.mjs` (`9700f609b7a1…`, déjà inscrit au registre —
+sa jambe d'exécution étend désormais le rejeu à l'étape Linux, faux `apt-get`/`sudo`, vrai
+`xargs` du poste). `fixtures/convergence.sha256` **7 → 9** : les deux fichiers neufs entrent, le
+cliquet de complétude (`CA-C6`) est relevé à 9 dans le même commit. **Cliquet `CA-C5` capturé
+ROUGE au préalable** (avant régénération des empreintes) : `release-publier-shell.test.mjs` avait
+déjà changé de contenu chez les sœurs, l'empreinte inscrite ici était donc périmée — motif daté au
+registre, puis refixé à la commande canonique.
+
+**Jambe d'exécution étendue, comportement mesuré sur ce poste (macOS)** : **SKIP explicite nommé**
+(3 tests), pas un vert muet — `xargs -r -a` (lecture d'arguments GNU findutils) est absent du
+`xargs` BSD livré par défaut sur macOS. La preuve définitive de ce que `apt-get install -y`
+reçoit bien les 5 paquets du fichier réel, dans l'ordre, reste réservée au run `ubuntu-22.04`
+(CA-Y13, successeur `CONVERGENCE-RELEASE-YML-TROIS-FRERES`). La garde statique
+`deps-linux.test.mjs`, elle, est **verte ici** : ses trois assertions (aucun paquet en dur, fichier
+non vide, fichier hors registre) et leurs trois contrefactuels tournent sans dépendre d'un
+`xargs` particulier.
+
+**`npm run test:convergence` contre les deux sœurs sur leur branche réelle** : `IakaCockpit`
+(`/Users/sjupin/work/IakaCockpit`) et `iakaFrameGUI` (`/Users/sjupin/work/iakaFrameGUI`) étaient
+déjà positionnées sur `feat/convergence-release-yml-alignement` au moment de ce lot — aucune
+worktree n'a été nécessaire (git refuse d'ailleurs de checkouter deux fois la même branche).
+**Exit 0** : 18 chemins comparés (9+9), 0 hors comparaison, 0 frère SKIP.
+
+**Preuve mesurée** : `npm run typecheck` `0` ; `npm run lint` `0` ; `npm run test` `0`,
+**165 passed | 3 skipped (168)** (avant : 158 — **+7, aucun supprimé** ; les 3 skip sont la jambe
+Linux nommée ci-dessus) ; `npm run build` `0`. **Non touché** : `cargo test`/Tauri (aucun fichier
+Rust concerné par ce lot). **`IakaCockpit` et `iakaFrameGUI` INTACTS** : lecture seule
+(`git show <branche>:<chemin>` et mesure des `HEAD` uniquement, canal d'écriture borné à ce
+dépôt).
+
+**Successeur nommé** : `CONVERGENCE-RELEASE-YML-TROIS-FRERES` (§ Backlog du `CLAUDE.md`) — la
+fusion de la branche des sœurs (hors canal d'écriture de cet agent), la question, une fois
+fusionnée, d'un éventuel alignement futur de `release.yml` d'`iakaInstall` (non tranchée par ce
+lot), et le run de preuve réel `ubuntu-22.04` (CA-Y13).

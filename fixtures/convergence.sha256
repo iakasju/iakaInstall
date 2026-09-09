@@ -21,14 +21,22 @@
 # …et on rejoue les deux faces. Les lignes `#` sont ignorées par les deux faces.
 #
 # 2026-09-08 — LOT 2 de CONVERGENCE-TROIS-FRERES. Sept entrées, toutes MESURÉES par empreinte à
-# l'étape 0.3 du cadrage (jamais supposées) :
+# l'étape 0.3 du cadrage (jamais supposées).
+# 2026-09-09 — CONVERGENCE-RELEASE-YML-ALIGNEMENT (fix/deps-linux-et-jambe-etendue) : DEUX
+# entrées neuves, MESURÉES byte-identiques aux copies de branche des sœurs
+# (feat/convergence-release-yml-alignement, Cockpit 1a9b45e / GUI 92f133d) ; l'entrée
+# `release-publier-shell.test.mjs` déjà inscrite a été RÉGÉNÉRÉE en place (la jambe d'exécution
+# étendue chez les sœurs porte désormais le rejeu de l'étape `Dependances systeme Linux` que ce
+# dépôt ne portait pas encore) — cliquet 7 → 9.
 56b0cca8b2dbada23161d6a30ffde710e03bded209d4112a67cbb57f8b84c439  fixtures/vitrine-assets.json
 91e41e4974d8b4233201a416684fb295daead28a7537310b341855ff1eccce80  scripts/lib/pin-tauri-action.mjs
 8a963aa34616d53cdfe65832c3509ff45d60d88b72d11b1bd32a21d1c4ee5746  scripts/__tests__/pin-tauri-action.test.mjs
 5421f10d73254ebcceea0313c981203192bbb2b6d23192e37ad85e6d53de03f5  scripts/lib/release-publication.mjs
 39627147da1b294ba0738d0418c196876e3fe9b62fede8e9c23720d0ae6ad31c  scripts/__tests__/release-publication.test.mjs
-891d75e89e4b0d7eecb354ca041f8f2390f29e91dc811412298b56f1112d3f94  scripts/__tests__/release-publier-shell.test.mjs
+9700f609b7a1ff3a40a39add3497f648dd332eb49a8d06b00bf4625ce2fc827b  scripts/__tests__/release-publier-shell.test.mjs
 f93d5f0771ba8281388a6f00b63d8cd230e2717f36e0500d415f438f05dbab56  scripts/test-convergence.mjs
+88b5dcd174a17a137d4d68b59b7391de1b4d944526ff8e5901ea3ec5c29cfb36  scripts/lib/deps-linux.mjs
+a4d019ec572b9d3960c484a41e0edfdf5dfd1aec1b795244bd7c0a11f726c511  scripts/__tests__/deps-linux.test.mjs
 #
 # POURQUOI CHACUN CONVERGE :
 #   — `fixtures/vitrine-assets.json` : la table des 7 plateformes, copiée byte-identique des
@@ -47,6 +55,13 @@ f93d5f0771ba8281388a6f00b63d8cd230e2717f36e0500d415f438f05dbab56  scripts/test-c
 #     le lot 1 des sœurs (résolution nommée par `fixtures/freres.json`, N-1, SKIP nommé). Il est
 #     lui-même inscrit ici, comme chez les sœurs : la face croisée le compare EN PLUS des chemins
 #     qu'il liste (c'est la troisième grandeur documentée au cadrage, M-C1).
+#   — `scripts/lib/deps-linux.mjs` + `scripts/__tests__/deps-linux.test.mjs` : la garde statique
+#     AR-Y5 (paquets Linux jamais en dur dans le workflow, fichier `.github/deps-linux.txt` non
+#     vide et hors registre) — NÉE chez les sœurs (CONVERGENCE-RELEASE-YML-ALIGNEMENT,
+#     2026-09-08), copiée ici byte-identique (2026-09-09). `.github/deps-linux.txt` LUI-MÊME
+#     reste HORS registre par construction (son contenu diverge : 5 paquets ici, 8 chez le
+#     Cockpit — AR-Y1/D-1, cpal/whisper-rs absents de ce dépôt).
 #
-# CLIQUET DE COMPLÉTUDE — posé à la valeur MESURÉE du 2026-09-08 : SEPT entrées. Ce nombre ne
-# descend que sur décision explicite, dans le commit qui la porte (voir la face locale du gate).
+# CLIQUET DE COMPLÉTUDE — posé à la valeur MESURÉE du 2026-09-09 : NEUF entrées (7 → 9,
+# CONVERGENCE-RELEASE-YML-ALIGNEMENT). Ce nombre ne descend que sur décision explicite, dans le
+# commit qui la porte (voir la face locale du gate).
