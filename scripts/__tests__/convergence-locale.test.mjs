@@ -58,15 +58,16 @@ describe("registre de convergence — face locale", () => {
     ).toBe("");
   });
 
-  it("CA-C6 — le cliquet de complétude ne descend que sur décision (≥ 7 entrées)", () => {
-    // CLIQUET — posé à la valeur MESURÉE le 2026-09-08 (lot 2 de CONVERGENCE-TROIS-FRERES).
-    // Ce nombre ne descend que sur décision explicite, portée dans le même commit que celui qui
-    // retire une ligne du registre.
+  it("CA-C6 — le cliquet de complétude ne descend que sur décision (≥ 9 entrées)", () => {
+    // CLIQUET — posé à la valeur MESURÉE le 2026-09-08 (lot 2 de CONVERGENCE-TROIS-FRERES, 7),
+    // relevé le 2026-09-09 (CONVERGENCE-RELEASE-YML-ALIGNEMENT, 7 → 9 : deps-linux.mjs +
+    // deps-linux.test.mjs). Ce nombre ne descend que sur décision explicite, portée dans le
+    // même commit que celui qui retire une ligne du registre.
     const lignes = lireLignes();
     expect(
       lignes.length,
       "le registre de convergence a PERDU des entrées sans que rien ne le dise. Si le retrait " +
         "est délibéré, baisser ce plancher DANS LE MÊME COMMIT.",
-    ).toBeGreaterThanOrEqual(7);
+    ).toBeGreaterThanOrEqual(9);
   });
 });
